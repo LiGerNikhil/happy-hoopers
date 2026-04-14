@@ -1,0 +1,988 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Packages - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- PACKAGES HERO -->
+<section class="packages-hero">
+  <div class="container">
+    <div class="packages-hero-content">
+      <div class="packages-hero-eyebrow">Pricing Packages</div>
+      <h1 class="packages-hero-title">Choose Your<br>Adventure Pack</h1>
+      <p class="packages-hero-desc">Flexible packages designed for every family's needs and budget</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES GRID -->
+<section class="packages-section">
+  <div class="container">
+    <div class="packages-grid">
+      {% for package in packages %}
+      <div class="pkg-card reveal {% if package.is_featured %}featured{% endif %}" data-delay="{{ forloop.counter0|floatformat:1 }}">
+        {% if package.is_featured %}<div class="pkg-best">MOST POPULAR</div>{% endif %}
+        <div class="pkg-bar pkg-bar-{{ package.color_scheme|default:'bronze' }}"></div>
+        <div class="pkg-icon">🎯</div>
+        <h3 class="pkg-name">{{ package.name }}</h3>
+        <p class="pkg-tagline">{{ package.tagline }}</p>
+        
+        <!-- Enhanced content with bullet points -->
+        <div class="pkg-duration">{{ package.duration }}</div>
+        <div class="pkg-age-group">Age Group: 5-15 years</div>
+        <div class="pkg-capacity">Max Capacity: 20 kids</div>
+        
+        <div class="pkg-price">₹{{ package.price }}<sup>/person</sup></div>
+        <p class="pkg-per">{{ package.duration }}</p>
+        
+        <ul class="pkg-features">
+          {% for feature in package.get_features_list %}
+          <li><span class="pkg-check {% if package.is_featured %}pkg-check-white{% else %}pkg-check-{{ package.color_scheme|default:'bronze' }}{% endif %}">✓</span> {{ feature }}</li>
+          {% endfor %}
+        </ul>
+        
+        <div class="pkg-btn-wrapper">
+          <button class="btn btn-blue btn-full buy-package-btn" 
+                  data-package-id="{{ package.id }}" 
+                  data-package-name="{{ package.name }}"
+                  data-package-price="{{ package.price }}"
+                  data-package-color="{{ package.color_scheme|default:'bronze' }}">
+            Buy Package →
+          </button>
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-packages">
+        <h3>No packages available</h3>
+        <p>Please check back later for our amazing packages!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="container">
+    <h2 class="section-title" style="background: linear-gradient(90deg, #ff8c00, #00bfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>What's included in each package?</h4>
+        <p>All packages include access to games zones, dedicated party area, and food options based on the package selected.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I customize the package?</h4>
+        <p>Yes! We offer flexible customization options. Contact our team to create your perfect party package.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What's included in the food?</h4>
+        <p>Food items vary by package but typically include kid-friendly meals, snacks, and beverages.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do I need to book in advance?</h4>
+        <p>Walk-ins are welcome, but we recommend booking during weekends and holidays to avoid disappointment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="payment-modal">
+  <div class="payment-modal-content">
+    <div class="payment-modal-header">
+      <h3>Complete Your Purchase</h3>
+      <button class="payment-modal-close" onclick="closePaymentModal()">&times;</button>
+    </div>
+    <div class="payment-modal-body">
+      <div class="package-summary">
+        <h4 id="modalPackageName">Package Name</h4>
+        <p class="package-price">₹<span id="modalPackagePrice">0</span></p>
+      </div>
+      
+      <form id="paymentForm">
+        <div class="form-group">
+          <label for="customerName">Full Name *</label>
+          <input type="text" id="customerName" name="customer_name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="customerEmail">Email Address *</label>
+          <input type="email" id="customerEmail" name="customer_email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="customerPhone">Phone Number *</label>
+          <input type="tel" id="customerPhone" name="customer_phone" pattern="[0-9]{10}" required>
+        </div>
+        
+        <input type="hidden" id="packageId" name="package_id">
+        
+        <button type="submit" class="btn btn-blue btn-full" id="payButton">
+          <span id="payButtonText">Proceed to Payment</span>
+          <div id="paymentLoader" class="payment-loader" style="display: none;">
+            <div class="spinner"></div>
+            Processing...
+          </div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="payment-modal">
+  <div class="payment-modal-content success-modal">
+    <div class="payment-modal-header">
+      <h3>🎉 Payment Successful!</h3>
+    </div>
+    <div class="payment-modal-body">
+      <div class="success-message">
+        <p>Your package has been purchased successfully!</p>
+        <div class="card-details">
+          <h4>Your Package Card</h4>
+          <p><strong>Card ID:</strong> <span id="successCardId"></span></p>
+          <p><strong>Package:</strong> <span id="successPackageName"></span></p>
+          <p><strong>Valid Until:</strong> <span id="successValidUntil"></span></p>
+        </div>
+        <div class="success-actions">
+          <button class="btn btn-blue" onclick="downloadCard()">Download Card</button>
+          <button class="btn btn-outline" onclick="closeSuccessModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* COMPREHENSIVE INLINE CSS - PACKAGES PAGE */
+
+/* CSS Variables */
+:root {
+  --blue: #2563eb;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --radius: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Packages Hero */
+.packages-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.packages-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.packages-hero-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.packages-hero-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.packages-hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.packages-hero-desc {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Packages Section */
+.packages-section {
+  padding: 80px 0;
+  background: var(--light);
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+/* Package Cards */
+.pkg-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: all 0.4s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.pkg-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--blue);
+}
+
+.pkg-card.featured {
+  border-color: var(--blue);
+  transform: scale(1.05);
+}
+
+.pkg-best {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: var(--blue);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.pkg-bar {
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+.pkg-bar-bronze { background: linear-gradient(90deg, #CD7F32, #B45309); }
+.pkg-bar-silver { background: linear-gradient(90deg, #C0C0C0, #808080); }
+.pkg-bar-gold { background: linear-gradient(90deg, #FFD700, #FFA500); }
+
+.pkg-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pkg-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.pkg-tagline {
+  color: var(--gray);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.pkg-duration {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+.pkg-age-group, .pkg-capacity {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+.pkg-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.pkg-price sup {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.pkg-per {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+.pkg-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.pkg-features li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+  color: var(--dark);
+}
+
+.pkg-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 12px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.pkg-check-bronze { background: #CD7F32; color: white; }
+.pkg-check-silver { background: #C0C0C0; color: white; }
+.pkg-check-gold { background: #FFD700; color: white; }
+.pkg-check-white { background: white; color: var(--blue); border: 2px solid var(--blue); }
+
+.pkg-btn-wrapper {
+  position: relative;
+  margin-top: 24px;
+}
+
+.pkg-btn-wrapper::before {
+  content: '🎯';
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  opacity: 0.3;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.btn-blue {
+  background: linear-gradient(135deg, var(--blue), var(--indigo));
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.btn-blue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* No Packages */
+.no-packages {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+}
+
+.no-packages h3 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 60px 0;
+  background: var(--light);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 48px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.faq-item h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.faq-item p {
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .packages-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .pkg-card {
+    padding: 24px;
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .pkg-btn-wrapper {
+    margin-top: 20px;
+  }
+  
+  .pkg-btn-wrapper::before {
+    left: -25px;
+    font-size: 16px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .packages-hero {
+    padding: 60px 0;
+  }
+  
+  .packages-hero-title {
+    font-size: 2rem;
+  }
+  
+  .pkg-card {
+    padding: 20px;
+  }
+  
+  .pkg-price {
+    font-size: 2rem;
+  }
+  
+  .pkg-btn-wrapper {
+    margin-top: 16px;
+  }
+  
+  .pkg-btn-wrapper::before {
+    left: -22px;
+    font-size: 14px;
+    padding: 4px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .pkg-card:hover {
+    transform: none;
+  }
+  
+  .faq-item:hover {
+    transform: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* Payment Modal Styles */
+.payment-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.payment-modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.payment-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.payment-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.payment-modal-close:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.payment-modal-body {
+  padding: 24px;
+}
+
+.package-summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.package-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+}
+
+.package-price {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.payment-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.success-modal .payment-modal-header {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-bottom: none;
+}
+
+.success-modal .payment-modal-header h3 {
+  color: white;
+}
+
+.card-details {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.card-details h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+}
+
+.card-details p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #667eea;
+  color: #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentOrderId = null;
+    let currentPaymentId = null;
+    let currentCardId = null;
+    
+    // Handle package purchase button clicks
+    document.querySelectorAll('.buy-package-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const packageId = this.dataset.packageId;
+            const packageName = this.dataset.packageName;
+            const packagePrice = this.dataset.packagePrice;
+            
+            // Populate modal
+            document.getElementById('modalPackageName').textContent = packageName;
+            document.getElementById('modalPackagePrice').textContent = packagePrice;
+            document.getElementById('packageId').value = packageId;
+            
+            // Clear form
+            document.getElementById('paymentForm').reset();
+            
+            // Show modal
+            document.getElementById('paymentModal').style.display = 'block';
+        });
+    });
+    
+    // Handle payment form submission
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const payButton = document.getElementById('payButton');
+        const payButtonText = document.getElementById('payButtonText');
+        const paymentLoader = document.getElementById('paymentLoader');
+        
+        // Show loading state
+        payButton.disabled = true;
+        payButtonText.style.display = 'none';
+        paymentLoader.style.display = 'flex';
+        
+        try {
+            // Create payment order
+            const response = await fetch('{% url "arena:create_payment_order" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    package_id: formData.get('package_id'),
+                    customer_name: formData.get('customer_name'),
+                    customer_email: formData.get('customer_email'),
+                    customer_phone: formData.get('customer_phone')
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                currentOrderId = data.order_id;
+                currentPaymentId = data.payment_id;
+                
+                // Initialize Razorpay
+                const options = {
+                    key: data.key_id,
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: 'Happy Hoopers',
+                    description: `Package Purchase - ${formData.get('customer_name')}`,
+                    order_id: data.order_id,
+                    handler: function (response) {
+                        handlePaymentSuccess(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature);
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            handlePaymentDismiss();
+                        }
+                    },
+                    prefill: {
+                        name: formData.get('customer_name'),
+                        email: formData.get('customer_email'),
+                        contact: formData.get('customer_phone')
+                    }
+                };
+                
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } else {
+                throw new Error(data.message || 'Payment initialization failed');
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('Payment failed: ' + error.message);
+            resetPaymentButton();
+        }
+    });
+    
+    function handlePaymentSuccess(paymentId, orderId, signature) {
+        // Verify payment on server
+        fetch('{% url "arena:verify_payment" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                razorpay_payment_id: paymentId,
+                razorpay_order_id: orderId,
+                razorpay_signature: signature,
+                payment_id: currentPaymentId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close payment modal
+                closePaymentModal();
+                
+                // Show success modal
+                currentCardId = data.card_id;
+                document.getElementById('successCardId').textContent = data.card_id;
+                document.getElementById('successPackageName').textContent = data.package_name;
+                document.getElementById('successValidUntil').textContent = data.valid_until;
+                document.getElementById('successModal').style.display = 'block';
+            } else {
+                throw new Error(data.message || 'Payment verification failed');
+            }
+        })
+        .catch(error => {
+            console.error('Verification error:', error);
+            alert('Payment verification failed: ' + error.message);
+        })
+        .finally(() => {
+            resetPaymentButton();
+        });
+    }
+    
+    function handlePaymentDismiss() {
+        resetPaymentButton();
+    }
+    
+    function resetPaymentButton() {
+        const payButton = document.getElementById('payButton');
+        const payButtonText = document.getElementById('payButtonText');
+        const paymentLoader = document.getElementById('paymentLoader');
+        
+        if (payButton) payButton.disabled = false;
+        if (payButtonText) payButtonText.style.display = 'inline';
+        if (paymentLoader) paymentLoader.style.display = 'none';
+    }
+    
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        resetPaymentButton();
+    }
+    
+    function closeSuccessModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+    
+    function downloadCard() {
+        if (currentCardId) {
+            window.open(`/arena/card/${currentCardId}/download/`, '_blank');
+        }
+    }
+    
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        const paymentModal = document.getElementById('paymentModal');
+        const successModal = document.getElementById('successModal');
+        
+        if (event.target === paymentModal) {
+            closePaymentModal();
+        }
+        if (event.target === successModal) {
+            closeSuccessModal();
+        }
+    });
+    
+    // Initialize reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((element, index) => {
+        setTimeout(() => {
+            element.classList.add('active');
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

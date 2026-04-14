@@ -1,0 +1,2246 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Packages - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- PACKAGES HERO -->
+<section class="packages-hero">
+  <div class="container">
+    <div class="packages-hero-content">
+      <div class="packages-hero-eyebrow">Pricing Packages</div>
+      <h1 class="packages-hero-title">Choose Your<br>Adventure Pack</h1>
+      <p class="packages-hero-desc">Flexible packages designed for every family's needs and budget</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES GRID -->
+<section class="packages-section">
+  <div class="container">
+    <div class="packages-grid">
+      {% for package in packages %}
+      <div class="pkg-card reveal {% if package.is_featured %}featured{% endif %}" data-delay="{{ forloop.counter0|floatformat:1 }}">
+        {% if package.is_featured %}<div class="pkg-best">MOST POPULAR</div>{% endif %}
+        <div class="pkg-bar pkg-bar-{{ package.color_scheme|default:'bronze' }}"></div>
+        <div class="pkg-icon">🎯</div>
+        <h3 class="pkg-name">{{ package.name }}</h3>
+        <p class="pkg-tagline">{{ package.tagline }}</p>
+        
+        <!-- Enhanced content with bullet points -->
+        <div class="pkg-duration">{{ package.duration }}</div>
+        <div class="pkg-age-group">Age Group: 5-15 years</div>
+        <div class="pkg-capacity">Max Capacity: 20 kids</div>
+        
+        <div class="pkg-price">₹{{ package.price }}<sup>/person</sup></div>
+        <p class="pkg-per">{{ package.duration }}</p>
+        
+        <ul class="pkg-features">
+          {% for feature in package.get_features_list %}
+          <li><span class="pkg-check {% if package.is_featured %}pkg-check-white{% else %}pkg-check-{{ package.color_scheme|default:'bronze' }}{% endif %}">✓</span> {{ feature }}</li>
+          {% endfor %}
+        </ul>
+        
+        <div class="pkg-btn-wrapper">
+          <button class="btn btn-blue btn-full buy-package-btn" 
+                  data-package-id="{{ package.id }}" 
+                  data-package-name="{{ package.name }}"
+                  data-package-price="{{ package.price }}"
+                  data-package-color="{{ package.color_scheme|default:'bronze' }}">
+            Buy Package →
+          </button>
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-packages">
+        <h3>No packages available</h3>
+        <p>Please check back later for our amazing packages!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Package Comparison</div>
+      <h2 class="section-title">Find the Perfect<br>Package for You</h2>
+    </div>
+    
+    <!-- Desktop/Tablet Table -->
+    <div class="pkg-table-responsive">
+      <table class="pkg-table">
+        <thead>
+          <tr>
+            <th>Features</th>
+            {% for package in packages %}
+            <th class="comparison-pkg {{ package.color_scheme|default:'bronze' }}">
+              <div class="comparison-pkg-name">{{ package.name }}</div>
+              <div class="comparison-pkg-price">₹{{ package.price }}</div>
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="comparison-feature">Duration</td>
+            {% for package in packages %}
+            <td class="comparison-cell">{{ package.duration }}</td>
+            {% endfor %}
+          </tr>
+          
+          <tr>
+            <td class="comparison-feature">Basic Games</td>
+            {% for package in packages %}
+            <td class="comparison-cell {% if 'basic games' in package.get_features_list|join:' ' or 'access to basic' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+              {% if 'basic games' in package.get_features_list|join:' ' or 'access to basic' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          
+          <tr>
+            <td class="comparison-feature">Trampoline</td>
+            {% for package in packages %}
+            <td class="comparison-cell {% if 'trampoline' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+              {% if 'trampoline' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          
+          <tr>
+            <td class="comparison-feature">Cricket Machine</td>
+            {% for package in packages %}
+            <td class="comparison-cell {% if 'cricket' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+              {% if 'cricket' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          
+          <tr>
+            <td class="comparison-feature">Food & Drinks</td>
+            {% for package in packages %}
+            <td class="comparison-cell {% if 'food' in package.get_features_list|join:' ' or 'meal' in package.get_features_list|join:' ' or 'snack' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+              {% if 'food' in package.get_features_list|join:' ' or 'meal' in package.get_features_list|join:' ' or 'snack' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Mobile Comparison Cards -->
+    <div class="comparison-cards" style="display: none;">
+      {% for package in packages %}
+      <div class="comparison-card {{ package.color_scheme|default:'bronze' }}">
+        <div class="comparison-card-header">
+          <div class="comparison-card-name">{{ package.name }}</div>
+          <div class="comparison-card-price">₹{{ package.price }}</div>
+        </div>
+        <ul class="comparison-card-features">
+          <li>
+            <span class="feature-name">Duration</span>
+            <span class="feature-value">{{ package.duration }}</span>
+          </li>
+          <li class="{% if 'basic games' in package.get_features_list|join:' ' or 'access to basic' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+            <span class="feature-name">Basic Games</span>
+            <span class="feature-value">{% if 'basic games' in package.get_features_list|join:' ' or 'access to basic' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}</span>
+          </li>
+          <li class="{% if 'trampoline' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+            <span class="feature-name">Trampoline</span>
+            <span class="feature-value">{% if 'trampoline' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}</span>
+          </li>
+          <li class="{% if 'cricket' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+            <span class="feature-name">Cricket Machine</span>
+            <span class="feature-value">{% if 'cricket' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}</span>
+          </li>
+          <li class="{% if 'food' in package.get_features_list|join:' ' or 'meal' in package.get_features_list|join:' ' or 'snack' in package.get_features_list|join:' ' %}included{% else %}not-included{% endif %}">
+            <span class="feature-name">Food & Drinks</span>
+            <span class="feature-value">{% if 'food' in package.get_features_list|join:' ' or 'meal' in package.get_features_list|join:' ' or 'snack' in package.get_features_list|join:' ' %}✓{% else %}—{% endif %}</span>
+          </li>
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Frequently Asked Questions</div>
+      <h2 class="section-title">Got Questions?<br>We've Got Answers!</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>Can I upgrade my package on-site?</h4>
+        <p>Yes! You can upgrade to a higher package at any time during your visit. Just pay the difference.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Are parents allowed in the play area?</h4>
+        <p>Parents are welcome to supervise and can access the café area. Some games require parental supervision.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What's included in the food?</h4>
+        <p>Food items vary by package but typically include kid-friendly meals, snacks, and beverages.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do I need to book in advance?</h4>
+        <p>Walk-ins are welcome, but we recommend booking during weekends and holidays to avoid disappointment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Debug Test Section (remove in production) -->
+<div style="position: fixed; top: 10px; right: 10px; z-index: 10000; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <button onclick="testPaymentConfig()" style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Test Payment Config</button>
+    <div id="testResult" style="margin-top: 10px; font-size: 12px;"></div>
+</div>
+
+<script>
+async function testPaymentConfig() {
+    const resultDiv = document.getElementById('testResult');
+    resultDiv.textContent = 'Testing...';
+    
+    try {
+        const response = await fetch('{% url "arena:test_payment_config" %}');
+        const data = await response.json();
+        
+        if (data.success) {
+            resultDiv.innerHTML = '<span style="color: green;">✓ Payment config working</span><br>Key: ' + data.razorpay_key_id;
+        } else {
+            resultDiv.innerHTML = '<span style="color: red;">✗ Error: ' + data.message + '</span>';
+        }
+    } catch (error) {
+        resultDiv.innerHTML = '<span style="color: red;">✗ Network error: ' + error.message + '</span>';
+    }
+}
+</script>
+
+<style>
+/* COMPREHENSIVE INLINE CSS - PACKAGES PAGE */
+
+/* CSS Variables */
+:root {
+  --blue: #2563eb;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --orange: #f97316;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --radius: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.btn-blue {
+  background: var(--blue);
+  color: white;
+}
+
+.btn-blue:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-amber {
+  background: var(--amber);
+  color: white;
+}
+
+.btn-amber:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+}
+
+.btn-ghost:hover {
+  background: var(--blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-ghost-white {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-ghost-white:hover {
+  background: white;
+  color: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Packages Hero */
+.packages-hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  padding: 120px 0 80px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: heroPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroPulse {
+  0% { 
+    background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  }
+  100% { 
+    background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 50%, #0a0a0a 100%);
+  }
+}
+
+.packages-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  animation: heroPattern 20s linear infinite;
+}
+
+@keyframes heroPattern {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.packages-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.packages-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255, 165, 0, 0.5);
+  color: #FFA500;
+  animation: eyebrowFloat 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.packages-hero-title {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+  }
+  100% { 
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
+  }
+}
+
+.packages-hero-desc {
+  font-size: clamp(18px, 2vw, 24px);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Packages Section */
+.packages-section {
+  padding: 80px 0;
+  background: var(--light);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--amber);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.section-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.pkg-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 50px 40px;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  opacity: 1;
+  transform: none;
+}
+
+.pkg-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pkg-card.featured {
+  border: 3px solid var(--amber);
+  transform: scale(1.05);
+}
+
+.pkg-card.featured:hover {
+  transform: scale(1.05) translateY(-12px);
+}
+
+.pkg-best {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber);
+  color: white;
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow);
+}
+
+.pkg-bar {
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 32px;
+}
+
+.pkg-bar-bronze { background: #cd7f32; }
+.pkg-bar-silver { background: #c0c0c0; }
+.pkg-bar-gold { background: #ffd700; }
+
+.pkg-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+}
+
+.pkg-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.pkg-tagline {
+  font-size: 16px;
+  color: var(--gray);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.pkg-price {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.pkg-price sup {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.pkg-per {
+  font-size: 16px;
+  color: var(--gray);
+  margin-bottom: 32px;
+}
+
+.pkg-features {
+  list-style: none;
+  margin-bottom: 40px;
+  text-align: left;
+  padding: 0;
+}
+
+.pkg-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #0a0a0a;
+  line-height: 1.5;
+  padding: 8px 12px;
+  background: rgba(135, 206, 235, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #87CEEB;
+  transition: all 0.3s ease;
+}
+
+.pkg-features li:hover {
+  background: rgba(135, 206, 235, 0.1);
+  border-left-color: #1E3A8A;
+  transform: translateX(4px);
+}
+
+.pkg-check {
+  color: var(--green);
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.pkg-check-bronze { 
+  color: #cd7f32; 
+  background: rgba(205, 127, 50, 0.1);
+}
+
+.pkg-check-silver { 
+  color: #c0c0c0; 
+  background: rgba(192, 192, 192, 0.1);
+}
+
+.pkg-check-gold { 
+  color: #ffd700; 
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.pkg-check-white { 
+  color: white; 
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced package card content with bullet points */
+.pkg-duration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(255, 165, 0, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #FFA500;
+}
+
+.pkg-duration::before {
+  content: '⏱';
+  font-size: 18px;
+  color: #FFA500;
+  font-weight: bold;
+}
+
+.pkg-age-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(30, 58, 138, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #1E3A8A;
+}
+
+.pkg-age-group::before {
+  content: '👥';
+  font-size: 18px;
+  color: #1E3A8A;
+  font-weight: bold;
+}
+
+.pkg-capacity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 8px 12px;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+}
+
+.pkg-capacity::before {
+  content: '👪';
+  font-size: 18px;
+  color: #10b981;
+  font-weight: bold;
+}
+
+/* Enhanced button styling with bullet point */
+.pkg-btn-wrapper {
+  position: relative;
+  margin-top: 24px;
+}
+
+.pkg-btn-wrapper::before {
+  content: '🎯';
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #1E3A8A;
+  background: rgba(30, 58, 138, 0.1);
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pkg-btn {
+  font-size: 16px;
+  padding: 16px 32px;
+  font-weight: 600;
+}
+
+/* Comparison Section */
+.comparison-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 50%, #f8f9fa 100%);
+  position: relative;
+}
+
+.comparison-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(135, 206, 235, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+}
+
+.comparison-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.comparison-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.comparison-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pkg-table-responsive {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.pkg-table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.pkg-table th,
+.pkg-table td {
+  padding: 20px 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  position: relative;
+}
+
+.pkg-table th {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.pkg-table th:first-child {
+  text-align: left;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 100%);
+  min-width: 200px;
+}
+
+.pkg-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: #0a0a0a;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.pkg-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pkg-table tr:hover {
+  background: rgba(135, 206, 235, 0.05);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.pkg-table tr:hover td:first-child {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.comparison-header-cell {
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.comparison-feature {
+  font-weight: 600;
+  color: #0a0a0a;
+  font-size: 15px;
+}
+
+.comparison-pkg {
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+}
+
+.comparison-pkg-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.comparison-pkg-price {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.comparison-cell {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+}
+
+.comparison-cell.included {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 20px;
+  animation: checkPulse 2s ease-in-out infinite;
+}
+
+@keyframes checkPulse {
+  0%, 100% { 
+    transform: scale(1);
+    color: #10b981;
+  }
+  50% { 
+    transform: scale(1.1);
+    color: #059669;
+  }
+}
+
+.comparison-cell.not-included {
+  color: #64748b;
+  font-weight: 400;
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+/* Package color schemes */
+.comparison-pkg.bronze th {
+  background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%);
+}
+
+.comparison-pkg.silver th {
+  background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+}
+
+.comparison-pkg.gold th {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+}
+
+/* Enhanced table styling */
+.pkg-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.pkg-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.pkg-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pkg-table tbody tr:nth-child(even):hover {
+  background: rgba(135, 206, 235, 0.08);
+}
+
+.pkg-table td {
+  position: relative;
+}
+
+.pkg-table td::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.pkg-table tr:hover td::before {
+  background: linear-gradient(135deg, #87CEEB, #FFA500);
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 80px 0;
+  background: var(--light);
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.faq-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.faq-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: white;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.faq-question {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.faq-answer {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Packages CTA */
+.packages-cta {
+  padding: 80px 0;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--indigo) 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.packages-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm0 0c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.packages-cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.packages-cta h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.packages-cta p {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+  min-width: 200px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .packages-hero {
+    padding: 60px 0 40px;
+  }
+  
+  .packages-hero-title {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+  
+  .packages-hero-desc {
+    font-size: 14px;
+  }
+  
+  .packages-section {
+    padding: 40px 0;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .section-sub {
+    font-size: 14px;
+  }
+  
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .pkg-card {
+    padding: 30px 20px;
+  }
+  
+  .pkg-icon {
+    font-size: 48px;
+  }
+  
+  .pkg-name {
+    font-size: 20px;
+  }
+  
+  .pkg-tagline {
+    font-size: 14px;
+  }
+  
+  .pkg-price {
+    font-size: 28px;
+  }
+  
+  .pkg-per {
+    font-size: 14px;
+  }
+  
+  .pkg-features li {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+  
+  .pkg-check {
+    font-size: 16px;
+    min-width: 20px;
+    height: 20px;
+  }
+  
+  .pkg-duration, .pkg-age-group, .pkg-capacity {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .pkg-btn-wrapper {
+    margin-top: 20px;
+  }
+  
+  .pkg-btn-wrapper::before {
+    left: -25px;
+    font-size: 16px;
+    padding: 6px;
+  }
+  
+  .pkg-btn {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  
+  .comparison-section {
+    padding: 40px 0;
+  }
+  
+  .comparison-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .comparison-sub {
+    font-size: 14px;
+  }
+  
+  .pkg-table-responsive {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+  
+  .pkg-table {
+    min-width: 600px;
+  }
+  
+  .pkg-table th,
+  .pkg-table td {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+  
+  .pkg-table th {
+    font-size: 11px;
+  }
+  
+  .comparison-pkg-name {
+    font-size: 14px;
+  }
+  
+  .comparison-pkg-price {
+    font-size: 16px;
+  }
+  
+  .comparison-feature {
+    font-size: 12px;
+  }
+  
+  .comparison-cell.included {
+    font-size: 16px;
+  }
+  
+  .comparison-cell.not-included {
+    font-size: 14px;
+  }
+  
+  /* Mobile comparison cards - hide table, show cards */
+  .pkg-table {
+    display: none;
+  }
+  
+  .comparison-cards {
+    display: block;
+  }
+  
+  .comparison-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid;
+  }
+  
+  .comparison-card.bronze {
+    border-left-color: #cd7f32;
+  }
+  
+  .comparison-card.silver {
+    border-left-color: #c0c0c0;
+  }
+  
+  .comparison-card.gold {
+    border-left-color: #ffd700;
+  }
+  
+  .comparison-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(10, 10, 10, 0.1);
+  }
+  
+  .comparison-card-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0a0a0a;
+  }
+  
+  .comparison-card-price {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .comparison-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .comparison-card-features li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background: rgba(135, 206, 235, 0.05);
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .comparison-card-features li.feature-name {
+    font-weight: 600;
+    color: #0a0a0a;
+  }
+  
+  .comparison-card-features li.feature-value {
+    font-weight: 700;
+  }
+  
+  .comparison-card-features li.included {
+    color: #10b981;
+  }
+  
+  .comparison-card-features li.not-included {
+    color: #64748b;
+    opacity: 0.6;
+  }
+  
+  .faq-section {
+    padding: 40px 0;
+  }
+  
+  .faq-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .faq-sub {
+    font-size: 14px;
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .faq-item {
+    padding: 20px;
+  }
+  
+  .faq-question {
+    font-size: 16px;
+  }
+  
+  .faq-answer {
+    font-size: 14px;
+  }
+  
+  .packages-cta p {
+    font-size: 16px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .packages-hero {
+    padding: 40px 0 30px;
+  }
+  
+  .packages-hero-title {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+  
+  .packages-hero-desc {
+    font-size: 13px;
+  }
+  
+  .packages-section {
+    padding: 30px 0;
+  }
+  
+  .section-header {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .section-sub {
+    font-size: 12px;
+  }
+  
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .pkg-card {
+    padding: 24px 16px;
+  }
+  
+  .pkg-icon {
+    font-size: 40px;
+  }
+  
+  .pkg-name {
+    font-size: 18px;
+  }
+  
+  .pkg-tagline {
+    font-size: 13px;
+  }
+  
+  .pkg-price {
+    font-size: 24px;
+  }
+  
+  .pkg-per {
+    font-size: 13px;
+  }
+  
+  .pkg-features li {
+    font-size: 13px;
+    padding: 5px 8px;
+    margin-bottom: 12px;
+  }
+  
+  .pkg-check {
+    font-size: 14px;
+    min-width: 18px;
+    height: 18px;
+  }
+  
+  .pkg-duration, .pkg-age-group, .pkg-capacity {
+    font-size: 12px;
+    padding: 5px 8px;
+    margin-bottom: 12px;
+  }
+  
+  .pkg-btn-wrapper {
+    margin-top: 16px;
+  }
+  
+  .pkg-btn-wrapper::before {
+    left: -22px;
+    font-size: 14px;
+    padding: 4px;
+  }
+  
+  .pkg-btn {
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+  
+  .comparison-section {
+    padding: 30px 0;
+  }
+  
+  .comparison-title {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .comparison-sub {
+    font-size: 12px;
+  }
+  
+  .pkg-table-responsive {
+    margin: 0 -12px;
+    padding: 0 12px;
+  }
+  
+  .pkg-table {
+    min-width: 500px;
+  }
+  
+  .pkg-table th,
+  .pkg-table td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  
+  .pkg-table th {
+    font-size: 10px;
+    padding: 6px 4px;
+  }
+  
+  .comparison-pkg-name {
+    font-size: 12px;
+  }
+  
+  .comparison-pkg-price {
+    font-size: 14px;
+  }
+  
+  .comparison-feature {
+    font-size: 11px;
+  }
+  
+  .comparison-cell.included {
+    font-size: 14px;
+  }
+  
+  .comparison-cell.not-included {
+    font-size: 12px;
+  }
+  
+  .faq-section {
+    padding: 30px 0;
+  }
+  
+  .faq-title {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .faq-sub {
+    font-size: 12px;
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .faq-item {
+    padding: 16px;
+  }
+  
+  .faq-question {
+    font-size: 14px;
+  }
+  
+  .faq-answer {
+    font-size: 13px;
+  }
+  
+  .packages-cta {
+    padding: 30px 0;
+  }
+  
+  .packages-cta h2 {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .packages-cta p {
+    font-size: 13px;
+  }
+  
+  .cta-buttons .btn {
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 12px;
+  }
+  
+  .packages-hero {
+    padding: 30px 0 20px;
+  }
+  
+  .packages-hero-title {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+  
+  .packages-hero-desc {
+    font-size: 12px;
+  }
+  
+  .packages-section {
+    padding: 20px 0;
+  }
+  
+  .pkg-card {
+    padding: 20px 12px;
+  }
+  
+  .pkg-icon {
+    font-size: 32px;
+  }
+  
+  .pkg-name {
+    font-size: 16px;
+  }
+  
+  .pkg-tagline {
+    font-size: 12px;
+  }
+  
+  .pkg-price {
+    font-size: 20px;
+  }
+  
+  .pkg-per {
+    font-size: 12px;
+  }
+  
+  .pkg-features li {
+    font-size: 12px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+  }
+  
+  .pkg-check {
+    font-size: 12px;
+    min-width: 16px;
+    height: 16px;
+  }
+  
+  .pkg-duration, .pkg-age-group, .pkg-capacity {
+    font-size: 11px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+  }
+  
+  .pkg-btn-wrapper {
+    margin-top: 12px;
+  }
+  
+  .pkg-btn-wrapper::before {
+    left: -20px;
+    font-size: 12px;
+    padding: 3px;
+  }
+  
+  .pkg-btn {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+  
+  .comparison-section {
+    padding: 20px 0;
+  }
+  
+  .pkg-table-responsive {
+    margin: 0 -8px;
+    padding: 0 8px;
+  }
+  
+  .pkg-table {
+    min-width: 450px;
+  }
+  
+  .pkg-table th,
+  .pkg-table td {
+    padding: 6px 4px;
+    font-size: 10px;
+  }
+  
+  .pkg-table th {
+    font-size: 9px;
+    padding: 4px 2px;
+  }
+  
+  .comparison-pkg-name {
+    font-size: 10px;
+  }
+  
+  .comparison-pkg-price {
+    font-size: 12px;
+  }
+  
+  .comparison-feature {
+    font-size: 10px;
+  }
+  
+  .comparison-cell.included {
+    font-size: 12px;
+  }
+  
+  .comparison-cell.not-included {
+    font-size: 10px;
+  }
+  
+  .faq-section {
+    padding: 20px 0;
+  }
+  
+  .faq-item {
+    padding: 12px;
+  }
+  
+  .faq-question {
+    font-size: 13px;
+  }
+  
+  .faq-answer {
+    font-size: 12px;
+  }
+  
+  .section-tag {
+    font-size: 10px;
+  }
+  
+  .section-sub {
+    font-size: 11px;
+  }
+}
+
+/* Payment Modal Styles */
+.payment-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.payment-modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.payment-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.payment-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.payment-modal-close:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.payment-modal-body {
+  padding: 24px;
+}
+
+.package-summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.package-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+}
+
+.package-price {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.payment-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.success-modal .payment-modal-header {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-bottom: none;
+}
+
+.success-modal .payment-modal-header h3 {
+  color: white;
+}
+
+.card-details {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.card-details h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+}
+
+.card-details p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #667eea;
+  color: #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .pkg-card:hover {
+    transform: none;
+  }
+  
+  .faq-item:hover {
+    transform: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+}
+</style>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="payment-modal">
+  <div class="payment-modal-content">
+    <div class="payment-modal-header">
+      <h3>Complete Your Purchase</h3>
+      <button class="payment-modal-close" onclick="closePaymentModal()">&times;</button>
+    </div>
+    <div class="payment-modal-body">
+      <div class="package-summary">
+        <h4 id="modalPackageName">Package Name</h4>
+        <p class="package-price">₹<span id="modalPackagePrice">0</span></p>
+      </div>
+      
+      <form id="paymentForm">
+        <div class="form-group">
+          <label for="customerName">Full Name *</label>
+          <input type="text" id="customerName" name="customer_name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="customerEmail">Email Address *</label>
+          <input type="email" id="customerEmail" name="customer_email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="customerPhone">Phone Number *</label>
+          <input type="tel" id="customerPhone" name="customer_phone" pattern="[0-9]{10}" required>
+        </div>
+        
+        <input type="hidden" id="packageId" name="package_id">
+        
+        <button type="submit" class="btn btn-blue btn-full" id="payButton">
+          <span id="payButtonText">Proceed to Payment</span>
+          <div id="paymentLoader" class="payment-loader" style="display: none;">
+            <div class="spinner"></div>
+            Processing...
+          </div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="payment-modal">
+  <div class="payment-modal-content success-modal">
+    <div class="payment-modal-header">
+      <h3>🎉 Payment Successful!</h3>
+    </div>
+    <div class="payment-modal-body">
+      <div class="success-message">
+        <p>Your package has been purchased successfully!</p>
+        <div class="card-details">
+          <h4>Your Package Card</h4>
+          <p><strong>Card ID:</strong> <span id="successCardId"></span></p>
+          <p><strong>Package:</strong> <span id="successPackageName"></span></p>
+          <p><strong>Valid Until:</strong> <span id="successValidUntil"></span></p>
+        </div>
+        <div class="success-actions">
+          <button class="btn btn-blue" onclick="downloadCard()">Download Card</button>
+          <button class="btn btn-outline" onclick="closeSuccessModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set transition delays from data attributes
+    document.querySelectorAll('.reveal[data-delay]').forEach(el => {
+        const delay = el.dataset.delay;
+        el.style.transitionDelay = delay + 's';
+    });
+    
+    // Reveal animations
+    if (typeof attachReveal === 'function') {
+        attachReveal();
+    }
+    
+    // Responsive comparison table/cards switcher
+    function handleComparisonResponsive() {
+        const table = document.querySelector('.pkg-table');
+        const cards = document.querySelector('.comparison-cards');
+        const windowWidth = window.innerWidth;
+        
+        if (windowWidth <= 768) {
+            // Show cards, hide table on mobile
+            if (table) table.style.display = 'none';
+            if (cards) cards.style.display = 'block';
+        } else {
+            // Show table, hide cards on desktop
+            if (table) table.style.display = 'table';
+            if (cards) cards.style.display = 'none';
+        }
+    }
+    
+    // Initial check
+    handleComparisonResponsive();
+    
+    // Update on resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(handleComparisonResponsive, 250);
+    });
+});
+
+// Load Razorpay script
+const script = document.createElement('script');
+script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+script.async = true;
+script.onload = function() {
+    console.log('Razorpay SDK loaded successfully'); // Debug log
+};
+script.onerror = function() {
+    console.error('Failed to load Razorpay SDK'); // Debug log
+};
+document.head.appendChild(script);
+
+// Initialize payment functionality after DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Payment functionality
+    let currentOrderId = null;
+    let currentPaymentId = null;
+    let currentCardId = null;
+    
+    // Handle package purchase button clicks
+    function attachPaymentButtonListeners() {
+        document.querySelectorAll('.buy-package-btn').forEach(button => {
+            // Remove existing listeners to prevent duplicates
+            button.replaceWith(button.cloneNode(true));
+        });
+        
+        // Re-attach listeners to fresh buttons
+        document.querySelectorAll('.buy-package-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('Payment button clicked'); // Debug log
+                
+                const packageId = this.dataset.packageId;
+                const packageName = this.dataset.packageName;
+                const packagePrice = this.dataset.packagePrice;
+                
+                console.log('Package data:', { packageId, packageName, packagePrice }); // Debug log
+                
+                // Populate modal
+                document.getElementById('modalPackageName').textContent = packageName;
+                document.getElementById('modalPackagePrice').textContent = packagePrice;
+                document.getElementById('packageId').value = packageId;
+                
+                // Clear form
+                document.getElementById('paymentForm').reset();
+                
+                // Show modal
+                const modal = document.getElementById('paymentModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    console.log('Modal opened'); // Debug log
+                } else {
+                    console.error('Payment modal not found');
+                }
+            });
+        });
+    }
+    
+    // Initial attachment
+    attachPaymentButtonListeners();
+    
+    // Re-attach after any dynamic content changes
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                attachPaymentButtonListeners();
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    
+    // Handle payment form submission
+    const paymentForm = document.getElementById('paymentForm');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const payButton = document.getElementById('payButton');
+            const payButtonText = document.getElementById('payButtonText');
+            const paymentLoader = document.getElementById('paymentLoader');
+            
+            // Show loading state
+            payButton.disabled = true;
+            payButtonText.style.display = 'none';
+            paymentLoader.style.display = 'flex';
+            
+            try {
+                console.log('Creating payment order...'); // Debug log
+                
+                // Create payment order
+                const response = await fetch('{% url "arena:create_payment_order" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        package_id: formData.get('package_id'),
+                        customer_name: formData.get('customer_name'),
+                        customer_email: formData.get('customer_email'),
+                        customer_phone: formData.get('customer_phone')
+                    })
+                });
+                
+                console.log('Response status:', response.status); // Debug log
+                const data = await response.json();
+                console.log('Response data:', data); // Debug log
+                
+                if (data.success) {
+                    console.log('Payment order created successfully'); // Debug log
+                    currentOrderId = data.order_id;
+                    currentPaymentId = data.payment_id;
+                    
+                    // Check if Razorpay is loaded
+                    if (typeof Razorpay === 'undefined') {
+                        throw new Error('Razorpay SDK not loaded. Please refresh the page and try again.');
+                    }
+                    
+                    // Initialize Razorpay
+                    const options = {
+                        key: data.key_id,
+                        amount: data.amount,
+                        currency: data.currency,
+                        name: 'Happy Hoopers',
+                        description: `Package Purchase - ${formData.get('customer_name')}`,
+                        order_id: data.order_id,
+                        handler: function (response) {
+                            console.log('Payment successful:', response); // Debug log
+                            handlePaymentSuccess(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature);
+                        },
+                        modal: {
+                            ondismiss: function() {
+                                console.log('Payment modal dismissed'); // Debug log
+                                handlePaymentDismiss();
+                            }
+                        },
+                        prefill: {
+                            name: formData.get('customer_name'),
+                            email: formData.get('customer_email'),
+                            contact: formData.get('customer_phone')
+                        }
+                    };
+                    
+                    console.log('Opening Razorpay checkout...'); // Debug log
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                } else {
+                    throw new Error(data.message || 'Payment initialization failed');
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed: ' + error.message);
+                resetPaymentButton();
+            }
+        });
+    }
+    
+    function handlePaymentSuccess(paymentId, orderId, signature) {
+        // Verify payment on server
+        fetch('{% url "arena:verify_payment" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                razorpay_payment_id: paymentId,
+                razorpay_order_id: orderId,
+                razorpay_signature: signature,
+                payment_id: currentPaymentId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close payment modal
+                closePaymentModal();
+                
+                // Show success modal
+                currentCardId = data.card_id;
+                document.getElementById('successCardId').textContent = data.card_id;
+                document.getElementById('successPackageName').textContent = data.package_name;
+                document.getElementById('successValidUntil').textContent = data.valid_until;
+                document.getElementById('successModal').style.display = 'block';
+            } else {
+                throw new Error(data.message || 'Payment verification failed');
+            }
+        })
+        .catch(error => {
+            console.error('Verification error:', error);
+            alert('Payment verification failed: ' + error.message);
+        })
+        .finally(() => {
+            resetPaymentButton();
+        });
+    }
+    
+    function handlePaymentDismiss() {
+        resetPaymentButton();
+    }
+    
+    function resetPaymentButton() {
+        const payButton = document.getElementById('payButton');
+        const payButtonText = document.getElementById('payButtonText');
+        const paymentLoader = document.getElementById('paymentLoader');
+        
+        if (payButton) payButton.disabled = false;
+        if (payButtonText) payButtonText.style.display = 'inline';
+        if (paymentLoader) paymentLoader.style.display = 'none';
+    }
+    
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        resetPaymentButton();
+    }
+    
+    function closeSuccessModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+    
+    function downloadCard() {
+        if (currentCardId) {
+            window.open(`/arena/card/${currentCardId}/download/`, '_blank');
+        }
+    }
+    
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        const paymentModal = document.getElementById('paymentModal');
+        const successModal = document.getElementById('successModal');
+        
+        if (event.target === paymentModal) {
+            closePaymentModal();
+        }
+        if (event.target === successModal) {
+            closeSuccessModal();
+        }
+    });
+});
+</script>
+{% endblock %}

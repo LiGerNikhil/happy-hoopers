@@ -1,0 +1,1057 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Birthday Parties - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- BIRTHDAY HERO -->
+<section class="birthday-hero">
+  <div class="container">
+    <div class="birthday-hero-content">
+      <div class="birthday-eyebrow">Birthday Parties</div>
+      <h1 class="birthday-title">Their Day.<br>Our Arena.<br>Pure Magic.</h1>
+      <p class="birthday-desc">Book Happy Hoopers exclusively for your kid's birthday. We handle the games, food, decor — you just show up and celebrate!</p>
+      <div class="birthday-hero-cta">
+        <a href="tel:{{ site_settings.phone_number|default:'+919876543210' }}" class="btn btn-white btn-lg">📞 Call to Book</a>
+        <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210' }}" class="btn btn-ghost-white btn-lg" target="_blank">💬 WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIRTHDAY FORM -->
+<section class="birthday-form-section">
+  <div class="container">
+    <div class="birthday-form-grid">
+      <div class="birthday-form-info">
+        <h2>Make Your Child's Birthday Unforgettable!</h2>
+        <p>Fill out the form below and our team will get back to you within 24 hours to plan the perfect celebration.</p>
+        
+        <div class="birthday-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">🎮</div>
+            <div class="highlight-text">
+              <strong>Exclusive Arena Access</strong>
+              <p>The whole play zone is booked just for your party</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🍰</div>
+            <div class="highlight-text">
+              <strong>Birthday Cake + Catering</strong>
+              <p>Custom menu and cake included in package</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🎨</div>
+            <div class="highlight-text">
+              <strong>Themed Setup & Decor</strong>
+              <p>We transform the space for your theme</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">📸</div>
+            <div class="highlight-text">
+              <strong>Photo Corner & Props</strong>
+              <p>Capture memories that last forever</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="birthday-form-card">
+        <h3>Book Your Party</h3>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        <form method="post" id="birthday-form">
+          {% csrf_token %}
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.parent_name.id_for_label }}">Parent/Guardian Name *</label>
+              {{ form.parent_name }}
+              {% if form.parent_name.errors %}
+                <div class="error">{{ form.parent_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.child_name.id_for_label }}">Child's Name *</label>
+              {{ form.child_name }}
+              {% if form.child_name.errors %}
+                <div class="error">{{ form.child_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.child_age.id_for_label }}">Child's Age *</label>
+              {{ form.child_age }}
+              {% if form.child_age.errors %}
+                <div class="error">{{ form.child_age.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.mobile.id_for_label }}">Mobile Number *</label>
+              {{ form.mobile }}
+              {% if form.mobile.errors %}
+                <div class="error">{{ form.mobile.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email Address</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="error">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.party_date.id_for_label }}">Party Date *</label>
+              {{ form.party_date }}
+              {% if form.party_date.errors %}
+                <div class="error">{{ form.party_date.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.party_time.id_for_label }}">Party Time *</label>
+              {{ form.party_time }}
+              {% if form.party_time.errors %}
+                <div class="error">{{ form.party_time.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.guest_count.id_for_label }}">Number of Guests *</label>
+              {{ form.guest_count }}
+              {% if form.guest_count.errors %}
+                <div class="error">{{ form.guest_count.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.theme.id_for_label }}">Party Theme</label>
+              {{ form.theme }}
+              {% if form.theme.errors %}
+                <div class="error">{{ form.theme.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.package_chosen.id_for_label }}">Preferred Package</label>
+            {{ form.package_chosen }}
+            {% if form.package_chosen.errors %}
+              <div class="error">{{ form.package_chosen.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.special_requirements.id_for_label }}">Special Requirements</label>
+            {{ form.special_requirements }}
+            {% if form.special_requirements.errors %}
+              <div class="error">{{ form.special_requirements.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <button type="submit" class="btn btn-blue btn-lg btn-full">Submit Party Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES INFO -->
+<section class="birthday-packages-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Birthday Packages</div>
+      <h2 class="section-title">Choose Your<br>Party Package</h2>
+    </div>
+    
+    <div class="birthday-packages-grid">
+      <div class="birthday-pkg-card">
+        <div class="pkg-header">
+          <h3>Basic Package</h3>
+          <div class="pkg-price">₹4,999</div>
+        </div>
+        <ul class="pkg-features">
+          <li>✓ 2 hours exclusive arena access</li>
+          <li>✓ Basic decorations</li>
+          <li>✓ Birthday cake</li>
+          <li>✓ 20 kids included</li>
+          <li>✓ Basic food package</li>
+        </ul>
+      </div>
+      
+      <div class="birthday-pkg-card featured">
+        <div class="pkg-badge">POPULAR</div>
+        <div class="pkg-header">
+          <h3>Premium Package</h3>
+          <div class="pkg-price">₹7,999</div>
+        </div>
+        <ul class="pkg-features">
+          <li>✓ 3 hours exclusive arena access</li>
+          <li>✓ Theme-based decorations</li>
+          <li>✓ Premium birthday cake</li>
+          <li>✓ 30 kids included</li>
+          <li>✓ Full food package</li>
+          <li>✓ Return gifts</li>
+          <li>✓ Photo session</li>
+        </ul>
+      </div>
+      
+      <div class="birthday-pkg-card">
+        <div class="pkg-header">
+          <h3>Deluxe Package</h3>
+          <div class="pkg-price">₹12,999</div>
+        </div>
+        <ul class="pkg-features">
+          <li>✓ 4 hours exclusive arena access</li>
+          <li>✓ Custom themed decorations</li>
+          <li>✓ Designer birthday cake</li>
+          <li>✓ 50 kids included</li>
+          <li>✓ Premium food package</li>
+          <li>✓ Luxury return gifts</li>
+          <li>✓ Professional photographer</li>
+          <li>✓ Entertainment host</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="birthday-gallery-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Past Celebrations</div>
+      <h2 class="section-title">Birthday Memories<br>Created Here!</h2>
+    </div>
+    
+    <div class="birthday-gallery">
+      <div class="gallery-item">
+        <img src="{% static 'images/birthday1.jpg' %}" alt="Birthday celebration">
+      </div>
+      <div class="gallery-item">
+        <img src="{% static 'images/birthday2.jpg' %}" alt="Kids enjoying party">
+      </div>
+      <div class="gallery-item">
+        <img src="{% static 'images/birthday3.jpg' %}" alt="Birthday cake cutting">
+      </div>
+      <div class="gallery-item">
+        <img src="{% static 'images/birthday4.jpg' %}" alt="Party games">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof attachReveal === 'function') {
+        attachReveal();
+    }
+    
+    // Form validation
+    const form = document.getElementById('birthday-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!validateForm('birthday-form')) {
+                e.preventDefault();
+                showToast('Please fill in all required fields', 'error');
+            }
+        });
+    }
+});
+</script>
+
+<style>
+/* CSS Variables */
+:root {
+  --blue: #2563eb;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --sky: #87CEEB;
+  --orange: #FFA500;
+  --navy: #1E3A8A;
+  --accent: #FFA500;
+  --offwhite: #f8f9fa;
+  --grey: #64748b;
+  --radius: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Birthday Hero */
+.birthday-hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  padding: 120px 0 80px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: heroPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroPulse {
+  0% { 
+    background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  }
+  100% { 
+    background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 50%, #0a0a0a 100%);
+  }
+}
+
+.birthday-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  animation: heroPattern 20s linear infinite;
+}
+
+@keyframes heroPattern {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.birthday-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.birthday-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255, 165, 0, 0.5);
+  color: #FFA500;
+  animation: eyebrowFloat 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.birthday-title {
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+  }
+  100% { 
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
+  }
+}
+
+.birthday-desc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.birthday-hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Enhanced Form Section */
+.birthday-form-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 50%, #f8f9fa 100%);
+  position: relative;
+}
+
+.birthday-form-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(135, 206, 235, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+  animation: sectionPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sectionPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+.birthday-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.birthday-form-info h2 {
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.birthday-form-info p {
+  font-size: 16px;
+  color: #0a0a0a;
+  line-height: 1.65;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.birthday-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(135, 206, 235, 0.3);
+  border-color: #87CEEB;
+}
+
+.highlight-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.highlight-text strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0a0a0a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.highlight-text p {
+  font-size: 14px;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.birthday-form-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+}
+
+.birthday-form-card h3 {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.alert-success {
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1px solid #10B981;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1E3A8A;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.error {
+  color: #EF4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Enhanced Packages Section */
+.birthday-packages-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  position: relative;
+}
+
+.birthday-packages-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  animation: sectionPulse 6s ease-in-out infinite alternate;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: tagPulse 2s ease-in-out infinite;
+}
+
+@keyframes tagPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 165, 0, 0.5);
+  }
+}
+
+.section-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #10B981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+  line-height: 1.2;
+  animation: sectionTitleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes sectionTitleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 15px rgba(0, 0, 0, 0.4));
+  }
+  100% { 
+    filter: brightness(1.2) drop-shadow(0 0 25px rgba(16, 185, 129, 0.6));
+  }
+}
+
+.birthday-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.birthday-pkg-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.birthday-pkg-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 80px rgba(135, 206, 235, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+}
+
+.birthday-pkg-card.featured {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 100%);
+  color: white;
+  border-color: #1E3A8A;
+  transform: scale(1.05);
+}
+
+.birthday-pkg-card.featured:hover {
+  transform: scale(1.05) translateY(-12px);
+  box-shadow: 0 25px 80px rgba(30, 58, 138, 0.4);
+}
+
+.pkg-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 165, 0, 0.5);
+  }
+}
+
+.pkg-header {
+  margin-bottom: 24px;
+}
+
+.pkg-header h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.birthday-pkg-card:not(.featured) .pkg-header h3 {
+  color: #0a0a0a;
+}
+
+.birthday-pkg-card.featured .pkg-header h3 {
+  color: white;
+}
+
+.pkg-price {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 24px;
+  background: linear-gradient(45deg, #10B981, #059669);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.birthday-pkg-card.featured .pkg-price {
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pkg-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pkg-features li {
+  padding: 8px 0;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  line-height: 1.5;
+}
+
+.birthday-pkg-card.featured .pkg-features li {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.pkg-features li:last-child {
+  border-bottom: none;
+}
+
+.birthday-pkg-card:not(.featured) .pkg-features li {
+  color: #0a0a0a;
+}
+
+.birthday-pkg-card.featured .pkg-features li {
+  color: white;
+}
+
+/* Enhanced Gallery Section */
+.birthday-gallery-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #0a0a0a 100%);
+  position: relative;
+}
+
+.birthday-gallery-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm0 0c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.birthday-gallery-section .section-tag {
+  color: #FFA500;
+}
+
+.birthday-gallery-section .section-title {
+  color: white;
+}
+
+.birthday-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 768px) {
+  .birthday-hero {
+    padding: 60px 0 40px;
+  }
+  
+  .birthday-title {
+    font-size: clamp(32px, 6vw, 48px);
+  }
+  
+  .birthday-desc {
+    font-size: 16px;
+  }
+  
+  .birthday-form-section {
+    padding: 40px 0;
+  }
+  
+  .birthday-form-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .birthday-form-info h2 {
+    font-size: 28px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .birthday-packages-section {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(28px, 5vw, 36px);
+  }
+  
+  .birthday-packages-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .birthday-pkg-card {
+    padding: 24px;
+  }
+  
+  .birthday-pkg-card.featured {
+    transform: none;
+  }
+  
+  .birthday-pkg-card.featured:hover {
+    transform: translateY(-8px);
+  }
+  
+  .birthday-gallery-section {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(28px, 5vw, 36px);
+  }
+  
+  .birthday-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .birthday-hero {
+    padding: 40px 0 30px;
+  }
+  
+  .birthday-title {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+  
+  .birthday-desc {
+    font-size: 14px;
+  }
+  
+  .birthday-form-section {
+    padding: 30px 0;
+  }
+  
+  .birthday-form-card {
+    padding: 24px 20px;
+  }
+  
+  .birthday-form-info h2 {
+    font-size: 24px;
+  }
+  
+  .highlight-item {
+    padding: 16px;
+  }
+  
+  .highlight-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .birthday-packages-section {
+    padding: 30px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .birthday-pkg-card {
+    padding: 20px;
+  }
+  
+  .pkg-header h3 {
+    font-size: 18px;
+  }
+  
+  .pkg-price {
+    font-size: 28px;
+  }
+  
+  .birthday-gallery-section {
+    padding: 30px 0;
+  }
+  
+  .birthday-gallery {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .birthday-hero {
+    padding: 30px 0 20px;
+  }
+  
+  .birthday-title {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+  
+  .birthday-desc {
+    font-size: 13px;
+  }
+  
+  .birthday-form-card {
+    padding: 20px 16px;
+  }
+  
+  .highlight-item {
+    padding: 12px;
+  }
+  
+  .highlight-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .birthday-pkg-card {
+    padding: 16px;
+  }
+  
+  .pkg-header h3 {
+    font-size: 16px;
+  }
+  
+  .pkg-price {
+    font-size: 24px;
+  }
+  
+  .pkg-features li {
+    font-size: 14px;
+  }
+  
+  .section-tag {
+    font-size: 10px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .highlight-item:hover,
+  .birthday-pkg-card:hover,
+  .gallery-item:hover {
+    transform: none;
+  }
+}
+</style>
+{% endblock %}

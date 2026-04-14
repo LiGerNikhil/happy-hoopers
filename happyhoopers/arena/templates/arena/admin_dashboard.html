@@ -1,0 +1,3781 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- ADMIN DASHBOARD -->
+<div class="admin-dashboard">
+  <!-- Admin Header -->
+  <div class="admin-header">
+    <div class="admin-header-content">
+      <div class="admin-header-left">
+        <h1 class="admin-title">Admin Dashboard</h1>
+        <p class="admin-subtitle">Complete control over Happy Hoopers operations</p>
+      </div>
+      <div class="admin-header-right">
+        <div class="admin-user">
+          <span class="admin-user-name">Admin User</span>
+          <a href="{% url 'arena:home' %}" class="btn btn-outline">Back to Website</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="admin-stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon games">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ games_count }}</div>
+            <div class="stat-label">Games</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon packages">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ packages_count }}</div>
+            <div class="stat-label">Packages</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon cafe">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ cafe_items_count }}</div>
+            <div class="stat-label">Café Items</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon membership">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8 8zm0-14c-2.21 0-4 1.79-4 4s4 1.79 4 4-4 1.79-4-4-4zm1 11h-2v2h2v-2zm2 0h-2v2h2v-2z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ membership_cards_count }}</div>
+            <div class="stat-label">Memberships</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon bookings">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ cricket_bookings_count }}</div>
+            <div class="stat-label">Cricket Bookings</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon birthdays">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2 10v-4h-4v4h4zm-2-8c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ birthday_parties_count }}</div>
+            <div class="stat-label">Birthday Parties</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon gallery">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ gallery_images_count }}</div>
+            <div class="stat-label">Gallery Images</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon testimonials">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ testimonials_count }}</div>
+            <div class="stat-label">Testimonials</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon inquiries">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ contact_inquiries_count }}</div>
+            <div class="stat-label">Contact Inquiries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Items Alert -->
+  {% if pending_bookings > 0 or pending_parties > 0 or pending_inquiries > 0 %}
+  <div class="admin-alerts">
+    <div class="container">
+      <div class="alert-grid">
+        {% if pending_bookings > 0 %}
+        <div class="alert-card warning">
+          <div class="alert-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title">{{ pending_bookings }} Pending Bookings</div>
+            <div class="alert-desc">Cricket bookings awaiting confirmation</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if pending_parties > 0 %}
+        <div class="alert-card warning">
+          <div class="alert-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title">{{ pending_parties }} Party Inquiries</div>
+            <div class="alert-desc">Birthday party requests awaiting response</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if pending_inquiries > 0 %}
+        <div class="alert-card info">
+          <div class="alert-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title">{{ pending_inquiries }} Unresolved Inquiries</div>
+            <div class="alert-desc">Contact messages awaiting response</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Admin Sidebar -->
+  <div class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>Management</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="sidebar-link active" onclick="showSection('overview')">Overview</a>
+      <a href="#" class="sidebar-link" onclick="showSection('cricket')">Cricket Bookings</a>
+      <a href="#" class="sidebar-link" onclick="showSection('birthday')">Birthday Parties</a>
+      <a href="#" class="sidebar-link" onclick="showSection('inquiries')">Contact Inquiries</a>
+      <a href="#" class="sidebar-link" onclick="showSection('cafe')">Café Items</a>
+      <a href="#" class="sidebar-link" onclick="showSection('packages')">Packages</a>
+      <a href="#" class="sidebar-link" onclick="showSection('games')">Games</a>
+      <a href="#" class="sidebar-link" onclick="showSection('memberships')">Membership Cards</a>
+      <a href="#" class="sidebar-link" onclick="showSection('gallery')">Gallery</a>
+    </nav>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="admin-content">
+    <div class="container">
+      <div class="content-grid">
+        
+        <!-- Recent Bookings -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Cricket Bookings</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('cricket')">View All</button>
+          </div>
+          <div class="card-content">
+            {% for booking in recent_bookings %}
+            <div class="data-item">
+              <div class="data-info">
+                <div class="data-title">{{ booking.name }}</div>
+                <div class="data-desc">{{ booking.date }} - {{ booking.start_time }}</div>
+              </div>
+              <div class="data-status {{ booking.status }}">
+                {{ booking.status|title }}
+              </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">📅</div>
+              <div class="empty-text">No recent bookings</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Recent Birthday Parties -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Birthday Parties</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('birthday')">View All</button>
+          </div>
+          <div class="card-content">
+            {% for party in recent_birthday_parties %}
+            <div class="data-item">
+              <div class="data-info">
+                <div class="data-title">{{ party.child_name }}'s Party</div>
+                <div class="data-desc">{{ party.party_date }} - {{ party.party_time }}</div>
+              </div>
+              <div class="data-status {{ party.status }}">
+                {{ party.status|title }}
+              </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">🎂</div>
+              <div class="empty-text">No recent parties</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Recent Inquiries -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Contact Inquiries</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('inquiries')">View All</button>
+          </div>
+          <div class="card-content">
+            {% for inquiry in recent_inquiries %}
+            <div class="data-item">
+              <div class="data-info">
+                <div class="data-title">{{ inquiry.name }}</div>
+                <div class="data-desc">{{ inquiry.subject }}</div>
+              </div>
+              <div class="data-status {% if inquiry.is_resolved %}resolved{% else %}pending{% endif %}">
+                {% if inquiry.is_resolved %}Resolved{% else %}Pending{% endif %}
+              </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">📧</div>
+              <div class="empty-text">No recent inquiries</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Popular Packages -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Popular Packages</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('packages')">Manage</button>
+          </div>
+          <div class="card-content">
+            {% for package in popular_packages %}
+            <div class="package-item">
+              <div class="package-info">
+                <div class="package-name">{{ package.name }}</div>
+                <div class="package-price">₹{{ package.price }}</div>
+              </div>
+              <div class="package-badge featured">Featured</div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">⭐</div>
+              <div class="empty-text">No featured packages</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Low Stock Items -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Low Stock Items</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('cafe')">Manage</button>
+          </div>
+          <div class="card-content">
+            {% for item in low_stock_items %}
+            <div class="stock-item">
+              <div class="stock-info">
+                <div class="stock-name">{{ item.name }}</div>
+                <div class="stock-category">{{ item.category.name }}</div>
+              </div>
+              <div class="stock-quantity low">{{ item.stock_quantity }} left</div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">📦</div>
+              <div class="empty-text">All items well stocked</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Packages Management -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Packages Management</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('packages')">Manage Packages</button>
+          </div>
+          <div class="card-content">
+            <div class="packages-summary">
+              <div class="summary-item">
+                <div class="summary-label">Total Packages</div>
+                <div class="summary-value">{{ packages_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Featured</div>
+                <div class="summary-value featured">{{ featured_packages_count|default:"0" }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Active</div>
+                <div class="summary-value">{{ packages_count }}</div>
+              </div>
+            </div>
+            <div class="recent-packages">
+              {% for package in popular_packages %}
+              <div class="package-item">
+                <div class="package-info">
+                  <div class="package-name">{{ package.name }}</div>
+                  <div class="package-details">₹{{ package.price }} • {{ package.duration }}</div>
+                </div>
+                <div class="package-badge {{ package.color_scheme }}">{{ package.color_scheme|title }}</div>
+              </div>
+              {% empty %}
+              <div class="empty-state">
+                <div class="empty-icon">⭐</div>
+                <div class="empty-text">No packages available</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Management -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Membership Cards</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('memberships')">View All</button>
+          </div>
+          <div class="card-content">
+            <div class="membership-summary">
+              <div class="summary-item">
+                <div class="summary-label">Total Members</div>
+                <div class="summary-value">{{ membership_cards_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Active</div>
+                <div class="summary-value active">{{ active_memberships_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Expired</div>
+                <div class="summary-value expired">{{ expired_memberships_count }}</div>
+              </div>
+            </div>
+            <div class="recent-memberships">
+              {% for membership in recent_memberships %}
+              <div class="membership-item">
+                <div class="membership-info">
+                  <div class="membership-name">{{ membership.customer_name }}</div>
+                  <div class="membership-details">{{ membership.get_duration_display }} • ₹{{ membership.price }}</div>
+                </div>
+                <div class="membership-status {{ membership.status }}">
+                  {{ membership.get_status_display }}
+                </div>
+              </div>
+              {% empty %}
+              <div class="empty-state">
+                <div class="empty-icon">👥</div>
+                <div class="empty-text">No recent memberships</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Management -->
+        <div class="content-card" id="membership-management">
+          <div class="card-header">
+            <h3 class="card-title">Membership Cards</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('memberships')">View All</button>
+          </div>
+          <div class="card-content">
+            <div class="membership-summary">
+              <div class="summary-item">
+                <div class="summary-label">Total Members</div>
+                <div class="summary-value">{{ membership_cards_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Active</div>
+                <div class="summary-value active">{{ active_memberships_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Expired</div>
+                <div class="summary-value expired">{{ expired_memberships_count }}</div>
+              </div>
+            </div>
+            <div class="recent-memberships">
+              {% for membership in recent_memberships %}
+              <div class="membership-item">
+                <div class="membership-info">
+                  <div class="membership-name">{{ membership.customer_name }}</div>
+                  <div class="membership-details">{{ membership.get_duration_display }} • ₹{{ membership.price }}</div>
+                </div>
+                <div class="membership-status {{ membership.status }}">
+                  {{ membership.get_status_display }}
+                </div>
+              </div>
+              {% empty %}
+              <div class="empty-state">
+                <div class="empty-icon">👥</div>
+                <div class="empty-text">No recent memberships</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Games Management -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Games & Categories</h3>
+            <button class="btn btn-sm btn-outline" onclick="showManageModal('games')">Manage Games</button>
+          </div>
+          <div class="card-content">
+            <div class="games-summary">
+              <div class="summary-item">
+                <div class="summary-label">Total Games</div>
+                <div class="summary-value">{{ games_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Active Games</div>
+                <div class="summary-value active">{{ games_count }}</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Categories</div>
+                <div class="summary-value">{{ categories_count|default:"5" }}</div>
+              </div>
+            </div>
+            <div class="recent-games">
+              {% for game in recent_games %}
+              <div class="game-item">
+                <div class="game-info">
+                  <div class="game-name">{{ game.name }}</div>
+                  <div class="game-details">{{ game.duration }} • {{ game.age_group }} • {{ game.category.name }}</div>
+                </div>
+                <div class="game-status active">Active</div>
+              </div>
+              {% empty %}
+              <div class="empty-state">
+                <div class="empty-icon">🎮</div>
+                <div class="empty-text">No games available</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="content-card">
+          <div class="card-header">
+            <h3 class="card-title">Quick Actions</h3>
+          </div>
+          <div class="card-content">
+            <div class="quick-actions">
+              <button class="action-btn" onclick="showAddModal('package')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add New Package
+              </button>
+              <button class="action-btn" onclick="showAddModal('game')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add New Game
+              </button>
+              <button class="action-btn" onclick="showAddModal('cricket')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Cricket Booking
+              </button>
+              <button class="action-btn" onclick="showAddModal('birthday')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Birthday Party
+              </button>
+              <button class="action-btn" onclick="showAddModal('cafe')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Café Item
+              </button>
+              <button class="action-btn" onclick="showAddModal('membership')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8 8zm0-14c-2.21 0-4 1.79-4 4s4 1.79 4 4-4 1.79-4-4zm1 11h-2v2h2v-2zm2 0h-2v2h2v-2z"/>
+                </svg>
+                Add Membership
+              </button>
+              <button class="action-btn" onclick="showAddModal('gallery')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Gallery Image
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Management Modals -->
+<div id="manageModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Manage Items</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="modalContent">
+        <!-- Content will be loaded dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Item Modals -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="addModalTitle">Add New Item</h3>
+      <button class="modal-close" onclick="closeAddModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="addModalContent">
+        <!-- Content will be loaded dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* CSS Variables */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --success: #22c55e;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+/* Admin Dashboard */
+.admin-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Admin Header */
+.admin-header {
+  background: linear-gradient(135deg, var(--dark) 0%, #334155 100%);
+  color: white;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #ffffff, #e2e8f0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-subtitle {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-user-name {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Stats Section */
+.admin-stats-section {
+  padding: 2rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.stat-icon.membership { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.stat-icon.games { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+.stat-icon.packages { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.stat-icon.cafe { background: linear-gradient(135deg, #10b981, #047857); }
+.stat-icon.bookings { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.stat-icon.birthdays { background: linear-gradient(135deg, #ec4899, #be185d); }
+.stat-icon.gallery { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+.stat-icon.testimonials { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.stat-icon.inquiries { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Alerts Section */
+.admin-alerts {
+  padding: 0 0 2rem;
+}
+
+.alert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.alert-card {
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.alert-card.warning {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+.alert-card.info {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  border: 1px solid #3b82f6;
+  color: #1e40af;
+}
+
+.alert-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.3);
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.alert-desc {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Admin Layout */
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 250px;
+  background: white;
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebar-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  color: var(--dark);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--gray);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.sidebar-link:hover {
+  background: var(--light);
+  color: var(--primary);
+}
+
+.sidebar-link.active {
+  background: var(--primary);
+  color: white;
+}
+
+.admin-content {
+  flex: 1;
+  padding-left: 2rem;
+  overflow-y: auto;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.content-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 0;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+/* Package Management Styles */
+.packages-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.package-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.package-info {
+  flex: 1;
+}
+
+.package-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.package-details {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.package-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.package-badge.bronze {
+  background: #cd7f32;
+  color: white;
+}
+
+.package-badge.silver {
+  background: #c0c0c0;
+  color: #333;
+}
+
+.package-badge.gold {
+  background: #ffd700;
+  color: #333;
+}
+
+.features-list {
+  max-width: 300px;
+}
+
+.feature-item {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.featured {
+  background: #28a745;
+  color: white;
+}
+
+.badge:not(.featured) {
+  background: #6c757d;
+  color: white;
+}
+
+.form-help {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+/* Data Items */
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.data-item:last-child {
+  border-bottom: none;
+}
+
+.data-info {
+  flex: 1;
+}
+
+.data-title {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+}
+
+.data-desc {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.data-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.data-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.data-status.confirmed {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.data-status.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.data-status.resolved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* Package Items */
+.package-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.package-item:last-child {
+  border-bottom: none;
+}
+
+.package-info {
+  flex: 1;
+}
+
+.package-name {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+}
+
+.package-price {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.package-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.package-badge.featured {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Stock Items */
+.stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.stock-item:last-child {
+  border-bottom: none;
+}
+
+.stock-info {
+  flex: 1;
+}
+
+.stock-name {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+}
+
+.stock-category {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.stock-quantity {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stock-quantity.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  transform: translateX(4px);
+  text-decoration: none;
+  color: var(--dark);
+}
+
+/* Empty States */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 0.875rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--dark) 0%, #334155 100%);
+  color: white;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+/* Form Styles */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--gray-light);
+  color: var(--dark);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--gray);
+  color: white;
+}
+
+/* Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table th {
+  background: var(--light);
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-table tr:hover {
+  background: var(--light);
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.btn-edit {
+  background: var(--warning);
+  color: white;
+  border: none;
+}
+
+.btn-edit:hover {
+  background: #d97706;
+  color: white;
+}
+
+.btn-delete {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* Games Management Styles */
+.games-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  text-align: center;
+  padding: 1rem;
+  background: var(--light);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.summary-value.active {
+  color: var(--success);
+}
+
+.game-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.game-item:last-child {
+  border-bottom: none;
+}
+
+.game-info {
+  flex: 1;
+}
+
+.game-name {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+}
+
+.game-details {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.game-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.game-status.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.package-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.package-badge.gold {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.package-badge.silver {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.package-badge.bronze {
+  background: #fed7aa;
+  color: #92400e;
+}
+
+/* Tab Styles */
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  color: var(--primary);
+  background: var(--light);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Form Row Styles */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Checkbox Styles */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkmark {
+  color: var(--dark);
+}
+
+/* Table Actions Top */
+.table-actions-top {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Loading States */
+.loading-row {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray);
+}
+
+.loading-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading-spinner::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Image Upload Styles */
+.image-preview {
+  margin-top: 0.5rem;
+  position: relative;
+  display: inline-block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.image-preview img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.remove-image {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.remove-image:hover {
+  background: #dc2626;
+}
+
+.file-info {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-top: 0.25rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .admin-header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .admin-title {
+    font-size: 1.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .data-item,
+  .package-item,
+  .stock-item,
+  .membership-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+.membership-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  text-align: center;
+  padding: 1rem;
+  background: var(--light);
+  border-radius: var(--radius);
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.summary-value.active {
+  color: var(--success);
+}
+
+.summary-value.expired {
+  color: var(--danger);
+}
+
+.recent-memberships {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.membership-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.membership-info {
+  flex: 1;
+}
+
+.membership-name {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.membership-details {
+  font-size: 0.875rem;
+  color: var(--gray);
+}
+
+.membership-status.active {
+  background: var(--success);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.membership-status.expired {
+  background: var(--danger);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.membership-status.cancelled {
+  background: var(--gray);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+  
+  .alert-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-header {
+    padding: 1.5rem 0;
+  }
+  
+  .admin-header-content {
+    padding: 0 1rem;
+  }
+  
+  .admin-title {
+    font-size: 1.25rem;
+  }
+  
+  .admin-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .stat-card {
+    padding: 0.75rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .stat-number {
+    font-size: 1.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  .content-card {
+    border-radius: var(--radius);
+  }
+  
+  .card-header,
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+  
+  .action-btn {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .admin-header-content {
+    padding: 0 0.75rem;
+  }
+  
+  .card-header,
+  .card-content {
+    padding: 0.75rem;
+  }
+  
+  .card-header,
+  .footer-logo-text span {
+    font-size: 9px;
+  }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Modal Management Functions
+function showManageModal(type) {
+  const modal = document.getElementById('manageModal');
+  const title = document.getElementById('modalTitle');
+  const content = document.getElementById('modalContent');
+  
+  // Set title based on type
+  const titles = {
+    'cricket': 'Manage Cricket Bookings',
+    'birthday': 'Manage Birthday Parties',
+    'inquiries': 'Manage Contact Inquiries',
+    'packages': 'Manage Packages',
+    'cafe': 'Manage Café Items',
+    'games': 'Manage Games & Categories',
+    'memberships': 'Manage Membership Cards'
+  };
+  
+  title.textContent = titles[type] || 'Manage Items';
+  
+  // Load content based on type
+  loadManageContent(type);
+  
+  modal.style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('manageModal').style.display = 'none';
+}
+
+function showAddModal(type) {
+  const modal = document.getElementById('addModal');
+  const title = document.getElementById('addModalTitle');
+  const content = document.getElementById('addModalContent');
+  
+  // Set title based on type
+  const titles = {
+    'cricket': 'Add Cricket Booking',
+    'birthday': 'Add Birthday Party',
+    'cafe': 'Add Café Item',
+    'gallery': 'Add Gallery Image',
+    'game': 'Add New Game',
+    'membership': 'Add Membership Card'
+  };
+  
+  title.textContent = titles[type] || 'Add New Item';
+  
+  // Load form based on type
+  loadAddForm(type);
+  
+  modal.style.display = 'block';
+}
+
+function closeAddModal() {
+  document.getElementById('addModal').style.display = 'none';
+}
+
+// Load Management Content
+function loadManageContent(type) {
+  const content = document.getElementById('modalContent');
+  
+  const templates = {
+    'cricket': `
+      <div class="admin-info">
+        <p>Here you can manage all cricket bookings. View, edit, or update booking statuses.</p>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cricketBookingsTableBody">
+          <tr>
+            <td colspan="5" class="loading-row">
+              <div class="loading-spinner">Loading cricket bookings...</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>2024-03-29</td>
+            <td>2:00 PM</td>
+            <td><span class="data-status pending">Pending</span></td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit">Edit</button>
+                <button class="btn btn-sm btn-delete">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'birthday': `
+      <div class="admin-info">
+        <p>Manage all birthday party bookings and inquiries.</p>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Child Name</th>
+            <th>Parent</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Emma Wilson</td>
+            <td>Sarah Wilson</td>
+            <td>2024-04-15</td>
+            <td><span class="data-status confirmed">Confirmed</span></td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit">Edit</button>
+                <button class="btn btn-sm btn-delete">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'inquiries': `
+      <div class="admin-info">
+        <p>Manage customer inquiries and support requests.</p>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mike Johnson</td>
+            <td>Package Information</td>
+            <td>2024-03-27</td>
+            <td><span class="data-status pending">Pending</span></td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit">Reply</button>
+                <button class="btn btn-sm btn-delete">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'packages': `
+      <div class="admin-info">
+        <p>Manage party packages and pricing.</p>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Package Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Featured</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basic Package</td>
+            <td>₹2999</td>
+            <td>2 hours</td>
+            <td><span class="package-badge featured">Featured</span></td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit">Edit</button>
+                <button class="btn btn-sm btn-delete">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'packages': `
+      <div class="admin-info">
+        <p>Manage party packages, pricing, features, and time duration. Changes reflect immediately on the website.</p>
+      </div>
+      <div class="table-actions-top">
+        <button class="btn btn-primary" onclick="showAddModal('package')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+          Add New Package
+        </button>
+      </div>
+      <table class="admin-table" id="packagesTable">
+        <thead>
+          <tr>
+            <th>Package Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Color Scheme</th>
+            <th>Features</th>
+            <th>Featured</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="packagesTableBody">
+          <tr>
+            <td colspan="8" class="loading-row">
+              <div class="loading-spinner">Loading packages...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'cafe': `
+      <div class="admin-info">
+        <p>Manage café menu items and stock levels.</p>
+      </div>
+      <div class="table-actions-top">
+        <button class="btn btn-primary" onclick="showAddModal('cafe')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+          Add Café Item
+        </button>
+      </div>
+      <table class="admin-table" id="cafeItemsTable">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Available</th>
+            <th>Order</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cafeItemsTableBody">
+          <tr>
+            <td colspan="8" class="loading-row">
+              <div class="loading-spinner">Loading cafe items...</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `,
+    'games': `
+      <div class="admin-tabs">
+        <button class="tab-btn active" onclick="showTab('games-list')">Games</button>
+        <button class="tab-btn" onclick="showTab('categories-list')">Categories</button>
+      </div>
+      
+      <div id="games-list" class="tab-content active">
+        <div class="admin-info">
+          <p>Manage games, duration, age groups, and categories. Changes reflect immediately on the website.</p>
+        </div>
+        <div class="table-actions-top">
+          <button class="btn btn-primary" onclick="showAddModal('game')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Add New Game
+          </button>
+        </div>
+        <table class="admin-table" id="gamesTable">
+          <thead>
+            <tr>
+              <th>Game Name</th>
+              <th>Category</th>
+              <th>Duration</th>
+              <th>Age Group</th>
+              <th>Package</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="gamesTableBody">
+            <tr>
+              <td colspan="7" class="loading-row">
+                <div class="loading-spinner">Loading games...</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="categories-list" class="tab-content">
+        <div class="admin-info">
+          <p>Manage game categories. These organize games on the main website.</p>
+        </div>
+        <div class="table-actions-top">
+          <button class="btn btn-primary" onclick="showAddCategoryModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Add New Category
+          </button>
+        </div>
+        <table class="admin-table" id="categoriesTable">
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Emoji</th>
+              <th>Tag Class</th>
+              <th>Game Count</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="categoriesTableBody">
+            <tr>
+              <td colspan="5" class="loading-row">
+                <div class="loading-spinner">Loading categories...</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `
+  };
+  
+  content.innerHTML = templates[type] || '<p>No content available</p>';
+  
+  // Load real data if it's games or categories or packages
+  if (type === 'games') {
+    loadGamesData();
+    loadCategoriesData();
+  } else if (type === 'packages') {
+    loadPackagesData();
+  } else if (type === 'cafe') {
+    loadCafeItemsData();
+  }
+}
+
+// Sidebar Navigation
+function showSection(section) {
+  // Hide all sections
+  document.querySelectorAll('.content-card').forEach(card => {
+    card.style.display = 'none';
+  });
+  
+  // Show selected section
+  const sections = {
+    'overview': ['stats-grid', 'recent-bookings', 'recent-birthdays', 'recent-inquiries', 'low-stock', 'packages-management', 'games-management'],
+    'cricket': ['recent-bookings'],
+    'birthday': ['recent-birthdays'],
+    'inquiries': ['recent-inquiries'],
+    'cafe': ['low-stock'],
+    'packages': ['packages-management'],
+    'games': ['games-management'],
+    'memberships': ['membership-management'],
+    'gallery': ['gallery-management']
+  };
+  
+  const targetSections = sections[section] || [];
+  targetSections.forEach(sectionId => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.style.display = 'block';
+    }
+  });
+  
+  // Update active link
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  const activeLink = document.querySelector(`.sidebar-link[onclick*="${section}"]`);
+  if (activeLink) {
+    activeLink.classList.add('active');
+  }
+}
+
+// Load Add Forms
+function loadAddForm(type) {
+  const content = document.getElementById('addModalContent');
+  
+  const forms = {
+    'cricket': `
+      <form class="admin-form">
+        <div class="form-group">
+          <label for="booking-name">Customer Name</label>
+          <input type="text" id="booking-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-mobile">Mobile Number</label>
+          <input type="tel" id="booking-mobile" name="mobile" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-date">Date</label>
+          <input type="date" id="booking-date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-time">Start Time</label>
+          <input type="time" id="booking-time" name="start_time" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-duration">Duration (hours)</label>
+          <input type="number" id="booking-duration" name="duration" min="1" max="8" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Booking</button>
+        </div>
+      </form>
+    `,
+    'birthday': `
+      <form class="admin-form">
+        <div class="form-group">
+          <label for="party-parent">Parent Name</label>
+          <input type="text" id="party-parent" name="parent_name" required>
+        </div>
+        <div class="form-group">
+          <label for="party-child">Child Name</label>
+          <input type="text" id="party-child" name="child_name" required>
+        </div>
+        <div class="form-group">
+          <label for="party-age">Child Age</label>
+          <input type="number" id="party-age" name="child_age" min="1" max="15" required>
+        </div>
+        <div class="form-group">
+          <label for="party-mobile">Mobile Number</label>
+          <input type="tel" id="party-mobile" name="mobile" required>
+        </div>
+        <div class="form-group">
+          <label for="party-date">Party Date</label>
+          <input type="date" id="party-date" name="party_date" required>
+        </div>
+        <div class="form-group">
+          <label for="party-time">Party Time</label>
+          <input type="time" id="party-time" name="party_time" required>
+        </div>
+        <div class="form-group">
+          <label for="party-guests">Number of Guests</label>
+          <input type="number" id="party-guests" name="guest_count" min="1" max="100" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Party</button>
+        </div>
+      </form>
+    `,
+    'cafe': `
+      <form class="admin-form" id="cafeItemForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="cafe-name">Item Name *</label>
+          <input type="text" id="cafe-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="cafe-category">Category *</label>
+          <select id="cafe-category" name="category" required>
+            <option value="">Loading categories...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cafe-price">Price (₹) *</label>
+          <input type="number" id="cafe-price" name="price" min="0" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="cafe-stock">Stock Quantity</label>
+          <input type="number" id="cafe-stock" name="stock_quantity" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label for="cafe-image">Upload Image</label>
+          <input type="file" id="cafe-image" name="image" accept="image/*">
+          <div class="form-help">Upload an image for cafe item. Supported formats: JPG, PNG, GIF.</div>
+        </div>
+        <div class="form-group">
+          <label for="cafe-image-url">Or Image URL</label>
+          <input type="url" id="cafe-image-url" name="image_url" placeholder="https://example.com/image.jpg">
+          <div class="form-help">Optional: Use image URL instead of uploading.</div>
+        </div>
+        <div class="form-group">
+          <label for="cafe-order">Display Order</label>
+          <input type="number" id="cafe-order" name="order" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="cafe-available" name="is_available" checked>
+            <span class="checkmark">Available</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="cafe-description">Description</label>
+          <textarea id="cafe-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+      </form>
+    `,
+    'membership': `
+      <form class="admin-form" id="membershipForm">
+        <div class="form-group">
+          <label for="membership-name">Customer Name *</label>
+          <input type="text" id="membership-name" name="customer_name" required>
+        </div>
+        <div class="form-group">
+          <label for="membership-email">Email Address *</label>
+          <input type="email" id="membership-email" name="customer_email" required>
+        </div>
+        <div class="form-group">
+          <label for="membership-phone">Phone Number *</label>
+          <input type="tel" id="membership-phone" name="customer_phone" pattern="[0-9]{10}" required>
+        </div>
+        <div class="form-group">
+          <label for="membership-duration">Duration *</label>
+          <select id="membership-duration" name="duration" required>
+            <option value="">Select Duration</option>
+            <option value="3_months">3 Months (₹2000)</option>
+            <option value="6_months">6 Months (₹3000)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="membership-discount">Discount Percentage</label>
+          <input type="number" id="membership-discount" name="discount_percentage" min="0" max="100" value="10" readonly>
+          <div class="form-help">Discount percentage for all visits</div>
+        </div>
+        <div class="form-group">
+          <label for="membership-status">Status</label>
+          <select id="membership-status" name="status" required>
+            <option value="active">Active</option>
+            <option value="expired">Expired</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Membership Card</button>
+        </div>
+      </form>
+    `,
+    'gallery': `
+      <form class="admin-form">
+        <div class="form-group">
+          <label for="gallery-title">Image Title</label>
+          <input type="text" id="gallery-title" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="gallery-category">Category</label>
+          <select id="gallery-category" name="category" required>
+            <option value="">Select Category</option>
+            <option value="games">Games</option>
+            <option value="cafe">Café</option>
+            <option value="birthday">Birthday Parties</option>
+            <option value="facility">Facility</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="gallery-url">Image URL</label>
+          <input type="url" id="gallery-url" name="image_url" placeholder="https://example.com/image.jpg" required>
+        </div>
+        <div class="form-group">
+          <label for="gallery-description">Description</label>
+          <textarea id="gallery-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Image</button>
+        </div>
+      </form>
+    `,
+    'package': `
+      <form class="admin-form" id="packageForm">
+        <div class="form-group">
+          <label for="package-name">Package Name *</label>
+          <input type="text" id="package-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="package-tagline">Tagline *</label>
+          <input type="text" id="package-tagline" name="tagline" placeholder="e.g., Perfect for kids' birthday parties" required>
+        </div>
+        <div class="form-group">
+          <label for="package-price">Price (₹) *</label>
+          <input type="number" id="package-price" name="price" min="0" step="0.01" placeholder="2999.00" required>
+        </div>
+        <div class="form-group">
+          <label for="package-duration">Duration *</label>
+          <input type="text" id="package-duration" name="duration" placeholder="e.g., 2 hours" required>
+        </div>
+        <div class="form-group">
+          <label for="package-features">Features (one per line)</label>
+          <textarea id="package-features" name="features" rows="4" placeholder="Unlimited access to all games zones&#10;Complimentary drinks&#10;Dedicated party host&#10;Free WiFi&#10;Parking available"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="package-featured" name="is_featured">
+            <span class="checkmark">Featured Package</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="package-order">Display Order</label>
+          <input type="number" id="package-order" name="order" min="0" value="0">
+            <option value="gold-birthday">Gold Birthday (₹799)</option>
+            <option value="custom">Custom Package</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="package-order">Display Order</label>
+            <input type="number" id="package-order" name="order" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="package-featured" name="is_featured">
+              <span class="checkmark">Featured Package</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Package</button>
+        </div>
+      </form>
+    `,
+    'game': `
+      <form class="admin-form" id="gameForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="game-name">Game Name *</label>
+          <input type="text" id="game-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="game-category">Category *</label>
+          <select id="game-category" name="category" required>
+            <option value="">Select Category</option>
+            <option value="1">Adventure</option>
+            <option value="2">Toddler</option>
+            <option value="3">Sports</option>
+            <option value="4">Creative</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="game-duration">Duration *</label>
+          <input type="text" id="game-duration" name="duration" placeholder="e.g., 30 min, Unlimited" required>
+        </div>
+        <div class="form-group">
+          <label for="game-age-group">Age Group *</label>
+          <input type="text" id="game-age-group" name="age_group" placeholder="e.g., 5–13, 2–8" required>
+        </div>
+        <div class="form-group">
+          <label for="game-price-info">Price Info *</label>
+          <input type="text" id="game-price-info" name="price_info" placeholder="e.g., Incl. Gold, ₹100/15 min" required>
+        </div>
+        <div class="form-group">
+          <label for="game-package">Package *</label>
+          <select id="game-package" name="package" required>
+            <option value="">Select Package</option>
+            <option value="bronze">Bronze Package</option>
+            <option value="silver">Silver Package</option>
+            <option value="gold">Gold Package</option>
+            <option value="individual">Individual</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="game-description">Description</label>
+          <textarea id="game-description" name="description" rows="4" placeholder="Describe the game experience..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="game-image">Game Image</label>
+          <input type="file" id="game-image" name="image" accept="image/*">
+          <div class="file-info">Upload game image (JPG, PNG, GIF - Max 5MB)</div>
+          <div id="imagePreview" class="image-preview" style="display: none;">
+            <img id="previewImg" src="" alt="Preview">
+            <button type="button" class="remove-image" onclick="removeImage()">×</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="game-image-url">Or Image URL</label>
+          <input type="url" id="game-image-url" name="image_url" placeholder="https://example.com/game-image.jpg">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="game-order">Display Order</label>
+            <input type="number" id="game-order" name="order" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="game-popular" name="is_popular">
+              <span class="checkmark">Popular Game</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Game</button>
+        </div>
+      </form>
+    `
+  };
+  
+  content.innerHTML = forms[type] || '<p>No form available</p>';
+  
+  if (type === 'cafe') {
+    loadCafeCategoriesOptions('cafe-category');
+    setupCafeItemCreateForm();
+  } else if (type === 'membership') {
+    setupMembershipForm();
+  }
+}
+
+function loadCafeCategoriesOptions(selectId, selectedId = null) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+
+  fetch('/api/admin/cafe-categories/')
+    .then(response => response.json())
+    .then(data => {
+      const categories = data.categories || [];
+      select.innerHTML = '<option value="">Select Category</option>';
+      categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        option.textContent = `${cat.emoji || ''} ${cat.name}`.trim();
+        if (selectedId && String(selectedId) === String(cat.id)) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+    })
+    .catch(() => {
+      select.innerHTML = '<option value="">Failed to load categories</option>';
+    });
+}
+
+function loadCafeItemsData() {
+  const tbody = document.getElementById('cafeItemsTableBody');
+  if (!tbody) return;
+
+  fetch('/api/admin/cafe-items/')
+    .then(response => response.json())
+    .then(data => {
+      const items = data.items || [];
+
+      if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="loading-row">No cafe items found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = items.map(item => {
+        const stockClass = item.stock_quantity <= 10 ? 'low' : '';
+        const availability = item.is_available ? 'Yes' : 'No';
+        const imageHtml = item.image_url ? `<a href="${item.image_url}" target="_blank">View</a>` : '-';
+        return `
+          <tr>
+            <td>${escapeHtml(item.name)}</td>
+            <td>${escapeHtml(item.category?.name || '')}</td>
+            <td>₹${item.price}</td>
+            <td><span class="stock-quantity ${stockClass}">${item.stock_quantity}</span></td>
+            <td>${availability}</td>
+            <td>${item.order}</td>
+            <td>${imageHtml}</td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit" onclick='openCafeItemEdit(${JSON.stringify(item)})'>Edit</button>
+                <button class="btn btn-sm btn-delete" onclick='deleteCafeItem(${item.id})'>Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    })
+    .catch(() => {
+      tbody.innerHTML = '<tr><td colspan="8" class="loading-row">Failed to load cafe items.</td></tr>';
+    });
+}
+
+function setupCafeItemCreateForm() {
+  const form = document.getElementById('cafeItemForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    
+    fetch('/api/admin/cafe-items/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        showNotification('Café item created successfully', 'success');
+        form.reset();
+        loadCafeItemsData();
+      } else {
+        showNotification('Failed to create café item', 'error');
+      }
+    })
+    .catch(() => {
+      showNotification('Error creating café item', 'error');
+    });
+  });
+}
+
+function setupMembershipForm() {
+  const form = document.getElementById('membershipForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    
+    fetch('/api/admin/membership-cards/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        showNotification('Membership card created successfully', 'success');
+        form.reset();
+        loadMembershipsData();
+      } else {
+        showNotification('Failed to create membership card', 'error');
+      }
+    })
+    .catch(() => {
+      showNotification('Error creating membership card', 'error');
+    });
+  });
+}
+
+function openCafeItemEdit(item) {
+  const modal = document.getElementById('addModal');
+  const title = document.getElementById('addModalTitle');
+  const content = document.getElementById('addModalContent');
+
+  title.textContent = 'Edit Café Item';
+  content.innerHTML = `
+    <form class="admin-form" id="cafeItemEditForm" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="${item.id}">
+      <div class="form-group">
+        <label for="cafe-edit-name">Item Name *</label>
+        <input type="text" id="cafe-edit-name" name="name" value="${escapeAttribute(item.name)}" required>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-category">Category *</label>
+        <select id="cafe-edit-category" name="category" required>
+          <option value="">Loading categories...</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-price">Price (₹) *</label>
+        <input type="number" id="cafe-edit-price" name="price" min="0" step="0.01" value="${item.price}" required>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-stock">Stock Quantity</label>
+        <input type="number" id="cafe-edit-stock" name="stock_quantity" min="0" value="${item.stock_quantity}">
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-image">Upload New Image</label>
+        <input type="file" id="cafe-edit-image" name="image" accept="image/*">
+        <div class="form-help">Upload a new image to replace the existing one.</div>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-image-url">Or Image URL</label>
+        <input type="url" id="cafe-edit-image-url" name="image_url" value="${escapeAttribute(item.image_url || '')}" placeholder="https://example.com/image.jpg">
+        <div class="form-help">Optional: Use image URL instead of uploading.</div>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-order">Display Order</label>
+        <input type="number" id="cafe-edit-order" name="order" min="0" value="${item.order}">
+      </div>
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="cafe-edit-available" name="is_available" ${item.is_available ? 'checked' : ''}>
+          <span class="checkmark">Available</span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="cafe-edit-description">Description</label>
+        <textarea id="cafe-edit-description" name="description" rows="3">${escapeHtml(item.description || '')}</textarea>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  `;
+
+  modal.style.display = 'block';
+
+  loadCafeCategoriesOptions('cafe-edit-category', item.category?.id);
+
+  const form = document.getElementById('cafeItemEditForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    
+    fetch('/api/admin/cafe-items/', {
+      method: 'PUT',
+      body: formData
+    })
+    .then(r => r.json())
+    .then(resp => {
+      if (!resp.success) throw new Error(resp.message || 'Failed');
+      closeAddModal();
+      loadCafeItemsData();
+    })
+    .catch(err => {
+      alert(err.message || 'Failed to update cafe item');
+    });
+  });
+}
+
+function deleteCafeItem(id) {
+  if (!confirm('Delete this cafe item?')) return;
+
+  fetch('/api/admin/cafe-items/', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id })
+  })
+  .then(r => r.json())
+  .then(resp => {
+    if (!resp.success) throw new Error(resp.message || 'Failed');
+    loadCafeItemsData();
+  })
+  .catch(err => {
+    alert(err.message || 'Failed to delete cafe item');
+  });
+}
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function escapeAttribute(str) {
+  return escapeHtml(str).replaceAll('`', '&#096;');
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+  const manageModal = document.getElementById('manageModal');
+  const addModal = document.getElementById('addModal');
+  
+  if (event.target == manageModal) {
+    closeModal();
+  }
+  if (event.target == addModal) {
+    closeAddModal();
+  }
+}
+
+// Handle form submissions
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle all form submissions in modals
+  document.addEventListener('submit', function(e) {
+    if (e.target.closest('.modal')) {
+      const form = e.target;
+      
+      // Handle game form submission
+      if (form.id === 'gameForm') {
+        e.preventDefault();
+        
+        // Create FormData for file upload
+        const formData = new FormData(form);
+        
+        // Handle image file if selected
+        const imageFile = formData.get('image');
+        if (imageFile && imageFile.size > 0) {
+          // File will be handled by the API
+          console.log('Image file selected:', imageFile.name);
+        }
+        
+        submitGameForm(formData);
+      } else if (form.id === 'packageForm') {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const packageData = {
+          name: formData.get('name'),
+          tagline: formData.get('tagline'),
+          price: parseFloat(formData.get('price')),
+          duration: formData.get('duration'),
+          features: formData.get('features'),
+          color_scheme: formData.get('color_scheme'),
+          order: parseInt(formData.get('order')),
+          is_featured: formData.has('is_featured')
+        };
+        
+        submitPackageForm(packageData);
+      } else {
+        // Handle other form submissions (existing logic)
+        e.preventDefault();
+        
+        // Show success message
+        const formData = new FormData(form);
+        
+        // Here you would normally send the data to the server
+        console.log('Form submitted:', Object.fromEntries(formData));
+        
+        // Show success notification
+        showNotification('Item added successfully!', 'success');
+        
+        // Close modal
+        const modal = form.closest('.modal');
+        if (modal.id === 'addModal') {
+          closeAddModal();
+        } else {
+          closeModal();
+        }
+        
+        // Reset form
+        form.reset();
+      }
+    }
+  });
+  
+  // Handle edit/delete buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-edit')) {
+      if (e.target.hasAttribute('onclick') && e.target.getAttribute('onclick').includes('editGame')) {
+        // Handle game editing specifically
+        const gameId = e.target.getAttribute('onclick').match(/\d+/)[0];
+        showEditGameModal(gameId);
+      } else {
+        showNotification('Edit functionality coming soon!', 'info');
+      }
+    } else if (e.target.classList.contains('btn-delete')) {
+      if (e.target.hasAttribute('onclick') && e.target.getAttribute('onclick').includes('deleteGame')) {
+        // Handle game deletion specifically
+        const gameId = e.target.getAttribute('onclick').match(/\d+/)[0];
+        deleteGame(gameId);
+      } else if (confirm('Are you sure you want to delete this item?')) {
+        showNotification('Item deleted successfully!', 'success');
+        // Here you would normally send delete request to server
+      }
+    }
+  });
+});
+
+// Submit game form function
+async function submitGameForm(formData) {
+  try {
+    // Debug: Log FormData contents
+    console.log('FormData contents:');
+    for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        console.log(`${key}:`, value.name, value.size, value.type);
+      } else {
+        console.log(`${key}:`, value);
+      }
+    }
+    
+    const response = await fetch('/api/admin/games/', {
+      method: 'POST',
+      body: formData // Don't set Content-Type header for FormData
+    });
+    
+    console.log('Response status:', response.status);
+    const result = await response.json();
+    console.log('Response data:', result);
+    
+    if (result.success) {
+      showNotification('Game added successfully!', 'success');
+      closeAddModal();
+      loadGamesData(); // Reload games data
+    } else {
+      showNotification(result.message || 'Error adding game', 'error');
+    }
+  } catch (error) {
+    console.error('Error adding game:', error);
+    showNotification('Error adding game', 'error');
+  }
+}
+
+// Submit package form function
+async function submitPackageForm(packageData) {
+  try {
+    const response = await fetch('/api/admin/packages/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(packageData)
+    });
+    
+    const result = await response.json();
+    
+    console.log('Response status:', response.status);
+    console.log('Response data:', result);
+    
+    if (result.success) {
+      showNotification('Package added successfully!', 'success');
+      closeAddModal();
+      loadPackagesData(); // Reload packages data
+    } else {
+      showNotification(result.message || 'Error adding package', 'error');
+    }
+  } catch (error) {
+    console.error('Error adding package:', error);
+    showNotification('Error adding package', 'error');
+  }
+}
+
+// Tab switching function
+function showTab(tabId) {
+  // Hide all tab contents
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(content => content.classList.remove('active'));
+  
+  // Remove active class from all tab buttons
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach(btn => btn.classList.remove('active'));
+  
+  // Show selected tab content
+  document.getElementById(tabId).classList.add('active');
+  
+  // Add active class to clicked button
+  event.target.classList.add('active');
+}
+
+// Edit game function
+function editGame(gameId) {
+  const modal = document.getElementById('addModal');
+  const title = document.getElementById('addModalTitle');
+  const content = document.getElementById('addModalContent');
+  
+  title.textContent = 'Edit Game';
+  
+  // Load edit form with existing data
+  content.innerHTML = `
+    <form class="admin-form">
+      <div class="form-group">
+        <label for="edit-game-name">Game Name *</label>
+        <input type="text" id="edit-game-name" name="name" value="Trampoline Jump" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-category">Category *</label>
+        <select id="edit-game-category" name="category" required>
+          <option value="1" selected>Adventure</option>
+          <option value="2">Toddler</option>
+          <option value="3">Sports</option>
+          <option value="4">Creative</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-duration">Duration *</label>
+        <input type="text" id="edit-game-duration" name="duration" value="30 min" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-age-group">Age Group *</label>
+        <input type="text" id="edit-game-age-group" name="age_group" value="5–13" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-price-info">Price Info *</label>
+        <input type="text" id="edit-game-price-info" name="price_info" value="Incl. Gold" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-package">Package *</label>
+        <select id="edit-game-package" name="package" required>
+          <option value="bronze">Bronze Package</option>
+          <option value="silver">Silver Package</option>
+          <option value="gold" selected>Gold Package</option>
+          <option value="individual">Individual</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-description">Description</label>
+        <textarea id="edit-game-description" name="description" rows="4">Jump high and have fun on our trampolines!</textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-game-image-url">Image URL</label>
+        <input type="url" id="edit-game-image-url" name="image_url" value="https://example.com/trampoline.jpg">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="edit-game-order">Display Order</label>
+          <input type="number" id="edit-game-order" name="order" min="0" value="1">
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="edit-game-popular" name="is_popular" checked>
+            <span class="checkmark">Popular Game</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Game</button>
+      </div>
+    </form>
+  `;
+  
+  modal.style.display = 'block';
+}
+
+// Fill package template function
+function fillPackageTemplate(templateType) {
+  const templates = {
+    'bronze-birthday': {
+      name: 'Bronze Birthday Package',
+      tagline: 'Perfect birthday celebration for small groups',
+      price: '299',
+      duration: '2 hours',
+      color_scheme: 'bronze',
+      features: '• Access to basic games\n• Building blocks area\n• Video games station\n• Basketball hoop\n• Complimentary water bottle\n• Basic party decorations\n• Birthday cake cutting ceremony\n• Party host assistance'
+    },
+    'silver-birthday': {
+      name: 'Silver Birthday Package',
+      tagline: 'Enhanced birthday celebration with more activities',
+      price: '499',
+      duration: '3 hours',
+      color_scheme: 'silver',
+      features: '• All Bronze package features\n• Trampoline access\n• Ball pit unlimited\n• Climbing wall session\n• Art & craft station\n• 1 complimentary snack\n• Enhanced party decorations\n• Birthday cake and snacks\n• Dedicated party host'
+    },
+    'gold-birthday': {
+      name: 'Gold Birthday Package',
+      tagline: 'Ultimate birthday celebration experience',
+      price: '799',
+      duration: 'Full day',
+      color_scheme: 'gold',
+      features: '• All Silver package features\n• Foam pit unlimited access\n• Cricket bowling machine (15 min)\n• Racing cars (2 rides)\n• Art & craft unlimited\n• Complimentary meal\n• Birthday crown & photo session\n• Party favor bag for all guests\n• Premium party decorations\n• Full day party host\n• VIP party area'
+    },
+    'custom': {
+      name: '',
+      tagline: '',
+      price: '',
+      duration: '',
+      color_scheme: '',
+      features: ''
+    }
+  };
+  
+  const template = templates[templateType];
+  if (template) {
+    document.getElementById('package-name').value = template.name;
+    document.getElementById('package-tagline').value = template.tagline;
+    document.getElementById('package-price').value = template.price;
+    document.getElementById('package-duration').value = template.duration;
+    document.getElementById('package-color-scheme').value = template.color_scheme;
+    document.getElementById('package-features').value = template.features;
+    
+    // Reset template dropdown
+    document.getElementById('package-template').value = '';
+  }
+}
+
+// Load packages data from API
+async function loadPackagesData() {
+  try {
+    const response = await fetch('/api/admin/packages/');
+    const data = await response.json();
+    
+    console.log('Packages data received:', data);
+    
+    if (data.packages) {
+      const tbody = document.getElementById('packagesTableBody');
+      tbody.innerHTML = '';
+      
+      if (data.packages.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="loading-row">
+              <div class="empty-state">
+                <div class="empty-icon">⭐</div>
+                <div class="empty-text">No packages found. Add your first package!</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      data.packages.forEach(pkg => {
+        console.log(`Package: ${pkg.name}, Price: ${pkg.price}, Features: ${pkg.features_list}`);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${pkg.name}</td>
+          <td>₹${pkg.price}</td>
+          <td>${pkg.duration}</td>
+          <td><span class="package-badge ${pkg.color_scheme}">${pkg.color_scheme.charAt(0).toUpperCase() + pkg.color_scheme.slice(1)}</span></td>
+          <td>
+            <div class="features-list">
+              ${pkg.features_list.map(feature => `<div class="feature-item">• ${feature}</div>`).join('')}
+            </div>
+          </td>
+          <td>
+            ${pkg.is_featured ? '<span class="badge featured">Featured</span>' : '<span class="badge">Regular</span>'}
+          </td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-sm btn-edit" onclick="editPackage(${pkg.id})">Edit</button>
+              <button class="btn btn-sm btn-delete" onclick="deletePackage(${pkg.id})">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading packages:', error);
+    const tbody = document.getElementById('packagesTableBody');
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="loading-row">
+          <div class="error-message">Error loading packages. Please try again.</div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Edit package function
+async function editPackage(packageId) {
+  try {
+    const response = await fetch('/api/admin/packages/');
+    const data = await response.json();
+    const pkg = data.packages.find(p => p.id === packageId);
+    
+    if (!pkg) {
+      showNotification('Package not found', 'error');
+      return;
+    }
+    
+    const modal = document.getElementById('addModal');
+    const title = document.getElementById('addModalTitle');
+    const content = document.getElementById('addModalContent');
+    
+    title.textContent = 'Edit Package';
+    
+    content.innerHTML = `
+      <form class="admin-form" id="editPackageForm">
+        <input type="hidden" id="edit-package-id" name="id" value="${pkg.id}">
+        <div class="form-group">
+          <label for="edit-package-name">Package Name *</label>
+          <input type="text" id="edit-package-name" name="name" value="${pkg.name}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-package-tagline">Tagline *</label>
+          <input type="text" id="edit-package-tagline" name="tagline" value="${pkg.tagline}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-package-price">Price (₹) *</label>
+          <input type="number" id="edit-package-price" name="price" value="${pkg.price}" min="0" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-package-duration">Duration *</label>
+          <input type="text" id="edit-package-duration" name="duration" value="${pkg.duration}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-package-color-scheme">Color Scheme *</label>
+          <select id="edit-package-color-scheme" name="color_scheme" required>
+            <option value="bronze" ${pkg.color_scheme === 'bronze' ? 'selected' : ''}>Bronze</option>
+            <option value="silver" ${pkg.color_scheme === 'silver' ? 'selected' : ''}>Silver</option>
+            <option value="gold" ${pkg.color_scheme === 'gold' ? 'selected' : ''}>Gold</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-package-features">Features *</label>
+          <textarea id="edit-package-features" name="features" rows="6" required>${pkg.features}</textarea>
+          <div class="form-help">Enter each feature on a new line</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-package-order">Display Order</label>
+            <input type="number" id="edit-package-order" name="order" min="0" value="${pkg.order}">
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="edit-package-featured" name="is_featured" ${pkg.is_featured ? 'checked' : ''}>
+              <span class="checkmark">Featured Package</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Package</button>
+        </div>
+      </form>
+    `;
+    
+    modal.style.display = 'block';
+    
+    // Handle form submission
+    document.getElementById('editPackageForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const packageData = {
+        id: formData.get('id'),
+        name: formData.get('name'),
+        tagline: formData.get('tagline'),
+        price: parseFloat(formData.get('price')),
+        duration: formData.get('duration'),
+        color_scheme: formData.get('color_scheme'),
+        features: formData.get('features'),
+        order: parseInt(formData.get('order')),
+        is_featured: formData.has('is_featured')
+      };
+      
+      try {
+        const response = await fetch('/api/admin/packages/', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(packageData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showNotification('Package updated successfully!', 'success');
+          closeAddModal();
+          loadPackagesData(); // Reload packages data
+        } else {
+          showNotification(result.message || 'Error updating package', 'error');
+        }
+      } catch (error) {
+        console.error('Error updating package:', error);
+        showNotification('Error updating package', 'error');
+      }
+    });
+    
+  } catch (error) {
+    console.error('Error loading package data:', error);
+    showNotification('Error loading package data', 'error');
+  }
+}
+
+// Delete package function
+async function deletePackage(packageId) {
+  if (!confirm('Are you sure you want to delete this package? This action cannot be undone.')) {
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/admin/packages/', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: packageId })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      showNotification('Package deleted successfully!', 'success');
+      loadPackagesData(); // Reload packages data
+    } else {
+      showNotification(result.message || 'Error deleting package', 'error');
+    }
+  } catch (error) {
+    console.error('Error deleting package:', error);
+    showNotification('Error deleting package', 'error');
+  }
+}
+
+// Load games data from API
+async function loadGamesData() {
+  try {
+    const response = await fetch('/api/admin/games/');
+    const data = await response.json();
+    
+    console.log('Games data received:', data);
+    
+    if (data.games) {
+      const tbody = document.getElementById('gamesTableBody');
+      tbody.innerHTML = '';
+      
+      if (data.games.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="loading-row">
+              <div class="empty-state">
+                <div class="empty-icon">🎮</div>
+                <div class="empty-text">No games found. Add your first game!</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      data.games.forEach(game => {
+        console.log(`Game: ${game.name}, Image URL: ${game.image_url}`);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${game.name}</td>
+          <td>${game.category.name}</td>
+          <td>${game.duration}</td>
+          <td>${game.age_group}</td>
+          <td><span class="package-badge ${game.package}">${game.package.charAt(0).toUpperCase() + game.package.slice(1)}</span></td>
+          <td>
+            ${game.image_url ? 
+              `<img src="${game.image_url}" alt="${game.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+               <span style="display: none;">No image</span>` : 
+              '<span style="color: #999;">No image</span>'
+            }
+          </td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-sm btn-edit" onclick="editGame(${game.id})">Edit</button>
+              <button class="btn btn-sm btn-delete" onclick="deleteGame(${game.id})">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading games:', error);
+    const tbody = document.getElementById('gamesTableBody');
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" class="loading-row">
+          <div class="error-message">Error loading games. Please try again.</div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Load categories data from API
+async function loadCategoriesData() {
+  try {
+    const response = await fetch('/api/admin/game-categories/');
+    const data = await response.json();
+    
+    if (data.categories) {
+      const tbody = document.getElementById('categoriesTableBody');
+      tbody.innerHTML = '';
+      
+      if (data.categories.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="loading-row">
+              <div class="empty-state">
+                <div class="empty-icon">📁</div>
+                <div class="empty-text">No categories found. Add your first category!</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      data.categories.forEach(category => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${category.name}</td>
+          <td>${category.emoji}</td>
+          <td>${category.tag_class}</td>
+          <td>${category.game_count} games</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-sm btn-edit" onclick="editCategory(${category.id})">Edit</button>
+              <button class="btn btn-sm btn-delete" onclick="deleteCategory(${category.id})">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading categories:', error);
+    const tbody = document.getElementById('categoriesTableBody');
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="loading-row">
+          <div class="error-message">Error loading categories. Please try again.</div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Edit game function
+async function editGame(gameId) {
+  try {
+    const response = await fetch('/api/admin/games/');
+    const data = await response.json();
+    const game = data.games.find(g => g.id === gameId);
+    
+    if (!game) {
+      showNotification('Game not found', 'error');
+      return;
+    }
+    
+    const modal = document.getElementById('addModal');
+    const title = document.getElementById('addModalTitle');
+    const content = document.getElementById('addModalContent');
+    
+    title.textContent = 'Edit Game';
+    
+    content.innerHTML = `
+      <form class="admin-form" id="editGameForm" enctype="multipart/form-data">
+        <input type="hidden" id="edit-game-id" name="id" value="${game.id}">
+        <div class="form-group">
+          <label for="edit-game-name">Game Name *</label>
+          <input type="text" id="edit-game-name" name="name" value="${game.name}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-category">Category *</label>
+          <select id="edit-game-category" name="category" required>
+            <option value="">Select Category</option>
+            <option value="1" ${game.category.id === 1 ? 'selected' : ''}>Adventure</option>
+            <option value="2" ${game.category.id === 2 ? 'selected' : ''}>Toddler</option>
+            <option value="3" ${game.category.id === 3 ? 'selected' : ''}>Sports</option>
+            <option value="4" ${game.category.id === 4 ? 'selected' : ''}>Creative</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-duration">Duration *</label>
+          <input type="text" id="edit-game-duration" name="duration" value="${game.duration}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-age-group">Age Group *</label>
+          <input type="text" id="edit-game-age-group" name="age_group" value="${game.age_group}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-price-info">Price Info *</label>
+          <input type="text" id="edit-game-price-info" name="price_info" value="${game.price_info}" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-package">Package *</label>
+          <select id="edit-game-package" name="package" required>
+            <option value="bronze" ${game.package === 'bronze' ? 'selected' : ''}>Bronze Package</option>
+            <option value="silver" ${game.package === 'silver' ? 'selected' : ''}>Silver Package</option>
+            <option value="gold" ${game.package === 'gold' ? 'selected' : ''}>Gold Package</option>
+            <option value="individual" ${game.package === 'individual' ? 'selected' : ''}>Individual</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-description">Description</label>
+          <textarea id="edit-game-description" name="description" rows="4">${game.description || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-game-image">Game Image</label>
+          <input type="file" id="edit-game-image" name="image" accept="image/*">
+          <div class="file-info">Upload game image (JPG, PNG, GIF - Max 5MB)</div>
+          ${game.image_url ? `
+            <div class="current-image">
+              <img src="${game.image_url}" alt="Current image" style="width: 100px; height: 75px; object-fit: cover; margin-top: 0.5rem;">
+            </div>
+          ` : ''}
+        </div>
+        <div class="form-group">
+          <label for="edit-game-image-url">Or Image URL</label>
+          <input type="url" id="edit-game-image-url" name="image_url" value="${game.image_url || ''}" placeholder="https://example.com/game-image.jpg">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-game-order">Display Order</label>
+            <input type="number" id="edit-game-order" name="order" min="0" value="${game.order}">
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="edit-game-popular" name="is_popular" ${game.is_popular ? 'checked' : ''}>
+              <span class="checkmark">Popular Game</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Game</button>
+        </div>
+      </form>
+    `;
+    
+    modal.style.display = 'block';
+    
+    // Handle form submission
+    document.getElementById('editGameForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const gameData = {
+        id: formData.get('id'),
+        name: formData.get('name'),
+        category: formData.get('category'),
+        duration: formData.get('duration'),
+        age_group: formData.get('age_group'),
+        price_info: formData.get('price_info'),
+        package: formData.get('package'),
+        description: formData.get('description'),
+        image_url: formData.get('image_url'),
+        order: formData.get('order'),
+        is_popular: formData.has('is_popular')
+      };
+      
+      try {
+        const response = await fetch('/api/admin/games/', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(gameData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showNotification('Game updated successfully!', 'success');
+          closeAddModal();
+          loadGamesData(); // Reload games data
+        } else {
+          showNotification(result.message || 'Error updating game', 'error');
+        }
+      } catch (error) {
+        console.error('Error updating game:', error);
+        showNotification('Error updating game', 'error');
+      }
+    });
+    
+  } catch (error) {
+    console.error('Error loading game data:', error);
+    showNotification('Error loading game data', 'error');
+  }
+}
+
+// Delete game function
+async function deleteGame(gameId) {
+  if (!confirm('Are you sure you want to delete this game? This action cannot be undone.')) {
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/admin/games/', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: gameId })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      showNotification('Game deleted successfully!', 'success');
+      loadGamesData(); // Reload games data
+    } else {
+      showNotification(result.message || 'Error deleting game', 'error');
+    }
+  } catch (error) {
+    console.error('Error deleting game:', error);
+    showNotification('Error deleting game', 'error');
+  }
+}
+
+// Image preview function
+function previewImage(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('previewImg').src = e.target.result;
+      document.getElementById('imagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Remove image function
+function removeImage() {
+  document.getElementById('game-image').value = '';
+  document.getElementById('imagePreview').style.display = 'none';
+  document.getElementById('previewImg').src = '';
+}
+
+// Handle image upload
+document.addEventListener('change', function(e) {
+  if (e.target.id === 'game-image') {
+    previewImage(e.target);
+  }
+});
+
+// Notification system
+function showNotification(message, type = 'info') {
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.textContent = message;
+  
+  // Add styles
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--info)'};
+    color: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    z-index: 2000;
+    animation: slideInRight 0.3s ease;
+  `;
+  
+  // Add to page
+  document.body.appendChild(notification);
+  
+  // Remove after 3 seconds
+  setTimeout(() => {
+    if (notification && notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 3000);
+}
+
+// Load Membership Data
+function loadMembershipsData() {
+  const tbody = document.getElementById('membershipsTableBody');
+  if (!tbody) return;
+
+  fetch('/api/admin/membership-cards/')
+    .then(response => response.json())
+    .then(data => {
+      const memberships = data.memberships || [];
+
+      if (memberships.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="loading-row">No memberships found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = memberships.map(membership => {
+        const statusClass = membership.status;
+        const validUntil = new Date(membership.valid_until).toLocaleDateString();
+        return `
+          <tr>
+            <td><span class="card-id">${membership.card_id.toString().substring(0, 8)}</span></td>
+            <td>${escapeHtml(membership.customer_name)}</td>
+            <td>${escapeHtml(membership.customer_email)}</td>
+            <td>${membership.get_duration_display}</td>
+            <td>₹${membership.price}</td>
+            <td><span class="membership-status ${statusClass}">${membership.get_status_display}</span></td>
+            <td>${validUntil}</td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-edit" onclick='viewMembershipCard("${membership.card_id}")'>View</button>
+                <button class="btn btn-sm btn-delete" onclick='deleteMembershipCard("${membership.card_id}")'>Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    })
+    .catch(() => {
+      tbody.innerHTML = '<tr><td colspan="8" class="loading-row">Failed to load memberships.</td></tr>';
+    });
+}
+
+function viewMembershipCard(cardId) {
+  // This would open a modal with card details
+  // For now, just show an alert
+  alert(`Viewing membership card: ${cardId}`);
+}
+
+function deleteMembershipCard(cardId) {
+  if (confirm('Are you sure you want to delete this membership card?')) {
+    fetch(`/api/admin/membership-cards/${cardId}/`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        showNotification('Membership card deleted successfully', 'success');
+        loadMembershipsData();
+      } else {
+        showNotification('Failed to delete membership card', 'error');
+      }
+    })
+    .catch(() => {
+      showNotification('Error deleting membership card', 'error');
+    });
+  }
+}
+
+// Add notification animations
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

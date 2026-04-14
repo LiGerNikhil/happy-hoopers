@@ -1,0 +1,1300 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- CONTACT HERO -->
+<section class="contact-hero">
+  <div class="container">
+    <div class="contact-hero-content">
+      <div class="contact-eyebrow">Get in Touch</div>
+      <h1 class="contact-title">We're Here to<br>Help You!</h1>
+      <p class="contact-desc">Have questions about bookings, parties, or our facilities? Reach out to us and we'll get back to you right away!</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM & INFO -->
+<section class="contact-main-section">
+  <div class="container">
+    <div class="contact-main-grid">
+      <div class="contact-info">
+        <h2>Visit Happy Hoopers</h2>
+        <p>Come experience the fun at Vijayawada's premier kids' play arena and café!</p>
+        
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-text">
+              <h3>Address</h3>
+              <p>{{ site_settings.address|default:'Gannavaram, Vijayawada, Andhra Pradesh 521101' }}</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-text">
+              <h3>Phone</h3>
+              <p>{{ site_settings.phone_number|default:'+91 98765 43210' }}</p>
+              <p>Available 10AM - 10PM Daily</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div class="contact-text">
+              <h3>WhatsApp</h3>
+              <p>{{ site_settings.whatsapp_number|default:'+91 98765 43210' }}</p>
+              <p>Quick responses for bookings</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-text">
+              <h3>Email</h3>
+              <p>info@happyhoopers.in</p>
+              <p>General inquiries</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">⏰</div>
+            <div class="contact-text">
+              <h3>Hours</h3>
+              <p>{{ site_settings.hours|default:'10AM – 10PM Daily' }}</p>
+              <p>Open 7 days a week</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-map">
+          <h3>Find Us Easily</h3>
+          <div class="map-placeholder">
+            <div class="map-icon">🗺️</div>
+            <p>Interactive map coming soon!</p>
+            <p>We're located in Gannavaram, easily accessible from all parts of Vijayawada</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form-card">
+        <h3>Send Us a Message</h3>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        <form method="post" id="contact-form">
+          {% csrf_token %}
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.name.id_for_label }}">Your Name *</label>
+              {{ form.name }}
+              {% if form.name.errors %}
+                <div class="error">{{ form.name.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.email.id_for_label }}">Email Address *</label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <div class="error">{{ form.email.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.mobile.id_for_label }}">Mobile Number *</label>
+            {{ form.mobile }}
+            {% if form.mobile.errors %}
+              <div class="error">{{ form.mobile.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.subject.id_for_label }}">Subject *</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+              <div class="error">{{ form.subject.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="{{ form.message.id_for_label }}">Your Message *</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+              <div class="error">{{ form.message.errors.0 }}</div>
+            {% endif %}
+          </div>
+          
+          <button type="submit" class="btn btn-blue btn-lg btn-full">Send Message</button>
+        </form>
+        
+        <div class="contact-alternatives">
+          <p>Or reach out directly:</p>
+          <div class="quick-contact">
+            <a href="tel:{{ site_settings.phone_number|default:'+919876543210' }}" class="quick-btn phone">
+              <span>📞</span>
+              <span>Call Now</span>
+            </a>
+            <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'919876543210' }}" class="quick-btn whatsapp" target="_blank">
+              <span>💬</span>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="contact-faq-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Frequently Asked Questions</div>
+      <h2 class="section-title">Common Questions<br>Quick Answers!</h2>
+    </div>
+    
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>Do I need to book in advance?</h4>
+        <p>Walk-ins are welcome, but we recommend booking during weekends and holidays to avoid disappointment. For birthday parties, advance booking is required.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h4>What age groups do you cater to?</h4>
+        <p>Our play arena is designed for children aged 2-13 years. We have different zones suitable for various age groups within this range.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h4>Is there parking available?</h4>
+        <p>Yes, we have ample parking space available for both two-wheelers and four-wheelers at no additional cost.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h4>Can parents stay while kids play?</h4>
+        <p>Absolutely! Parents are welcome to stay and supervise. We have a comfortable café area where you can relax while keeping an eye on your kids.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h4>Do you have party packages?</h4>
+        <p>Yes! We offer various birthday party packages starting from ₹4,999. Each package includes exclusive arena access, food, and decorations.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h4>Is the facility safe and hygienic?</h4>
+        <p>Safety and hygiene are our top priorities. All equipment is regularly sanitized, and we have trained staff supervising the play areas at all times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL SECTION -->
+<section class="contact-social-section">
+  <div class="container">
+    <div class="social-content">
+      <div class="social-text">
+        <h2>Stay Connected!</h2>
+        <p>Follow us on social media for updates, special offers, and to see the fun happening at Happy Hoopers!</p>
+        
+        <div class="social-links">
+          <a href="{{ site_settings.instagram_url|default:'#' }}" class="social-link" target="_blank">
+            <span class="social-icon">📸</span>
+            <div class="social-info">
+              <strong>Instagram</strong>
+              <span>@happyhoopers</span>
+            </div>
+          </a>
+          
+          <a href="{{ site_settings.facebook_url|default:'#' }}" class="social-link" target="_blank">
+            <span class="social-icon">📘</span>
+            <div class="social-info">
+              <strong>Facebook</strong>
+              <span>Happy Hoopers Play Arena</span>
+            </div>
+          </a>
+          
+          <a href="{{ site_settings.youtube_url|default:'#' }}" class="social-link" target="_blank">
+            <span class="social-icon">▶️</span>
+            <div class="social-info">
+              <strong>YouTube</strong>
+              <span>Happy Hoopers Channel</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <div class="social-cta">
+        <div class="cta-card">
+          <div class="cta-icon">🎯</div>
+          <h3>Ready for Fun?</h3>
+          <p>Book your slot now and create amazing memories with us!</p>
+          <div class="cta-buttons">
+            <a href="{% url 'arena:cricket_booking' %}" class="btn btn-blue">Book Cricket Slot</a>
+            <a href="{% url 'arena:birthday' %}" class="btn btn-amber">Plan Birthday Party</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof attachReveal === 'function') {
+        attachReveal();
+    }
+    
+    // Form validation
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!validateForm('contact-form')) {
+                e.preventDefault();
+                showToast('Please fill in all required fields', 'error');
+            }
+        });
+    }
+});
+</script>
+
+<style>
+:root {
+  --blue: #2563eb;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --sky: #87CEEB;
+  --orange: #FFA500;
+  --navy: #1E3A8A;
+  --accent: #FFA500;
+  --offwhite: #f8f9fa;
+  --grey: #64748b;
+  --radius: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Contact Hero */
+.contact-hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  padding: 120px 0 80px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: heroPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroPulse {
+  0% { 
+    background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  }
+  100% { 
+    background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 50%, #0a0a0a 100%);
+  }
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  animation: heroPattern 20s linear infinite;
+}
+
+@keyframes heroPattern {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.contact-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255, 165, 0, 0.5);
+  color: #FFA500;
+  animation: eyebrowFloat 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.contact-title {
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+  }
+  100% { 
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
+  }
+}
+
+.contact-desc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.65;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Main Section */
+.contact-main-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 50%, #f8f9fa 100%);
+  position: relative;
+}
+
+.contact-main-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(135, 206, 235, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+  animation: sectionPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sectionPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+.contact-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-info h2 {
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.contact-info p {
+  font-size: 16px;
+  color: #0a0a0a;
+  line-height: 1.65;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(135, 206, 235, 0.3);
+  border-color: #87CEEB;
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.contact-text h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin-bottom: 4px;
+}
+
+.contact-text p {
+  font-size: 14px;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.contact-map {
+  margin-top: 40px;
+}
+
+.contact-map h3 {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+
+.map-placeholder {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px dashed rgba(135, 206, 235, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.map-placeholder:hover {
+  border-color: #87CEEB;
+  background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+}
+
+.map-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: mapFloat 3s ease-in-out infinite;
+}
+
+@keyframes mapFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.map-placeholder p {
+  font-size: 14px;
+  color: #0a0a0a;
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.contact-form-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+}
+
+.contact-form-card h3 {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.alert-success {
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1px solid #10B981;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1E3A8A;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.error {
+  color: #EF4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.contact-alternatives {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(135, 206, 235, 0.2);
+}
+
+.contact-alternatives p {
+  font-size: 14px;
+  color: #0a0a0a;
+  margin-bottom: 16px;
+}
+
+.quick-contact {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quick-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quick-btn.phone {
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+}
+
+.quick-btn.whatsapp {
+  background: linear-gradient(45deg, #25D366, #128C7D);
+  color: white;
+}
+
+.quick-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced FAQ Section */
+.contact-faq-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  position: relative;
+}
+
+.contact-faq-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+  animation: sectionPulse 6s ease-in-out infinite alternate;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: tagPulse 2s ease-in-out infinite;
+}
+
+@keyframes tagPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 165, 0, 0.5);
+  }
+}
+
+.section-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #10B981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+  line-height: 1.2;
+  animation: sectionTitleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes sectionTitleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 15px rgba(0, 0, 0, 0.4));
+  }
+  100% { 
+    filter: brightness(1.2) drop-shadow(0 0 25px rgba(16, 185, 129, 0.6));
+  }
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.faq-item {
+  padding: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(135, 206, 235, 0.3);
+  border-color: #87CEEB;
+}
+
+.faq-item h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin-bottom: 8px;
+}
+
+.faq-item p {
+  font-size: 14px;
+  color: #0a0a0a;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Enhanced Social Section */
+.contact-social-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #0a0a0a 100%);
+  position: relative;
+}
+
+.contact-social-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10s-10 4.5-10 10 4.5 10 10 10-4.5 10-10-10-4.5-10-10-10 4.5-10 10-10z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.social-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.social-text h2 {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.social-text p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.social-info strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.social-info span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cta-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.cta-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cta-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: ctaFloat 3s ease-in-out infinite;
+}
+
+@keyframes ctaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.cta-card h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.cta-card p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.cta-buttons .btn {
+  flex: 1;
+  min-width: 200px;
+  justify-content: center;
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 768px) {
+  .contact-hero {
+    padding: 60px 0 40px;
+  }
+  
+  .contact-title {
+    font-size: clamp(32px, 6vw, 48px);
+  }
+  
+  .contact-desc {
+    font-size: 16px;
+  }
+  
+  .contact-main-section {
+    padding: 40px 0;
+  }
+  
+  .contact-main-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .contact-info h2 {
+    font-size: 28px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .quick-contact {
+    flex-direction: column;
+  }
+  
+  .contact-faq-section {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(28px, 5vw, 36px);
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .faq-item {
+    padding: 20px;
+  }
+  
+  .faq-item h4 {
+    font-size: 15px;
+  }
+  
+  .faq-item p {
+    font-size: 13px;
+  }
+  
+  .contact-social-section {
+    padding: 40px 0;
+  }
+  
+  .social-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .social-text h2 {
+    font-size: 28px;
+  }
+  
+  .social-text p {
+    font-size: 14px;
+  }
+  
+  .cta-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .cta-buttons .btn {
+    flex: 1;
+    min-width: 200px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-hero {
+    padding: 40px 0 30px;
+  }
+  
+  .contact-title {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+  
+  .contact-desc {
+    font-size: 14px;
+  }
+  
+  .contact-main-section {
+    padding: 30px 0;
+  }
+  
+  .contact-form-card {
+    padding: 24px 20px;
+  }
+  
+  .contact-info h2 {
+    font-size: 24px;
+  }
+  
+  .contact-item {
+    padding: 16px;
+  }
+  
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .contact-text h3 {
+    font-size: 14px;
+  }
+  
+  .contact-text p {
+    font-size: 13px;
+  }
+  
+  .map-placeholder {
+    padding: 30px 20px;
+  }
+  
+  .map-icon {
+    font-size: 40px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  
+  .cta-card {
+    padding: 24px 20px;
+  }
+  
+  .cta-icon {
+    font-size: 40px;
+  }
+  
+  .cta-card h3 {
+    font-size: 18px;
+  }
+  
+  .cta-card p {
+    font-size: 13px;
+  }
+  
+  .contact-faq-section {
+    padding: 30px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .faq-item {
+    padding: 16px;
+  }
+  
+  .faq-item h4 {
+    font-size: 14px;
+  }
+  
+  .faq-item p {
+    font-size: 12px;
+  }
+  
+  .contact-social-section {
+    padding: 30px 0;
+  }
+  
+  .social-links {
+    gap: 12px;
+  }
+  
+  .social-link {
+    padding: 16px;
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .social-info strong {
+    font-size: 14px;
+  }
+  
+  .social-info span {
+    font-size: 11px;
+  }
+  
+  .section-tag {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-hero {
+    padding: 30px 0 20px;
+  }
+  
+  .contact-title {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+  
+  .contact-desc {
+    font-size: 13px;
+  }
+  
+  .contact-main-section {
+    padding: 20px 0;
+  }
+  
+  .contact-form-card {
+    padding: 20px 16px;
+  }
+  
+  .contact-info h2 {
+    font-size: 20px;
+  }
+  
+  .contact-item {
+    padding: 12px;
+  }
+  
+  .contact-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .contact-text h3 {
+    font-size: 13px;
+  }
+  
+  .contact-text p {
+    font-size: 12px;
+  }
+  
+  .map-placeholder {
+    padding: 20px 12px;
+  }
+  
+  .map-icon {
+    font-size: 32px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  .cta-card {
+    padding: 20px 16px;
+  }
+  
+  .cta-icon {
+    font-size: 32px;
+  }
+  
+  .cta-card h3 {
+    font-size: 16px;
+  }
+  
+  .cta-card p {
+    font-size: 12px;
+  }
+  
+  .contact-faq-section {
+    padding: 20px 0;
+  }
+  
+  .section-title {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .faq-item {
+    padding: 12px;
+  }
+  
+  .faq-item h4 {
+    font-size: 13px;
+  }
+  
+  .faq-item p {
+    font-size: 11px;
+  }
+  
+  .contact-social-section {
+    padding: 20px 0;
+  }
+  
+  .social-text h2 {
+    font-size: 24px;
+  }
+  
+  .social-text p {
+    font-size: 12px;
+  }
+  
+  .social-links {
+    gap: 8px;
+  }
+  
+  .social-link {
+    padding: 12px;
+  }
+  
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .social-info strong {
+    font-size: 12px;
+  }
+  
+  .social-info span {
+    font-size: 10px;
+  }
+  
+  .section-tag {
+    font-size: 10px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .contact-item:hover,
+  .social-link:hover,
+  .faq-item:hover,
+  .cta-card:hover {
+    transform: none;
+  }
+}
+</style>
+{% endblock %}

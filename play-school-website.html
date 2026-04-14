@@ -1,0 +1,1539 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Hoopers — Vijayawada's #1 Play Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM — SKY BLUE + WHITE + NAVY
+══════════════════════════════════════════ */
+:root {
+  --blue:    #0EA5E9;
+  --blue2:   #0284C7;
+  --blue3:   #0369A1;
+  --sky:     #38BDF8;
+  --sky2:    #7DD3FC;
+  --navy:    #0C1B2E;
+  --navy2:   #1E3A5F;
+  --white:   #FFFFFF;
+  --offwhite:#F0F9FF;
+  --grey:    #64748B;
+  --grey2:   #94A3B8;
+  --accent:  #F59E0B;
+  --accent2: #FBBF24;
+  --green:   #10B981;
+  --r-sm:    8px;
+  --r-md:    16px;
+  --r-lg:    24px;
+  --r-xl:    40px;
+  --sh:      0 2px 16px rgba(14,165,233,0.10);
+  --sh-lg:   0 8px 40px rgba(14,165,233,0.18);
+  --sh-xl:   0 20px 60px rgba(12,27,46,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,.display{font-family:'Exo 2',sans-serif}
+
+/* ── UTILITIES ── */
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+a{text-decoration:none;color:inherit}
+
+/* ── BUTTONS ── */
+.btn{border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;transition:all .2s;display:inline-flex;align-items:center;gap:8px;line-height:1;white-space:nowrap}
+.btn-blue{background:var(--blue);color:white;border-radius:6px;padding:14px 28px;font-size:15px;box-shadow:0 4px 20px rgba(14,165,233,0.4)}
+.btn-blue:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(14,165,233,0.5)}
+.btn-amber{background:var(--accent);color:var(--navy);border-radius:6px;padding:14px 28px;font-size:15px;font-weight:900;box-shadow:0 4px 20px rgba(245,158,11,0.4)}
+.btn-amber:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:2px solid var(--blue);color:var(--blue);border-radius:6px;padding:12px 26px;font-size:15px}
+.btn-outline:hover{background:var(--blue);color:white}
+.btn-white{background:white;color:var(--navy);border-radius:6px;padding:14px 28px;font-size:15px;font-weight:800}
+.btn-white:hover{background:var(--offwhite);transform:translateY(-2px)}
+.btn-ghost-white{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.35);color:white;border-radius:6px;padding:12px 24px;font-size:14px}
+.btn-ghost-white:hover{background:rgba(255,255,255,0.22)}
+.btn-lg{padding:16px 36px;font-size:17px}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:6px}
+
+/* ══════════════════════════════════════════
+   PAGE SYSTEM
+══════════════════════════════════════════ */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ══════════════════════════════════════════
+   ANNOUNCE BAR
+══════════════════════════════════════════ */
+.announce-bar{background:var(--navy);padding:10px 20px;text-align:center;font-size:13px;font-weight:700;color:rgba(255,255,255,0.85);position:relative}
+.announce-bar strong{color:var(--accent)}
+.announce-bar a{color:var(--sky);cursor:pointer;font-weight:800;text-decoration:underline}
+.announce-close{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:16px;font-family:'Nunito',sans-serif}
+
+/* ══════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════ */
+.site-header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(14,165,233,0.12);
+  height:72px;padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow .3s;
+}
+.site-header.scrolled{box-shadow:0 4px 32px rgba(14,165,233,0.12)}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;box-shadow:0 4px 16px rgba(14,165,233,0.4);
+}
+.logo-text h1{font-size:22px;font-weight:900;color:var(--navy);letter-spacing:-.5px}
+.logo-text span{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-top:-3px}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{padding:8px 14px;border-radius:6px;font-size:14px;font-weight:700;color:var(--grey);cursor:pointer;transition:all .2s;border:none;background:none;font-family:'Nunito',sans-serif}
+.nav-link:hover{background:var(--offwhite);color:var(--blue)}
+.header-btns{display:flex;align-items:center;gap:8px}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  position:relative;height:92vh;min-height:600px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1576073719676-aa95576db207?auto=format&w=1600&q=80') center/cover no-repeat;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(12,27,46,0.88) 0%,rgba(2,132,199,0.65) 55%,rgba(12,27,46,0.4) 100%);
+}
+.hero-content{position:relative;z-index:2;max-width:700px;padding:0 40px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid rgba(56,189,248,0.5);background:rgba(56,189,248,0.1);
+  border-radius:4px;padding:5px 14px;
+  font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  color:var(--sky);margin-bottom:20px;
+  animation:fadeUp .6s ease both;
+}
+.hero-title{
+  font-size:clamp(42px,6vw,76px);font-weight:900;color:white;
+  line-height:1.05;letter-spacing:-1.5px;margin-bottom:20px;
+  animation:fadeUp .6s ease .1s both;
+}
+.hero-title .hl{color:var(--sky)}
+.hero-desc{
+  font-size:17px;color:rgba(255,255,255,0.78);font-weight:600;
+  max-width:520px;line-height:1.65;margin-bottom:36px;
+  animation:fadeUp .6s ease .2s both;
+}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .6s ease .3s both}
+.hero-chips{
+  display:flex;align-items:center;gap:16px;margin-top:36px;
+  animation:fadeUp .6s ease .4s both;flex-wrap:wrap;
+}
+.hero-chip{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  border-radius:4px;padding:8px 14px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.5px;
+}
+.hero-chip span{font-size:15px}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:rgba(255,255,255,0.5);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════════════
+   TICKER
+══════════════════════════════════════════ */
+.ticker{background:var(--blue);padding:11px 0;overflow:hidden}
+.ticker-wrap{display:flex;gap:0;white-space:nowrap;animation:ticker 35s linear infinite}
+.ticker-item{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:800;color:rgba(255,255,255,0.9);padding:0 48px;letter-spacing:.3px}
+.ticker-item .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.5);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════
+   STATS
+══════════════════════════════════════════ */
+.stats-section{background:var(--navy);padding:56px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat-item{text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,0.07)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Exo 2',sans-serif;font-size:52px;font-weight:900;color:var(--sky);line-height:1;letter-spacing:-2px}
+.stat-num sup{font-size:24px}
+.stat-label{font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);margin-top:8px;text-transform:uppercase;letter-spacing:1px}
+
+/* ══════════════════════════════════════════
+   GAMES
+══════════════════════════════════════════ */
+.games-section{padding:96px 0;background:var(--white)}
+.section-header{margin-bottom:56px}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.section-tag::before{content:'';width:24px;height:2px;background:var(--blue);border-radius:2px}
+.section-title{font-size:clamp(30px,4vw,46px);font-weight:900;letter-spacing:-1px;line-height:1.1;color:var(--navy);margin-bottom:12px}
+.section-sub{font-size:16px;color:var(--grey);font-weight:600;max-width:500px;line-height:1.6}
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.game-card{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);transition:all .35s cubic-bezier(.34,1.56,.64,1);cursor:pointer;background:white;position:relative;border:1px solid rgba(14,165,233,0.08)}
+.game-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.game-card-img{height:200px;overflow:hidden;position:relative}
+.game-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.game-card:hover .game-card-img img{transform:scale(1.07)}
+.game-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(12,27,46,0.6) 100%)}
+.game-card-overlay{position:absolute;bottom:12px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;z-index:1}
+.game-tag-badge{background:var(--blue);color:white;font-size:11px;font-weight:800;padding:3px 10px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase}
+.game-tag-badge.sports{background:var(--green)}
+.game-tag-badge.arcade{background:#8B5CF6}
+.game-tag-badge.creative{background:#EC4899}
+.game-age-badge{background:rgba(12,27,46,0.8);color:rgba(255,255,255,0.9);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;backdrop-filter:blur(4px)}
+.game-card-body{padding:18px 20px 20px}
+.game-card-name{font-family:'Exo 2',sans-serif;font-size:19px;font-weight:800;margin-bottom:6px;letter-spacing:-.3px}
+.game-card-desc{font-size:13px;color:var(--grey);font-weight:600;line-height:1.55;margin-bottom:14px}
+.game-card-footer{display:flex;align-items:center;justify-content:space-between}
+.game-price{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;color:var(--blue)}
+.game-price small{font-family:'Nunito',sans-serif;font-size:11px;color:var(--grey2);font-weight:600}
+.game-dur{font-size:12px;font-weight:700;color:var(--grey2);background:var(--offwhite);padding:4px 10px;border-radius:4px}
+.game-popular{position:absolute;top:14px;right:14px;background:var(--accent);color:var(--navy);font-size:10px;font-weight:900;padding:4px 10px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;z-index:2}
+
+/* ══════════════════════════════════════════
+   PACKAGES
+══════════════════════════════════════════ */
+.packages-section{padding:96px 0;background:var(--offwhite)}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.pkg-card{background:white;border-radius:var(--r-lg);padding:36px 30px;border:1.5px solid rgba(14,165,233,0.12);transition:all .3s;position:relative;overflow:hidden}
+.pkg-card:hover{transform:translateY(-5px);box-shadow:var(--sh-lg)}
+.pkg-card.featured{background:var(--navy);border-color:var(--blue)}
+.pkg-bar{height:3px;border-radius:3px;margin-bottom:28px}
+.pkg-bar-b{background:linear-gradient(90deg,#CD7F32,#E8A040)}
+.pkg-bar-s{background:linear-gradient(90deg,#94A3B8,#CBD5E1)}
+.pkg-bar-g{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.pkg-icon{font-size:40px;margin-bottom:16px;display:block}
+.pkg-name{font-family:'Exo 2',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
+.pkg-tagline{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:24px}
+.pkg-card.featured .pkg-tagline{color:rgba(255,255,255,.5)}
+.pkg-price{font-family:'Exo 2',sans-serif;font-size:52px;font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:4px}
+.pkg-price sup{font-size:22px;letter-spacing:0}
+.pkg-per{font-size:13px;color:var(--grey);font-weight:600;margin-bottom:28px}
+.pkg-card.featured .pkg-per{color:rgba(255,255,255,.4)}
+.pkg-card.featured .pkg-name{color:white}
+.pkg-card.featured .pkg-price{color:var(--sky)}
+.pkg-features{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:30px}
+.pkg-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:600;color:var(--grey)}
+.pkg-card.featured .pkg-features li{color:rgba(255,255,255,.75)}
+.pkg-check{width:18px;height:18px;border-radius:4px;background:rgba(14,165,233,0.12);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0;margin-top:2px}
+.pkg-card.featured .pkg-check{background:rgba(56,189,248,0.2);color:var(--sky)}
+.pkg-best{position:absolute;top:20px;right:-28px;background:var(--accent);color:var(--navy);font-size:9px;font-weight:900;padding:5px 38px;transform:rotate(45deg);letter-spacing:1px;text-transform:uppercase}
+
+/* ══════════════════════════════════════════
+   CRICKET
+══════════════════════════════════════════ */
+.cricket-section{padding:0;background:var(--navy);overflow:hidden;position:relative}
+.cricket-img-half{
+  position:absolute;right:0;top:0;bottom:0;width:48%;
+  background:url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&w=800&q=80') center/cover no-repeat;
+}
+.cricket-img-half::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--navy) 0%,rgba(12,27,46,0.4) 100%)}
+.cricket-content{position:relative;z-index:2;padding:96px 40px;max-width:600px}
+.cricket-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.cricket-label::before{content:'';width:20px;height:2px;background:var(--accent);border-radius:2px}
+.cricket-title{font-size:clamp(34px,4vw,56px);font-weight:900;color:white;letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px}
+.cricket-title .hl{color:var(--sky)}
+.cricket-desc{font-size:16px;color:rgba(255,255,255,0.65);font-weight:600;line-height:1.65;margin-bottom:40px}
+.slot-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:36px}
+.slot-card{
+  background:rgba(255,255,255,0.05);
+  border:1.5px solid rgba(56,189,248,0.15);
+  border-radius:var(--r-md);padding:18px 12px;text-align:center;
+  cursor:pointer;transition:all .2s;
+}
+.slot-card:hover,.slot-card.active{background:rgba(14,165,233,0.15);border-color:var(--blue)}
+.slot-dur{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:4px}
+.slot-price{font-family:'Exo 2',sans-serif;font-size:26px;font-weight:900;color:white;margin-bottom:2px}
+.slot-lbl{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.cricket-balls{display:flex;gap:8px;margin-bottom:28px}
+.ball{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#c0392b,#e74c3c);box-shadow:0 2px 8px rgba(192,57,43,0.5)}
+
+/* ══════════════════════════════════════════
+   CAFÉ
+══════════════════════════════════════════ */
+.cafe-section{padding:96px 0;background:white}
+.cafe-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.cat-btn{padding:9px 20px;border-radius:6px;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;border:1.5px solid #E2E8F0;background:white;color:var(--grey);font-family:'Nunito',sans-serif;letter-spacing:.3px}
+.cat-btn.active,.cat-btn:hover{background:var(--blue);border-color:var(--blue);color:white}
+.cafe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.cafe-card{background:white;border-radius:var(--r-md);overflow:hidden;border:1px solid #E2E8F0;transition:all .3s;cursor:pointer}
+.cafe-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:rgba(14,165,233,0.2)}
+.cafe-img{height:160px;overflow:hidden;position:relative}
+.cafe-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.cafe-card:hover .cafe-img img{transform:scale(1.06)}
+.cafe-cat-pill{position:absolute;top:10px;left:10px;font-size:10px;font-weight:800;padding:3px 9px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase}
+.cp-bev{background:#DBEAFE;color:#1D4ED8}
+.cp-snack{background:#DCFCE7;color:#166534}
+.cp-combo{background:#FEF3C7;color:#92400E}
+.cp-dessert{background:#EDE9FE;color:#5B21B6}
+.cafe-card-body{padding:14px 16px 16px}
+.cafe-card-name{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;letter-spacing:-.3px}
+.cafe-card-desc{font-size:12px;color:var(--grey);font-weight:600;margin-bottom:12px;line-height:1.45}
+.cafe-card-footer{display:flex;align-items:center;justify-content:space-between}
+.cafe-price{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:900;color:var(--blue)}
+.cafe-add{width:32px;height:32px;border-radius:6px;background:var(--blue);border:none;cursor:pointer;color:white;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'Nunito',sans-serif;font-weight:700;box-shadow:0 2px 10px rgba(14,165,233,0.35)}
+.cafe-add:hover{background:var(--blue2);transform:scale(1.12)}
+
+/* ══════════════════════════════════════════
+   BIRTHDAY
+══════════════════════════════════════════ */
+.birthday-section{padding:96px 0;background:var(--offwhite)}
+.birthday-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.birthday-img{border-radius:var(--r-lg);overflow:hidden;position:relative;height:520px;box-shadow:var(--sh-xl)}
+.birthday-img img{width:100%;height:100%;object-fit:cover}
+.birthday-img-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,27,46,0.6) 0%,transparent 50%)}
+.birthday-img-badge{position:absolute;bottom:24px;left:24px;background:white;border-radius:var(--r-md);padding:16px 20px;box-shadow:var(--sh-xl)}
+.bib-top{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:900;color:var(--blue);line-height:1}
+.bib-lbl{font-size:12px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.birthday-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.birthday-eyebrow::before{content:'';width:20px;height:2px;background:var(--blue);border-radius:2px}
+.birthday-title{font-size:clamp(30px,4vw,46px);font-weight:900;letter-spacing:-1px;line-height:1.1;color:var(--navy);margin-bottom:16px}
+.birthday-desc{font-size:16px;color:var(--grey);font-weight:600;line-height:1.65;margin-bottom:32px}
+.bday-feats{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.bday-feat{display:flex;align-items:flex-start;gap:14px;padding:16px;background:white;border-radius:var(--r-md);border:1px solid #E2E8F0;transition:all .2s}
+.bday-feat:hover{border-color:rgba(14,165,233,0.3);box-shadow:var(--sh)}
+.bday-feat-icon{width:40px;height:40px;border-radius:8px;background:var(--offwhite);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.bday-feat-info strong{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800;display:block;margin-bottom:2px;letter-spacing:-.2px}
+.bday-feat-info p{font-size:12px;color:var(--grey);font-weight:600;margin:0}
+.bday-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ══════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════ */
+.reviews-section{padding:96px 0;background:var(--navy);position:relative;overflow:hidden}
+.reviews-section::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:rgba(14,165,233,0.06);pointer-events:none}
+.reviews-header{margin-bottom:56px}
+.reviews-header .section-tag{color:var(--sky)}
+.reviews-header .section-tag::before{background:var(--sky)}
+.reviews-header .section-title{color:white}
+.reviews-header .section-sub{color:rgba(255,255,255,.5)}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.review-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:28px;transition:all .3s}
+.review-card:hover{background:rgba(14,165,233,0.08);border-color:rgba(14,165,233,0.2);transform:translateY(-4px)}
+.review-stars{font-size:14px;margin-bottom:14px;letter-spacing:2px;color:var(--accent)}
+.review-text{font-size:15px;color:rgba(255,255,255,0.75);font-weight:600;line-height:1.65;margin-bottom:20px;font-style:italic}
+.review-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07)}
+.review-avatar{width:42px;height:42px;border-radius:10px;background:var(--blue2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.review-name{font-family:'Exo 2',sans-serif;font-weight:800;color:white;font-size:14px;letter-spacing:-.2px}
+.review-meta{font-size:12px;color:rgba(255,255,255,.4);font-weight:600;margin-top:2px}
+
+/* ══════════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════════ */
+.how-section{padding:96px 0;background:white}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:56px;position:relative}
+.how-line{position:absolute;top:36px;left:12.5%;right:12.5%;height:1px;background:rgba(14,165,233,0.2);z-index:0}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{width:72px;height:72px;border-radius:var(--r-md);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;background:white;border:2px solid rgba(14,165,233,0.2);box-shadow:var(--sh)}
+.how-num::after{content:attr(data-n);position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--blue);color:white;font-family:'Exo 2',sans-serif;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.how-step h3{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:800;margin-bottom:8px;letter-spacing:-.3px}
+.how-step p{font-size:13px;color:var(--grey);font-weight:600;line-height:1.55}
+
+/* ══════════════════════════════════════════
+   GALLERY
+══════════════════════════════════════════ */
+.gallery-section{padding:96px 0;background:var(--offwhite)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:12px;margin-top:48px}
+.gal-item{border-radius:var(--r-md);overflow:hidden;position:relative;cursor:pointer}
+.gal-item.tall{grid-row:span 2}
+.gal-item.wide{grid-column:span 2}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.gal-item:hover img{transform:scale(1.06)}
+.gal-overlay{position:absolute;inset:0;background:rgba(12,27,46,0);transition:background .3s;display:flex;align-items:flex-end;padding:16px}
+.gal-item:hover .gal-overlay{background:rgba(12,27,46,0.5)}
+.gal-label{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800;color:white;opacity:0;transition:opacity .3s;letter-spacing:-.2px}
+.gal-item:hover .gal-label{opacity:1}
+
+/* ══════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════ */
+.faq-section{padding:96px 0;background:white}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:56px}
+.faq-item{border:1.5px solid #E2E8F0;border-radius:var(--r-md);overflow:hidden;transition:all .2s}
+.faq-item.open{border-color:var(--blue);box-shadow:var(--sh)}
+.faq-q{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:12px}
+.faq-q-text{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px}
+.faq-icon{width:26px;height:26px;border-radius:6px;background:var(--offwhite);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .3s;color:var(--blue);font-weight:900}
+.faq-item.open .faq-icon{background:var(--blue);color:white;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 22px}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:18px}
+.faq-a p{font-size:14px;color:var(--grey);font-weight:600;line-height:1.65}
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+.contact-section{padding:96px 0;background:var(--navy);position:relative;overflow:hidden}
+.contact-section::before{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:rgba(14,165,233,0.06)}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;position:relative;z-index:1}
+.contact-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--sky);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.contact-eyebrow::before{content:'';width:20px;height:2px;background:var(--sky);border-radius:2px}
+.contact-title{font-size:clamp(28px,4vw,42px);font-weight:900;color:white;letter-spacing:-1px;margin-bottom:36px}
+.contact-cards{display:flex;flex-direction:column;gap:14px}
+.contact-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-md);padding:18px 20px;display:flex;align-items:flex-start;gap:14px;transition:all .2s}
+.contact-card:hover{background:rgba(14,165,233,0.1);border-color:rgba(14,165,233,0.2)}
+.contact-icon{width:42px;height:42px;border-radius:8px;background:rgba(14,165,233,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:var(--sky)}
+.contact-card strong{display:block;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.2px}
+.contact-card p{font-size:13px;color:rgba(255,255,255,0.55);font-weight:600;line-height:1.5}
+.map-box{border-radius:var(--r-lg);overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.map-pin-icon{font-size:56px}
+.map-box h3{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;color:white;letter-spacing:-.3px}
+.map-box p{font-size:13px;color:rgba(255,255,255,.5);font-weight:600;text-align:center;line-height:1.5}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+.footer{background:#060E1A;padding:64px 0 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo-text h1{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}
+.footer-logo-text span{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-top:-3px}
+.footer-desc{font-size:14px;color:rgba(255,255,255,.45);font-weight:600;margin-top:16px;line-height:1.65;max-width:280px}
+.footer-social{display:flex;gap:8px;margin-top:20px}
+.social-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s}
+.social-btn:hover{background:rgba(14,165,233,0.2);border-color:rgba(14,165,233,0.3);transform:translateY(-2px)}
+.footer-col h4{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800;color:white;margin-bottom:16px;letter-spacing:.3px;text-transform:uppercase}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.45);font-weight:600;cursor:pointer;transition:color .2s}
+.footer-links a:hover{color:var(--sky)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding:20px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.3);font-weight:600}
+.footer-bottom-links{display:flex;gap:20px}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.3);cursor:pointer;font-weight:600;transition:color .2s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.6)}
+
+/* ══════════════════════════════════════════
+   FLOATING BUTTONS
+══════════════════════════════════════════ */
+.whatsapp-float{
+  position:fixed;bottom:28px;right:28px;z-index:900;
+  width:54px;height:54px;border-radius:14px;
+  background:#25D366;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;box-shadow:0 6px 24px rgba(37,211,102,0.45);
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(37,211,102,0.6)}
+.book-float{
+  position:fixed;bottom:28px;left:28px;z-index:900;
+  background:var(--blue);color:white;border:none;border-radius:10px;
+  padding:13px 22px;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 6px 24px rgba(14,165,233,0.45);
+  display:flex;align-items:center;gap:8px;transition:all .2s;letter-spacing:.3px;
+}
+.book-float:hover{background:var(--blue2);transform:translateY(-3px)}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+#toast{position:fixed;top:88px;right:28px;background:var(--navy);color:white;border-radius:var(--r-md);padding:13px 18px;font-weight:700;font-size:14px;z-index:700;display:flex;align-items:center;gap:8px;transform:translateX(120px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:280px;box-shadow:var(--sh-xl);border-left:3px solid var(--blue)}
+#toast.show{transform:translateX(0);opacity:1}
+
+/* ══════════════════════════════════════════
+   MODALS
+══════════════════════════════════════════ */
+.overlay{display:none;position:fixed;inset:0;background:rgba(6,14,26,0.75);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:20px}
+.overlay.open{display:flex}
+.modal-box{background:white;border-radius:var(--r-xl);width:480px;max-width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-xl);animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-header{padding:28px 28px 0;position:relative}
+.modal-header h2{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
+.modal-header p{font-size:13px;color:var(--grey);font-weight:600;margin-bottom:24px}
+.modal-close{position:absolute;top:20px;right:20px;background:#F1F5F9;border:none;width:32px;height:32px;border-radius:8px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;font-family:'Nunito',sans-serif;font-weight:700;color:var(--grey)}
+.modal-close:hover{background:#E2E8F0}
+.modal-body{padding:0 28px 28px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--grey);margin-bottom:6px}
+.form-group input,.form-group select{width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:12px 14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;color:var(--navy);outline:none;transition:border-color .2s;background:#FAFAFA}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+.btn-full{width:100%;padding:14px;font-size:16px;border-radius:8px;justify-content:center}
+.error-box{background:#FEF2F2;border:1.5px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;color:#DC2626;margin-bottom:14px;display:none}
+.error-box.show{display:block}
+.success-box{background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:var(--r-md);padding:24px;text-align:center;display:none}
+.success-box.show{display:block}
+.success-icon{font-size:48px;margin-bottom:12px;display:block}
+.cost-box{background:linear-gradient(135deg,var(--offwhite),#EFF6FF);border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;border:1.5px solid rgba(14,165,233,0.15)}
+.cost-amount{font-family:'Exo 2',sans-serif;font-size:38px;font-weight:900;color:var(--blue);letter-spacing:-1px}
+.cost-breakdown{font-size:12px;color:var(--grey);font-weight:700;margin-top:4px}
+
+/* ══════════════════════════════════════════
+   LOGIN
+══════════════════════════════════════════ */
+.login-banner{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:36px 28px 28px;text-align:center;position:relative;border-radius:var(--r-xl) var(--r-xl) 0 0}
+.login-icon{width:60px;height:60px;background:rgba(14,165,233,0.2);border:1.5px solid rgba(14,165,233,0.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px}
+.login-banner h2{font-family:'Exo 2',sans-serif;font-size:24px;font-weight:900;color:white;letter-spacing:-.5px}
+.login-banner p{font-size:13px;color:rgba(255,255,255,.55);font-weight:600;margin-top:4px}
+.login-close{position:absolute;top:14px;right:18px;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);width:32px;height:32px;border-radius:8px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .2s;font-family:'Nunito',sans-serif}
+.login-close:hover{background:rgba(255,255,255,.2)}
+.btn-login{width:100%;padding:14px;font-size:15px;border-radius:8px;background:var(--blue);color:white;border:none;font-family:'Exo 2',sans-serif;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:all .2s;box-shadow:0 4px 16px rgba(14,165,233,.35)}
+.btn-login:hover{background:var(--blue2);transform:translateY(-2px)}
+.login-hint{text-align:center;margin-top:12px;font-size:12px;color:var(--grey2);font-weight:600}
+
+/* ══════════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════════ */
+.admin-bar{background:var(--navy);padding:0 32px;display:flex;align-items:center;gap:16px;height:62px;border-bottom:1px solid rgba(255,255,255,.06)}
+.admin-back{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:14px;font-weight:700;cursor:pointer;padding:6px 12px;border-radius:6px;transition:all .2s;font-family:'Nunito',sans-serif;border:none;background:none}
+.admin-back:hover{background:rgba(255,255,255,.08);color:white}
+.admin-title{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:800;color:white;margin:0 auto;letter-spacing:-.3px}
+.user-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 14px;color:white;cursor:pointer}
+.user-chip .uc-av{width:26px;height:26px;border-radius:6px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px}
+.user-chip .uc-n{font-size:13px;font-weight:700;font-family:'Exo 2',sans-serif}
+.tabs-bar{display:flex;padding:0 32px;border-bottom:1px solid #E2E8F0;background:white;overflow-x:auto;scrollbar-width:none;gap:4px}
+.tabs-bar::-webkit-scrollbar{display:none}
+.tab-btn{display:flex;align-items:center;gap:8px;padding:16px 20px;border:none;background:none;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:var(--grey2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;letter-spacing:.2px}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-badge{background:var(--blue);color:white;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:800;font-family:'Nunito',sans-serif}
+.tab-badge.green{background:var(--green)}
+.tab-badge.amber{background:var(--accent)}
+.admin-section{display:none;padding:28px 32px}
+.admin-section.active{display:block}
+.stats-bar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.stat-chip-admin{background:white;border-radius:var(--r-md);padding:16px 20px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);flex:1;min-width:150px;border:1px solid #E2E8F0}
+.stat-chip-admin .sc-e{font-size:26px}
+.stat-chip-admin .sc-v{font-family:'Exo 2',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--navy)}
+.stat-chip-admin .sc-l{font-size:11px;color:var(--grey2);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.add-card{background:white;border-radius:var(--r-md);padding:22px;border:1px solid #E2E8F0;margin-bottom:24px;border-left:3px solid var(--blue)}
+.add-card.cafe-c{border-left-color:var(--green)}
+.add-card h3{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;margin-bottom:14px;color:var(--navy);letter-spacing:-.2px}
+.a-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.a-group{display:flex;flex-direction:column;gap:5px;flex:1;min-width:130px}
+.a-group label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--grey2)}
+.a-group input,.a-group select{border:1.5px solid #E2E8F0;border-radius:6px;padding:9px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--navy);outline:none;transition:border-color .2s;background:#FAFAFA}
+.a-group input:focus,.a-group select:focus{border-color:var(--blue);background:white}
+.section-label{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.item-card{background:white;border-radius:var(--r-md);padding:18px;border:1px solid #E2E8F0;display:flex;flex-direction:column;gap:9px;transition:all .15s;position:relative;overflow:hidden}
+.item-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
+.item-card.cafe-c::before{background:var(--green)}
+.item-card:hover{box-shadow:var(--sh);border-color:rgba(14,165,233,0.2)}
+.item-emoji{font-size:28px;height:40px;display:flex;align-items:center}
+.item-name{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.3px}
+.item-category{display:inline-flex;align-items:center;background:#EFF6FF;color:var(--blue);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;width:fit-content}
+.item-category.food{background:#F0FDF4;color:var(--green)}
+.item-row{display:flex;align-items:center;justify-content:space-between}
+.item-price{font-size:20px;font-weight:800;font-family:'Exo 2',sans-serif}
+.qty-pill{background:#FEF9C3;border:1.5px solid #FDE047;border-radius:4px;padding:2px 10px;font-size:12px;font-weight:700;color:#854D0E}
+.qty-pill.low{background:#FEF2F2;border-color:#FECACA;color:#DC2626}
+.item-actions{display:flex;gap:6px;margin-top:2px}
+.btn-edit{background:#EFF6FF;color:var(--blue);border:1px solid #BFDBFE;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s}
+.btn-edit:hover{background:#DBEAFE}
+.btn-del{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s}
+.btn-del:hover{background:#FEE2E2}
+.btn-prim-sm{background:var(--blue);color:white;border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-prim-sm:hover{background:var(--blue2)}
+.btn-prim-sm.green-btn{background:var(--green)}
+.btn-prim-sm.green-btn:hover{background:#059669}
+.empty-state{text-align:center;padding:56px 20px;color:var(--grey2)}
+.empty-state .es-emoji{font-size:48px;margin-bottom:12px;display:block}
+.empty-state p{font-size:15px;font-weight:600}
+.edit-overlay{display:none;position:fixed;inset:0;background:rgba(6,14,26,.65);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.edit-overlay.open{display:flex}
+.edit-modal{background:white;border-radius:var(--r-lg);padding:26px;width:420px;max-width:90vw;box-shadow:var(--sh-xl);animation:popIn .2s cubic-bezier(.34,1.56,.64,1)}
+.edit-modal h3{font-family:'Exo 2',sans-serif;font-size:19px;font-weight:900;margin-bottom:18px;letter-spacing:-.3px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.booking-table{width:100%;border-collapse:separate;border-spacing:0 6px}
+.booking-table th{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--grey2);padding:8px 14px;text-align:left}
+.booking-table td{background:white;padding:13px 14px;font-size:13px;font-weight:600;border-top:1px solid #F1F5F9;border-bottom:1px solid #F1F5F9}
+.booking-table tr td:first-child{border-left:1px solid #F1F5F9;border-radius:8px 0 0 8px}
+.booking-table tr td:last-child{border-right:1px solid #F1F5F9;border-radius:0 8px 8px 0}
+.b-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:800}
+.b-confirmed{background:#F0FDF4;color:var(--green)}
+.bowl-section{padding:28px 32px}
+.bowl-hero{background:var(--navy);border-radius:var(--r-lg);padding:28px;margin-bottom:24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.bowl-hero-icon{font-size:48px}
+.bowl-hero-text h2{font-family:'Exo 2',sans-serif;color:white;font-size:22px;font-weight:900;letter-spacing:-.5px}
+.bowl-hero-text p{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;margin-top:4px}
+.bowl-rate{background:var(--accent);color:var(--navy);border-radius:6px;padding:7px 16px;font-weight:900;font-size:13px;display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:'Exo 2',sans-serif;letter-spacing:.3px}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal-l.visible{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal-r.visible{opacity:1;transform:translateX(0)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .birthday-inner,.contact-inner{grid-template-columns:1fr}
+  .packages-grid{grid-template-columns:1fr 1fr}
+  .pkg-card.featured{transform:none}
+  .cricket-img-half{display:none}
+  .cricket-content{max-width:100%;padding:64px 40px}
+  .how-grid{grid-template-columns:1fr 1fr}
+  .how-line{display:none}
+  .reviews-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .hero-content{padding:0 20px}
+  .nav-links{display:none}
+  .site-header{padding:0 20px}
+  .packages-grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
+  .gal-item.tall{grid-row:span 1}
+  .gal-item.wide{grid-column:span 1}
+  .footer-grid{grid-template-columns:1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .slot-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCE BAR -->
+<div class="announce-bar" id="announce-bar">
+  ⚡ Weekend Special: <strong>20% OFF</strong> on Gold Package bookings this weekend! &nbsp;<a onclick="openBookingModal()">Grab the deal →</a>
+  <button class="announce-close" onclick="document.getElementById('announce-bar').style.display='none'">✕</button>
+</div>
+
+<!-- ══════════ PAGE: HOME ══════════ -->
+<div class="page active" id="page-home">
+
+  <header class="site-header" id="site-header">
+    <div class="logo" onclick="goHome()">
+      <div class="logo-icon">🎯</div>
+      <div class="logo-text"><h1>HAPPY HOOPERS</h1><span>Play Arena & Café · Vijayawada</span></div>
+    </div>
+    <nav class="nav-links">
+      <button class="nav-link" onclick="scrollTo('#games')">Games</button>
+      <button class="nav-link" onclick="scrollTo('#packages')">Packages</button>
+      <button class="nav-link" onclick="scrollTo('#cafe')">Café</button>
+      <button class="nav-link" onclick="scrollTo('#birthday')">Parties</button>
+      <button class="nav-link" onclick="scrollTo('#contact')">Visit Us</button>
+    </nav>
+    <div class="header-btns">
+      <button class="btn btn-outline btn-sm" onclick="openLogin()">Login</button>
+      <button class="btn btn-blue btn-sm" onclick="openBookingModal()">🏏 Book Now</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">⭐ Vijayawada's #1 Play Arena</div>
+      <h1 class="hero-title">Play Hard.<br><span class="hl">Win Big.</span><br>Have Fun!</h1>
+      <p class="hero-desc">10+ thrilling games, cricket bowling machine, gourmet café and epic birthday parties — all in one action-packed arena in Gannavaram, Vijayawada.</p>
+      <div class="hero-cta">
+        <button class="btn btn-blue btn-lg" onclick="scrollTo('#games')">Explore Games</button>
+        <button class="btn btn-amber btn-lg" onclick="openBookingModal()">🏏 Book Cricket Slot</button>
+      </div>
+      <div class="hero-chips">
+        <div class="hero-chip"><span>🛡️</span> Safety Certified</div>
+        <div class="hero-chip"><span>❄️</span> Full AC</div>
+        <div class="hero-chip"><span>🕐</span> 10AM–10PM Daily</div>
+        <div class="hero-chip"><span>🅿️</span> Free Parking</div>
+      </div>
+    </div>
+    <div class="hero-scroll">▼ SCROLL</div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-wrap" id="ticker-wrap">
+      <span class="ticker-item"><span class="dot"></span> Now Open Daily 10AM – 10PM</span>
+      <span class="ticker-item"><span class="dot"></span> Cricket Bowling Machine — Book Your Slot!</span>
+      <span class="ticker-item"><span class="dot"></span> Birthday Party Packages From ₹4,999</span>
+      <span class="ticker-item"><span class="dot"></span> 10+ Games For Kids Ages 2–13</span>
+      <span class="ticker-item"><span class="dot"></span> 100% Sanitised & Safe Facility</span>
+      <span class="ticker-item"><span class="dot"></span> Gannavaram, Vijayawada</span>
+      <span class="ticker-item"><span class="dot"></span> Call: +91 98765 43210</span>
+      <span class="ticker-item"><span class="dot"></span> Now Open Daily 10AM – 10PM</span>
+      <span class="ticker-item"><span class="dot"></span> Cricket Bowling Machine — Book Your Slot!</span>
+      <span class="ticker-item"><span class="dot"></span> Birthday Party Packages From ₹4,999</span>
+      <span class="ticker-item"><span class="dot"></span> 10+ Games For Kids Ages 2–13</span>
+      <span class="ticker-item"><span class="dot"></span> 100% Sanitised & Safe Facility</span>
+      <span class="ticker-item"><span class="dot"></span> Gannavaram, Vijayawada</span>
+      <span class="ticker-item"><span class="dot"></span> Call: +91 98765 43210</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-num"><span class="counter" data-target="15000">0</span>+</div>
+          <div class="stat-label">Happy Kids</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:.08s">
+          <div class="stat-num"><span class="counter" data-target="10">0</span>+</div>
+          <div class="stat-label">Games & Activities</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:.16s">
+          <div class="stat-num"><span class="counter" data-target="500">0</span>+</div>
+          <div class="stat-label">Birthdays Celebrated</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:.24s">
+          <div class="stat-num">4.9<sup>⭐</sup></div>
+          <div class="stat-label">Google Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section class="games-section" id="games">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Games & Activities</div>
+        <h2 class="section-title">10+ Games That'll Keep<br>Them Coming Back!</h2>
+        <p class="section-sub">From high-flying trampolines to precision cricket — every game is a new adventure.</p>
+      </div>
+      <div class="games-grid" id="games-grid"></div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="packages-section" id="packages">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <div class="section-tag" style="justify-content:center">Packages & Pricing</div>
+        <h2 class="section-title">Straight-Up Pricing.<br>Zero Surprises.</h2>
+        <p class="section-sub" style="margin:0 auto">Pick a package and start playing in minutes!</p>
+      </div>
+      <div class="packages-grid">
+        <div class="pkg-card reveal" style="transition-delay:.05s">
+          <div class="pkg-bar pkg-bar-b"></div>
+          <span class="pkg-icon">🥉</span>
+          <div class="pkg-name">BRONZE</div>
+          <div class="pkg-tagline">Perfect starter pack</div>
+          <div class="pkg-price"><sup>₹</sup>299</div>
+          <div class="pkg-per">per child · 1 hour</div>
+          <ul class="pkg-features">
+            <li><div class="pkg-check">✓</div>Soft Play Zone (unlimited)</li>
+            <li><div class="pkg-check">✓</div>Ball Pit Splash (30 min)</li>
+            <li><div class="pkg-check">✓</div>Mega Slide Zone (unlimited)</li>
+            <li><div class="pkg-check">✓</div>Welcome juice included</li>
+          </ul>
+          <button class="btn btn-outline btn-full" onclick="openBookingModal()">Get Started</button>
+        </div>
+        <div class="pkg-card featured reveal" style="transition-delay:.1s">
+          <div class="pkg-bar pkg-bar-g"></div>
+          <div class="pkg-best">BEST VALUE</div>
+          <span class="pkg-icon">🥇</span>
+          <div class="pkg-name">GOLD</div>
+          <div class="pkg-tagline">The full Happy Hoopers experience</div>
+          <div class="pkg-price"><sup>₹</sup>699</div>
+          <div class="pkg-per">per child · 3 hours</div>
+          <ul class="pkg-features">
+            <li><div class="pkg-check">✓</div>All Bronze + Silver included</li>
+            <li><div class="pkg-check">✓</div>Trampoline (unlimited)</li>
+            <li><div class="pkg-check">✓</div>Cricket Bowling (30 min)</li>
+            <li><div class="pkg-check">✓</div>Arcade + Air Hockey</li>
+            <li><div class="pkg-check">✓</div>Meal combo included</li>
+            <li><div class="pkg-check">✓</div>Priority wristband entry</li>
+          </ul>
+          <button class="btn btn-amber btn-full" onclick="openBookingModal()">Book Gold 🔥</button>
+        </div>
+        <div class="pkg-card reveal" style="transition-delay:.15s">
+          <div class="pkg-bar pkg-bar-s"></div>
+          <span class="pkg-icon">🥈</span>
+          <div class="pkg-name">SILVER</div>
+          <div class="pkg-tagline">For the adventure seeker</div>
+          <div class="pkg-price"><sup>₹</sup>449</div>
+          <div class="pkg-per">per child · 2 hours</div>
+          <ul class="pkg-features">
+            <li><div class="pkg-check">✓</div>All Bronze activities</li>
+            <li><div class="pkg-check">✓</div>Trampoline Jump (30 min)</li>
+            <li><div class="pkg-check">✓</div>Climbing Wall (15 min)</li>
+            <li><div class="pkg-check">✓</div>Mini Bowling (1 game)</li>
+            <li><div class="pkg-check">✓</div>Snack combo included</li>
+          </ul>
+          <button class="btn btn-blue btn-full" onclick="openBookingModal()">Book Silver</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRICKET -->
+  <section class="cricket-section" id="cricket">
+    <div class="cricket-img-half"></div>
+    <div class="container" style="position:relative;z-index:2">
+      <div class="cricket-content reveal-l">
+        <div class="cricket-label">Premium Attraction</div>
+        <h2 class="cricket-title">Train Like a<br><span class="hl">Cricket Pro.</span></h2>
+        <p class="cricket-desc">Face our state-of-the-art Automated Cricket Bowling Machine at multiple speed settings. Every ball is real action, real excitement — book your slot now!</p>
+        <div class="cricket-balls">
+          <div class="ball"></div><div class="ball"></div><div class="ball"></div>
+          <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);margin-left:8px;align-self:center;letter-spacing:.5px">SELECT YOUR SLOT</span>
+        </div>
+        <div class="slot-row">
+          <div class="slot-card" onclick="selectSlot(this)"><div class="slot-dur">15 min</div><div class="slot-price">₹100</div><div class="slot-lbl">Starter</div></div>
+          <div class="slot-card active" onclick="selectSlot(this)"><div class="slot-dur">30 min</div><div class="slot-price">₹200</div><div class="slot-lbl">Standard</div></div>
+          <div class="slot-card" onclick="selectSlot(this)"><div class="slot-dur">45 min</div><div class="slot-price">₹300</div><div class="slot-lbl">Extended</div></div>
+          <div class="slot-card" onclick="selectSlot(this)"><div class="slot-dur">1 Hour</div><div class="slot-price">₹400</div><div class="slot-lbl">Full Session</div></div>
+        </div>
+        <button class="btn btn-amber btn-lg" onclick="openBookingModal()">🏏 Book Your Slot Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAFÉ -->
+  <section class="cafe-section" id="cafe">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Happy Hoopers Café</div>
+        <h2 class="section-title">Fuel Up for<br>More Action!</h2>
+        <p class="section-sub">Fresh, hygienically prepared food. From ice-cold beverages to filling combos!</p>
+      </div>
+      <div class="cafe-cats" id="cafe-cats">
+        <button class="cat-btn active" onclick="filterCafe('All',this)">All Items</button>
+        <button class="cat-btn" onclick="filterCafe('Beverages',this)">🥤 Beverages</button>
+        <button class="cat-btn" onclick="filterCafe('Snacks',this)">🍟 Snacks</button>
+        <button class="cat-btn" onclick="filterCafe('Combos',this)">🍱 Combos</button>
+        <button class="cat-btn" onclick="filterCafe('Desserts',this)">🍰 Desserts</button>
+      </div>
+      <div class="cafe-grid" id="cafe-grid"></div>
+    </div>
+  </section>
+
+  <!-- BIRTHDAY -->
+  <section class="birthday-section" id="birthday">
+    <div class="container">
+      <div class="birthday-inner">
+        <div class="birthday-img reveal-l">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&w=800&q=80" alt="Birthday Party at Happy Hoopers">
+          <div class="birthday-img-overlay"></div>
+          <div class="birthday-img-badge">
+            <div class="bib-top">₹4,999</div>
+            <div class="bib-lbl">Party packages from</div>
+          </div>
+        </div>
+        <div class="reveal-r">
+          <div class="birthday-eyebrow">Birthday Parties</div>
+          <h2 class="birthday-title">Their Day.<br>Our Arena.<br>Pure Magic.</h2>
+          <p class="birthday-desc">Book Happy Hoopers exclusively for your kid's birthday. We handle the games, food, decor — you just show up and celebrate!</p>
+          <div class="bday-feats">
+            <div class="bday-feat"><div class="bday-feat-icon">🎮</div><div class="bday-feat-info"><strong>Exclusive Arena Access</strong><p>The whole play zone is booked just for your party</p></div></div>
+            <div class="bday-feat"><div class="bday-feat-icon">🍰</div><div class="bday-feat-info"><strong>Birthday Cake + Catering</strong><p>Custom menu and cake included in package</p></div></div>
+            <div class="bday-feat"><div class="bday-feat-icon">🎨</div><div class="bday-feat-info"><strong>Themed Setup & Decor</strong><p>We transform the space for your theme</p></div></div>
+            <div class="bday-feat"><div class="bday-feat-icon">📸</div><div class="bday-feat-info"><strong>Photo Corner & Props</strong><p>Capture memories that last forever</p></div></div>
+          </div>
+          <div class="bday-cta">
+            <a href="tel:+919876543210" class="btn btn-blue btn-lg">📞 Call to Book</a>
+            <button class="btn btn-ghost-white btn-lg" style="background:#F1F5F9;color:var(--navy);border:none" onclick="showToast('WhatsApp opening! 💬')">💬 WhatsApp Us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="container">
+      <div class="reviews-header reveal">
+        <div class="section-tag">Parent Reviews</div>
+        <h2 class="section-title">500+ Families Can't<br>Be Wrong!</h2>
+        <p class="section-sub">Real reviews from real Vijayawada parents on Google.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"My daughter had the most incredible birthday here! The staff managed everything — decor, food, games. Kids were screaming with joy the whole time!"</p>
+          <div class="review-author">
+            <div class="review-avatar">👩</div>
+            <div><div class="review-name">Priya Sharma</div><div class="review-meta">Mom of 2 · Birthday Party</div></div>
+          </div>
+        </div>
+        <div class="review-card reveal" style="transition-delay:.08s">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"The cricket bowling machine is absolutely fantastic! My 10-year-old son asks to go every week. Super clean facility and extremely friendly staff!"</p>
+          <div class="review-author">
+            <div class="review-avatar">👨</div>
+            <div><div class="review-name">Ravi Kumar</div><div class="review-meta">Dad · Gold Package</div></div>
+          </div>
+        </div>
+        <div class="review-card reveal" style="transition-delay:.16s">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Best play area in Vijayawada! The trampoline and foam pit are amazing. The café has great food too — we spent 4 hours and the kids didn't want to leave!"</p>
+          <div class="review-author">
+            <div class="review-avatar">👩</div>
+            <div><div class="review-name">Anitha Reddy</div><div class="review-meta">Mom · Weekend Visit</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <div class="section-tag" style="justify-content:center">How It Works</div>
+        <h2 class="section-title">Ready in 4 Simple Steps</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-line"></div>
+        <div class="how-step reveal"><div class="how-num" data-n="1">📱</div><h3>Pick a Package</h3><p>Choose Bronze, Silver or Gold — or book individual game sessions at the counter.</p></div>
+        <div class="how-step reveal" style="transition-delay:.08s"><div class="how-num" data-n="2">📅</div><h3>Book Your Slot</h3><p>Book cricket slots online instantly. Call us for birthday party reservations.</p></div>
+        <div class="how-step reveal" style="transition-delay:.16s"><div class="how-num" data-n="3">🚗</div><h3>Arrive & Check In</h3><p>Come to Gannavaram, collect your wristbands and the action starts immediately!</p></div>
+        <div class="how-step reveal" style="transition-delay:.24s"><div class="how-num" data-n="4">🏆</div><h3>Play & Eat!</h3><p>Conquer every game, refuel at the café and create memories the whole family will love.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Gallery</div>
+        <h2 class="section-title">Action Inside<br>Happy Hoopers</h2>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gal-item wide tall"><img src="https://images.unsplash.com/photo-1576073719676-aa95576db207?auto=format&w=800&q=80" alt="Trampoline Park"><div class="gal-overlay"><div class="gal-label">Trampoline Jump Zone</div></div></div>
+        <div class="gal-item"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&w=600&q=80" alt="Kids Fun"><div class="gal-overlay"><div class="gal-label">Happy Kids</div></div></div>
+        <div class="gal-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=600&q=80" alt="Ball Pit"><div class="gal-overlay"><div class="gal-label">Ball Pit Splash</div></div></div>
+        <div class="gal-item tall"><img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&w=600&q=80" alt="Cricket"><div class="gal-overlay"><div class="gal-label">Cricket Machine</div></div></div>
+        <div class="gal-item"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&w=600&q=80" alt="Birthday"><div class="gal-overlay"><div class="gal-label">Birthday Parties</div></div></div>
+        <div class="gal-item"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&w=600&q=80" alt="Café"><div class="gal-overlay"><div class="gal-label">Hoopers Café</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <div class="section-tag" style="justify-content:center">FAQs</div>
+        <h2 class="section-title">Got Questions?<br>We've Got Answers.</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">What are your opening hours?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Open every day including weekends and public holidays — 10:00 AM to 10:00 PM. Last entry at 9:00 PM.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">What ages are the games for?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>We have activities for kids aged 2 to 13. Soft Play for toddlers (2–5), Trampoline, Cricket and Arcade for older kids (6–13).</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">Do parents need to pay entry?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Parents get free entry to the café and waiting area. Parents who wish to participate in activities can buy individual tokens at the counter.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">How do I book the Cricket Bowling Machine?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Book online via our website using the "Book Now" button. Slots start from ₹100 for 15 minutes. Walk-ins also welcome based on availability.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">How do I plan a birthday party?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Call us on +91 98765 43210. We'll customise a package for your guest count, theme and budget. Minimum 3 days advance booking needed.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">Is the facility safe and clean?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>All equipment and play areas are sanitised multiple times daily. Staff are first-aid trained. Fully air-conditioned with CCTV monitoring throughout.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">Can we bring outside food?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Outside food is not permitted inside the play area. Our café serves freshly prepared food and beverages for kids and adults at reasonable prices.</p></div></div>
+        <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">What is your cancellation policy?</span><span class="faq-icon">+</span></div><div class="faq-a"><p>Cricket slot cancellations 4+ hours in advance receive a full refund. Birthday party deposits are non-refundable but transferable to a new date.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div>
+          <div class="contact-eyebrow reveal">Find Us</div>
+          <h2 class="contact-title reveal">Visit Happy Hoopers<br>Today!</h2>
+          <div class="contact-cards">
+            <div class="contact-card reveal" style="transition-delay:.05s"><div class="contact-icon">📍</div><div><strong>Address</strong><p>Gannavaram, Krishna District<br>Vijayawada, Andhra Pradesh – 521101</p></div></div>
+            <div class="contact-card reveal" style="transition-delay:.1s"><div class="contact-icon">📞</div><div><strong>Phone & WhatsApp</strong><p>+91 98765 43210<br>+91 98765 43211 (Bookings)</p></div></div>
+            <div class="contact-card reveal" style="transition-delay:.15s"><div class="contact-icon">🕐</div><div><strong>Hours</strong><p>Monday – Sunday: 10:00 AM – 10:00 PM<br>Open on all public holidays</p></div></div>
+            <div class="contact-card reveal" style="transition-delay:.2s"><div class="contact-icon">✉️</div><div><strong>Email</strong><p>hello@happyhoopers.in</p></div></div>
+          </div>
+        </div>
+        <div class="reveal-r">
+          <div class="map-box">
+            <div class="map-pin-icon">📍</div>
+            <h3>Happy Hoopers Arena</h3>
+            <p>Gannavaram, Vijayawada<br>Andhra Pradesh</p>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-blue" style="margin-top:8px">🗺️ Open Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo">
+            <div class="logo-icon">🎯</div>
+            <div class="footer-logo-text"><h1>HAPPY HOOPERS</h1><span>Play Arena & Café</span></div>
+          </div>
+          <p class="footer-desc">Vijayawada's most loved kids' play arena and café. Creating epic memories for children and families since day one.</p>
+          <div class="footer-social">
+            <div class="social-btn" onclick="showToast('Facebook')">📘</div>
+            <div class="social-btn" onclick="showToast('Instagram')">📸</div>
+            <div class="social-btn" onclick="showToast('YouTube')">▶️</div>
+            <div class="social-btn" onclick="showToast('WhatsApp')">💬</div>
+          </div>
+        </div>
+        <div>
+          <h4>Games</h4>
+          <ul class="footer-links">
+            <li><a onclick="scrollTo('#games')">Trampoline Jump</a></li>
+            <li><a onclick="scrollTo('#games')">Ball Pit Splash</a></li>
+            <li><a onclick="scrollTo('#cricket')">Cricket Machine</a></li>
+            <li><a onclick="scrollTo('#games')">Foam Pit</a></li>
+            <li><a onclick="scrollTo('#games')">Climbing Wall</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a onclick="scrollTo('#packages')">Packages</a></li>
+            <li><a onclick="scrollTo('#cafe')">Café Menu</a></li>
+            <li><a onclick="scrollTo('#birthday')">Birthday Parties</a></li>
+            <li><a onclick="openBookingModal()">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a>Gannavaram, Vijayawada</a></li>
+            <li><a>10AM – 10PM Daily</a></li>
+          </ul>
+          <a href="tel:+919876543210" class="btn btn-blue btn-sm" style="margin-top:16px">📞 Call Now</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Happy Hoopers Play Arena & Café · Vijayawada. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a>Privacy</a><a>Terms</a><a>Refunds</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div><!-- /page-home -->
+
+<!-- ══════════ PAGE: ADMIN ══════════ -->
+<div class="page" id="page-admin">
+  <div class="admin-bar">
+    <button class="admin-back" onclick="goHome()">← Back to Site</button>
+    <div class="admin-title">HAPPY HOOPERS · Admin Dashboard</div>
+    <div class="user-chip" onclick="logout()"><div class="uc-av">👤</div><div class="uc-n" id="admin-name-chip">Admin</div></div>
+  </div>
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('games',this)">Games <span class="tab-badge" id="badge-games">0</span></button>
+    <button class="tab-btn" onclick="switchTab('cafe',this)">Café <span class="tab-badge green" id="badge-cafe">0</span></button>
+    <button class="tab-btn" onclick="switchTab('bowling',this)">Bookings <span class="tab-badge amber" id="badge-bowl">0</span></button>
+  </div>
+
+  <!-- GAMES -->
+  <div class="admin-section active" id="tab-games">
+    <div class="stats-bar">
+      <div class="stat-chip-admin"><span class="sc-e">🎮</span><div><div class="sc-v" id="s-total-games">0</div><div class="sc-l">Total Games</div></div></div>
+      <div class="stat-chip-admin"><span class="sc-e">🏆</span><div><div class="sc-v">3</div><div class="sc-l">Packages</div></div></div>
+    </div>
+    <div class="add-card">
+      <h3>Add New Game / Activity</h3>
+      <div class="a-row">
+        <div class="a-group"><label>Game Name</label><input id="g-name" placeholder="e.g. Laser Tag"></div>
+        <div class="a-group"><label>Category</label><select id="g-cat"><option>Adventure</option><option>Indoor</option><option>Sports</option><option>Arcade</option></select></div>
+        <div class="a-group"><label>Package</label><select id="g-pkg"><option>Bronze Package</option><option>Silver Package</option><option>Gold Package</option></select></div>
+        <div class="a-group"><label>Duration</label><input id="g-dur" placeholder="e.g. 30 min"></div>
+        <button class="btn-prim-sm" onclick="addGame()">+ Add Game</button>
+      </div>
+    </div>
+    <div class="section-label">All Games & Activities</div>
+    <div class="items-grid" id="admin-games-grid"></div>
+  </div>
+
+  <!-- CAFÉ -->
+  <div class="admin-section" id="tab-cafe">
+    <div class="stats-bar">
+      <div class="stat-chip-admin"><span class="sc-e">☕</span><div><div class="sc-v" id="s-total-cafe">0</div><div class="sc-l">Menu Items</div></div></div>
+      <div class="stat-chip-admin"><span class="sc-e">⚠️</span><div><div class="sc-v" id="s-low-stock">0</div><div class="sc-l">Low Stock</div></div></div>
+    </div>
+    <div class="add-card cafe-c">
+      <h3>Add Café Item</h3>
+      <div class="a-row">
+        <div class="a-group"><label>Item Name</label><input id="c-name" placeholder="e.g. Mango Lassi"></div>
+        <div class="a-group"><label>Category</label><select id="c-cat"><option>Beverages</option><option>Snacks</option><option>Combos</option><option>Desserts</option></select></div>
+        <div class="a-group"><label>Price (₹)</label><input id="c-price" type="number" placeholder="120"></div>
+        <div class="a-group"><label>Qty</label><input id="c-qty" type="number" placeholder="30"></div>
+        <button class="btn-prim-sm green-btn" onclick="addCafeItem()">+ Add Item</button>
+      </div>
+    </div>
+    <div class="section-label">Café Menu</div>
+    <div class="items-grid" id="admin-cafe-grid"></div>
+  </div>
+
+  <!-- BOWLING -->
+  <div class="admin-section bowl-section" id="tab-bowling">
+    <div class="bowl-hero">
+      <div class="bowl-hero-icon">🏏</div>
+      <div class="bowl-hero-text">
+        <h2>Cricket Bowling Machine — Bookings</h2>
+        <p>Manage all slot bookings from one place</p>
+        <div class="bowl-rate">₹100 per 15 minutes</div>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-chip-admin"><span class="sc-e">📅</span><div><div class="sc-v" id="s-bookings">0</div><div class="sc-l">Total Bookings</div></div></div>
+      <div class="stat-chip-admin"><span class="sc-e">💰</span><div><div class="sc-v" id="s-revenue">₹0</div><div class="sc-l">Revenue</div></div></div>
+    </div>
+    <div class="section-label">All Bookings</div>
+    <div id="bookings-table-wrap"><div class="empty-state"><span class="es-emoji">📭</span><p>No bookings yet. They'll appear here!</p></div></div>
+  </div>
+</div><!-- /page-admin -->
+
+<!-- FLOATING -->
+<a href="https://wa.me/919876543210" class="whatsapp-float">💬</a>
+<button class="book-float" onclick="openBookingModal()">🏏 Book Now</button>
+<div id="toast"></div>
+
+<!-- BOOKING MODAL -->
+<div class="overlay" id="booking-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>🏏 Book Your Cricket Slot</h2>
+      <p>Fill in the details to confirm your booking</p>
+      <button class="modal-close" onclick="closeBookingModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="bm-form">
+        <div class="error-box" id="bm-error"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input id="bm-name" placeholder="Full name"></div>
+          <div class="form-group"><label>Mobile Number</label><input id="bm-mobile" type="tel" placeholder="10-digit number" maxlength="10"></div>
+        </div>
+        <div class="form-group"><label>Date</label><input id="bm-date" type="date"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Start Time</label><input id="bm-start" type="time" onchange="calcCost()"></div>
+          <div class="form-group"><label>End Time</label><input id="bm-end" type="time" onchange="calcCost()"></div>
+        </div>
+        <div class="cost-box"><div class="cost-amount" id="bm-cost">₹—</div><div class="cost-breakdown" id="bm-breakdown">Select times to calculate cost</div></div>
+        <button class="btn btn-blue btn-full" onclick="confirmBooking()">✅ Confirm Booking</button>
+      </div>
+      <div class="success-box" id="bm-success">
+        <span class="success-icon">🎉</span>
+        <p id="bm-success-msg" style="font-weight:700;margin-bottom:8px"></p>
+        <p id="bm-ref" style="font-size:12px;color:var(--grey);font-weight:600;margin-bottom:16px"></p>
+        <button class="btn btn-blue btn-full" onclick="closeBookingModal()">See You at the Arena! 🏏</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="login-overlay">
+  <div class="modal-box" style="max-width:400px">
+    <div class="login-banner">
+      <div class="login-icon">🔐</div>
+      <h2>Admin Login</h2>
+      <p>Enter credentials to access dashboard</p>
+      <button class="login-close" onclick="closeLogin()">✕</button>
+    </div>
+    <div class="modal-body" style="padding-top:24px">
+      <div class="error-box" id="login-error"></div>
+      <div class="form-group"><label>Username</label><input id="login-user" placeholder="Enter username" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="form-group"><label>Password</label><input id="login-pass" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn-login" onclick="doLogin()" style="margin-top:4px">Login to Dashboard →</button>
+      <p class="login-hint">Demo: admin / admin123</p>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODALS -->
+<div class="edit-overlay" id="edit-game-overlay">
+  <div class="edit-modal">
+    <h3>Edit Game</h3>
+    <input type="hidden" id="eg-id">
+    <div class="a-group" style="margin-bottom:12px"><label>Game Name</label><input id="eg-name"></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Category</label><select id="eg-cat"><option>Adventure</option><option>Indoor</option><option>Sports</option><option>Arcade</option></select></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Package</label><select id="eg-pkg"><option>Bronze Package</option><option>Silver Package</option><option>Gold Package</option></select></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Duration</label><input id="eg-dur"></div>
+    <div class="modal-actions"><button class="btn btn-outline btn-sm" onclick="closeEditGame()">Cancel</button><button class="btn btn-blue btn-sm" onclick="saveEditGame()">Save</button></div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="edit-cafe-overlay">
+  <div class="edit-modal">
+    <h3>Edit Café Item</h3>
+    <input type="hidden" id="ec-id">
+    <div class="a-group" style="margin-bottom:12px"><label>Item Name</label><input id="ec-name"></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Category</label><select id="ec-cat"><option>Beverages</option><option>Snacks</option><option>Combos</option><option>Desserts</option></select></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Price (₹)</label><input id="ec-price" type="number"></div>
+    <div class="a-group" style="margin-bottom:12px"><label>Qty in Stock</label><input id="ec-qty" type="number"></div>
+    <div class="modal-actions"><button class="btn btn-outline btn-sm" onclick="closeEditCafe()">Cancel</button><button class="btn btn-blue btn-sm" onclick="saveEditCafe()">Save</button></div>
+  </div>
+</div>
+
+<script>
+/* ══ DATA ══ */
+let games=[],cafeItems=[],bowlingBookings=[];
+let nG=1,nC=1,nB=1;
+let currentCat='All';
+
+const GEMOJI={'Adventure':'🤸','Indoor':'🧸','Sports':'⚽','Arcade':'🕹️'};
+const CEMOJI={'Beverages':'🥤','Snacks':'🍟','Combos':'🍱','Desserts':'🍰'};
+const GTAG={'Adventure':'adventure','Indoor':'indoor','Sports':'sports','Arcade':'arcade'};
+const CCLS={'Beverages':'cp-bev','Snacks':'cp-snack','Combos':'cp-combo','Desserts':'cp-dessert'};
+
+const GDESCS={'Trampoline Jump':'Bounce to insane heights on our pro-grade trampolines! High-energy fun for all ages.','Ball Pit Splash':'Dive into a sea of colourful balls! Perfect for younger kids to explore and play.','Mini Bowling':'Strike zone! Kids-sized bowling alley with lightweight balls and full scoring.','Soft Play Zone':'Safe, padded wonderland for the little ones. Crawl, climb and slide freely!','Cricket Bowling':'Face the automated bowling machine and perfect your batting — choose your speed!','Foam Pit Jump':'Launch off the platform into a massive foam pit — the ultimate soft landing!','Climbing Wall':'Multi-grip climbing wall with safety harness. Builds strength and confidence!','Slide Mega Zone':'Three giant slides at different speeds. Race your mates to the bottom!','Air Hockey':'Blazing fast air hockey action — challenge a friend or take on a parent!','Arcade Corner':'Classic and modern arcade games — win tokens, collect prizes!'};
+
+const CDESCS={'Chocolate Milkshake':'Thick, creamy and rich. Kids go crazy every single time!','Fresh Lemonade':'Freshly squeezed lemon, ice-cold and perfectly refreshing.','Mango Smoothie':'Real Alphonso mango blended fresh — tropical and delicious!','Hot Chocolate':'Velvety smooth hot chocolate for a cozy café moment.','Cheese Fries':'Golden fries loaded with melted cheese and seasoning. A crowd favourite!','Popcorn Bucket':'Buttery, crunchy popcorn in a fun takeaway bucket.','Nachos & Salsa':'Crispy chips with fresh salsa dip. Perfect for sharing!','Mini Sandwiches':'Soft bread with fresh fillings — cheese, veggie or chicken.','Mini Slider Combo':'Two mini burgers + fries + a drink. The ultimate kids combo!','Kids Meal Box':'Balanced meal — main, side and juice — curated just for kids.','Party Snack Platter':'Giant assorted platter, perfect for birthday parties!','Birthday Cake Slice':'Freshly baked in chocolate or vanilla. A celebration must-have!','Ice Cream Sundae':'Two scoops with your choice of topping. Pure bliss in a cup!','Brownie + Ice Cream':'Warm brownie with vanilla ice cream. Absolute comfort food!','Rainbow Waffle':'Colourful waffle with fruits, cream and sprinkles. Instagram gold!'};
+
+const GIMG=['https://images.unsplash.com/photo-1576073719676-aa95576db207?auto=format&w=600&q=75','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=600&q=75','https://images.unsplash.com/photo-1472746729193-e8d17dd4e0c8?auto=format&w=600&q=75','https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&w=600&q=75','https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&w=600&q=75','https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&w=600&q=75','https://images.unsplash.com/photo-1551958219-acbc595b7a15?auto=format&w=600&q=75','https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&w=600&q=75','https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?auto=format&w=600&q=75','https://images.unsplash.com/photo-1587662268709-87c59e71c29c?auto=format&w=600&q=75'];
+
+const CIMG={'Beverages':'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&w=400&q=75','Snacks':'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&w=400&q=75','Combos':'https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&w=400&q=75','Desserts':'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&w=400&q=75'};
+
+const SEED_GAMES=[
+  {id:nG++,name:'Trampoline Jump',cat:'Adventure',pkg:'Gold Package',dur:'30 min',age:'5–13',price:'Incl. Gold'},
+  {id:nG++,name:'Ball Pit Splash',cat:'Indoor',pkg:'Bronze Package',dur:'30 min',age:'2–8',price:'Incl. Bronze'},
+  {id:nG++,name:'Mini Bowling',cat:'Sports',pkg:'Silver Package',dur:'30 min',age:'4–12',price:'Incl. Silver'},
+  {id:nG++,name:'Soft Play Zone',cat:'Indoor',pkg:'Bronze Package',dur:'Unlimited',age:'2–7',price:'Incl. Bronze'},
+  {id:nG++,name:'Cricket Bowling',cat:'Sports',pkg:'Gold Package',dur:'30 min',age:'6–13',price:'₹100/15 min'},
+  {id:nG++,name:'Foam Pit Jump',cat:'Adventure',pkg:'Silver Package',dur:'20 min',age:'5–13',price:'Incl. Silver'},
+  {id:nG++,name:'Climbing Wall',cat:'Adventure',pkg:'Silver Package',dur:'15 min',age:'6–13',price:'Incl. Silver'},
+  {id:nG++,name:'Slide Mega Zone',cat:'Adventure',pkg:'Bronze Package',dur:'Unlimited',age:'3–12',price:'Incl. Bronze'},
+  {id:nG++,name:'Air Hockey',cat:'Arcade',pkg:'Gold Package',dur:'15 min',age:'5–13',price:'Incl. Gold'},
+  {id:nG++,name:'Arcade Corner',cat:'Arcade',pkg:'Gold Package',dur:'30 min',age:'4–13',price:'Incl. Gold'},
+];
+const SEED_CAFE=[
+  {id:nC++,name:'Chocolate Milkshake',cat:'Beverages',price:90,qty:40},
+  {id:nC++,name:'Fresh Lemonade',cat:'Beverages',price:60,qty:35},
+  {id:nC++,name:'Mango Smoothie',cat:'Beverages',price:85,qty:30},
+  {id:nC++,name:'Hot Chocolate',cat:'Beverages',price:70,qty:25},
+  {id:nC++,name:'Cheese Fries',cat:'Snacks',price:120,qty:8},
+  {id:nC++,name:'Popcorn Bucket',cat:'Snacks',price:70,qty:50},
+  {id:nC++,name:'Nachos & Salsa',cat:'Snacks',price:100,qty:20},
+  {id:nC++,name:'Mini Sandwiches',cat:'Snacks',price:90,qty:15},
+  {id:nC++,name:'Mini Slider Combo',cat:'Combos',price:180,qty:25},
+  {id:nC++,name:'Kids Meal Box',cat:'Combos',price:220,qty:20},
+  {id:nC++,name:'Party Snack Platter',cat:'Combos',price:350,qty:10},
+  {id:nC++,name:'Birthday Cake Slice',cat:'Desserts',price:110,qty:15},
+  {id:nC++,name:'Ice Cream Sundae',cat:'Desserts',price:120,qty:18},
+  {id:nC++,name:'Brownie + Ice Cream',cat:'Desserts',price:140,qty:12},
+  {id:nC++,name:'Rainbow Waffle',cat:'Desserts',price:150,qty:10},
+];
+
+/* ══ PAGE NAV ══ */
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  renderGames();renderCafe('All');
+}
+function goAdmin(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-admin').classList.add('active');
+  renderAdmin();
+}
+
+/* ══ SCROLL ══ */
+function scrollTo(sel){
+  const el=document.querySelector(sel);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+window.addEventListener('scroll',()=>{
+  const h=document.getElementById('site-header');
+  if(h) h.classList.toggle('scrolled',window.scrollY>50);
+});
+
+/* ══ REVEAL ══ */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')});
+},{threshold:0.1});
+function attachReveal(){
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>ro.observe(el));
+}
+
+/* ══ COUNTERS ══ */
+const co=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.done){
+      e.target.dataset.done=true;
+      const target=parseInt(e.target.dataset.target);
+      const start=performance.now();
+      function upd(now){
+        const p=Math.min((now-start)/1800,1);
+        const ease=1-Math.pow(1-p,3);
+        e.target.textContent=Math.round(ease*target).toLocaleString('en-IN');
+        if(p<1) requestAnimationFrame(upd);
+      }
+      requestAnimationFrame(upd);
+    }
+  });
+},{threshold:0.5});
+function attachCounters(){document.querySelectorAll('.counter').forEach(el=>co.observe(el))}
+
+/* ══ GAMES RENDER ══ */
+function renderGames(){
+  const g=document.getElementById('games-grid');
+  if(!g) return;
+  g.innerHTML='';
+  games.forEach((game,i)=>{
+    const isPopular=i<3;
+    const desc=GDESCS[game.name]||'An incredible activity that kids absolutely love!';
+    const tagCls=GTAG[game.cat]||'indoor';
+    const img=GIMG[i%GIMG.length];
+    const card=document.createElement('div');
+    card.className='game-card reveal';
+    card.style.transitionDelay=(i*.05)+'s';
+    card.innerHTML=`
+      ${isPopular?'<div class="game-popular">⭐ Popular</div>':''}
+      <div class="game-card-img">
+        <img src="${img}" alt="${esc(game.name)}" loading="lazy">
+        <div class="game-card-overlay">
+          <span class="game-tag-badge ${tagCls}">${esc(game.cat)}</span>
+          <span class="game-age-badge">Age ${esc(game.age||'3–13')}</span>
+        </div>
+      </div>
+      <div class="game-card-body">
+        <div class="game-card-name">${esc(game.name)}</div>
+        <p class="game-card-desc">${desc}</p>
+        <div class="game-card-footer">
+          <div><div class="game-price">${esc(game.price||'See packages')}</div></div>
+          <div class="game-dur">⏱ ${esc(game.dur)}</div>
+        </div>
+      </div>`;
+    g.appendChild(card);
+    ro.observe(card);
+  });
+}
+
+/* ══ CAFÉ RENDER ══ */
+function renderCafe(cat){
+  currentCat=cat;
+  const g=document.getElementById('cafe-grid');
+  if(!g) return;
+  g.innerHTML='';
+  const filtered=cat==='All'?cafeItems:cafeItems.filter(c=>c.cat===cat);
+  filtered.forEach((item,i)=>{
+    const imgSrc=CIMG[item.cat]||CIMG['Snacks'];
+    const catCls=CCLS[item.cat]||'cp-snack';
+    const desc=CDESCS[item.name]||'Freshly prepared and delicious!';
+    const card=document.createElement('div');
+    card.className='cafe-card reveal';
+    card.style.transitionDelay=(i*.04)+'s';
+    card.innerHTML=`
+      <div class="cafe-img">
+        <img src="${imgSrc}" alt="${esc(item.name)}" loading="lazy">
+        <span class="cafe-cat-pill ${catCls}">${esc(item.cat)}</span>
+      </div>
+      <div class="cafe-card-body">
+        <div class="cafe-card-name">${esc(item.name)}</div>
+        <p class="cafe-card-desc">${desc}</p>
+        <div class="cafe-card-footer">
+          <div class="cafe-price">₹${item.price}</div>
+          <button class="cafe-add" onclick="showToast('${esc(item.name)} added! 🛒')">+</button>
+        </div>
+      </div>`;
+    g.appendChild(card);
+    ro.observe(card);
+  });
+}
+function filterCafe(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCafe(cat);
+}
+
+/* ══ CRICKET ══ */
+function selectSlot(el){
+  document.querySelectorAll('.slot-card').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ══ ADMIN ══ */
+function renderAdmin(){
+  renderAdminGames();renderAdminCafe();renderAdminBookings();updateBadges();
+}
+function renderAdminGames(){
+  const g=document.getElementById('admin-games-grid');
+  if(!g) return;
+  document.getElementById('s-total-games').textContent=games.length;
+  g.innerHTML=games.length?'':`<div class="empty-state"><span class="es-emoji">🎮</span><p>No games yet.</p></div>`;
+  games.forEach(game=>{
+    const card=document.createElement('div');
+    card.className='item-card';
+    card.innerHTML=`<div class="item-emoji">${GEMOJI[game.cat]||'🎮'}</div><div class="item-name">${esc(game.name)}</div><div class="item-category">${esc(game.cat)}</div><div class="item-row"><span style="font-weight:700;font-size:13px">${esc(game.pkg)}</span><span class="game-dur">⏱ ${esc(game.dur)}</span></div><div class="item-actions"><button class="btn-edit" onclick="openEditGame(${game.id})">✏️ Edit</button><button class="btn-del" onclick="deleteGame(${game.id})">🗑️</button></div>`;
+    g.appendChild(card);
+  });
+}
+function renderAdminCafe(){
+  const g=document.getElementById('admin-cafe-grid');
+  if(!g) return;
+  const low=cafeItems.filter(c=>c.qty<=10).length;
+  document.getElementById('s-total-cafe').textContent=cafeItems.length;
+  document.getElementById('s-low-stock').textContent=low;
+  g.innerHTML=cafeItems.length?'':`<div class="empty-state"><span class="es-emoji">☕</span><p>No items yet.</p></div>`;
+  cafeItems.forEach(c=>{
+    const isLow=c.qty<=10;
+    const card=document.createElement('div');
+    card.className='item-card cafe-c';
+    card.innerHTML=`<div class="item-emoji">${CEMOJI[c.cat]||'🍽️'}</div><div class="item-name">${esc(c.name)}</div><div class="item-category food">${esc(c.cat)}</div><div class="item-row"><div class="item-price">₹${c.price}</div><span class="qty-pill ${isLow?'low':''}">${isLow?'⚠️':'📦'} Qty: ${c.qty}</span></div><div class="item-actions"><button class="btn-edit" onclick="openEditCafe(${c.id})">✏️ Edit</button><button class="btn-del" onclick="deleteCafeItem(${c.id})">🗑️</button></div>`;
+    g.appendChild(card);
+  });
+}
+function renderAdminBookings(){
+  const w=document.getElementById('bookings-table-wrap');
+  if(!w) return;
+  const rev=bowlingBookings.reduce((s,b)=>s+b.cost,0);
+  document.getElementById('s-bookings').textContent=bowlingBookings.length;
+  document.getElementById('s-revenue').textContent='₹'+rev.toLocaleString('en-IN');
+  if(!bowlingBookings.length){w.innerHTML='<div class="empty-state"><span class="es-emoji">📭</span><p>No bookings yet!</p></div>';return}
+  const rows=bowlingBookings.map(b=>`<tr><td>${esc(b.name)}</td><td>${esc(b.mobile)}</td><td>${new Date(b.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}</td><td>${fmt(b.time)}</td><td>${b.mins} min</td><td><strong>₹${b.cost}</strong></td><td><span class="b-status b-confirmed">✓ Confirmed</span></td><td><button class="btn-del" onclick="deleteBooking(${b.id})">🗑️</button></td></tr>`).join('');
+  w.innerHTML=`<table class="booking-table"><thead><tr><th>Name</th><th>Mobile</th><th>Date</th><th>Time</th><th>Dur</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+function updateBadges(){
+  const bg=document.getElementById('badge-games');if(bg)bg.textContent=games.length;
+  const bc=document.getElementById('badge-cafe');if(bc)bc.textContent=cafeItems.length;
+  const bb=document.getElementById('badge-bowl');if(bb)bb.textContent=bowlingBookings.length;
+}
+
+/* ══ GAME CRUD ══ */
+function addGame(){
+  const name=document.getElementById('g-name').value.trim(),cat=document.getElementById('g-cat').value,pkg=document.getElementById('g-pkg').value,dur=document.getElementById('g-dur').value.trim();
+  if(!name||!dur){showToast('⚠️ Fill in all fields!');return}
+  games.push({id:nG++,name,cat,pkg,dur,age:'3–13',price:'See packages'});
+  document.getElementById('g-name').value='';document.getElementById('g-dur').value='';
+  renderAdmin();renderGames();showToast('🎮 Game added!');
+}
+function deleteGame(id){games=games.filter(g=>g.id!==id);renderAdmin();renderGames();showToast('🗑️ Removed')}
+function openEditGame(id){
+  const g=games.find(x=>x.id===id);if(!g)return;
+  document.getElementById('eg-id').value=id;document.getElementById('eg-name').value=g.name;
+  document.getElementById('eg-cat').value=g.cat;document.getElementById('eg-pkg').value=g.pkg;
+  document.getElementById('eg-dur').value=g.dur;
+  document.getElementById('edit-game-overlay').classList.add('open');
+}
+function closeEditGame(){document.getElementById('edit-game-overlay').classList.remove('open')}
+function saveEditGame(){
+  const id=parseInt(document.getElementById('eg-id').value),g=games.find(x=>x.id===id);if(!g)return;
+  g.name=document.getElementById('eg-name').value.trim();g.cat=document.getElementById('eg-cat').value;
+  g.pkg=document.getElementById('eg-pkg').value;g.dur=document.getElementById('eg-dur').value.trim();
+  closeEditGame();renderAdmin();renderGames();showToast('✅ Updated!');
+}
+
+/* ══ CAFÉ CRUD ══ */
+function addCafeItem(){
+  const name=document.getElementById('c-name').value.trim(),cat=document.getElementById('c-cat').value,price=parseInt(document.getElementById('c-price').value),qty=parseInt(document.getElementById('c-qty').value);
+  if(!name||isNaN(price)||isNaN(qty)){showToast('⚠️ Fill in all fields!');return}
+  cafeItems.push({id:nC++,name,cat,price,qty});
+  document.getElementById('c-name').value='';document.getElementById('c-price').value='';document.getElementById('c-qty').value='';
+  renderAdmin();renderCafe(currentCat);showToast('☕ Item added!');
+}
+function deleteCafeItem(id){cafeItems=cafeItems.filter(c=>c.id!==id);renderAdmin();renderCafe(currentCat);showToast('🗑️ Removed')}
+function openEditCafe(id){
+  const c=cafeItems.find(x=>x.id===id);if(!c)return;
+  document.getElementById('ec-id').value=id;document.getElementById('ec-name').value=c.name;
+  document.getElementById('ec-cat').value=c.cat;document.getElementById('ec-price').value=c.price;
+  document.getElementById('ec-qty').value=c.qty;
+  document.getElementById('edit-cafe-overlay').classList.add('open');
+}
+function closeEditCafe(){document.getElementById('edit-cafe-overlay').classList.remove('open')}
+function saveEditCafe(){
+  const id=parseInt(document.getElementById('ec-id').value),c=cafeItems.find(x=>x.id===id);if(!c)return;
+  c.name=document.getElementById('ec-name').value.trim();c.cat=document.getElementById('ec-cat').value;
+  c.price=parseInt(document.getElementById('ec-price').value);c.qty=parseInt(document.getElementById('ec-qty').value);
+  closeEditCafe();renderAdmin();renderCafe(currentCat);showToast('✅ Updated!');
+}
+
+/* ══ BOOKING ══ */
+function openBookingModal(){
+  const o=document.getElementById('booking-overlay');
+  document.getElementById('bm-form').style.display='block';
+  document.getElementById('bm-success').classList.remove('show');
+  document.getElementById('bm-error').classList.remove('show');
+  document.getElementById('bm-cost').textContent='₹—';
+  document.getElementById('bm-breakdown').textContent='Select times to calculate cost';
+  ['bm-date','bm-start','bm-end','bm-mobile','bm-name'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+  document.getElementById('bm-date').min=new Date().toISOString().split('T')[0];
+  o.classList.add('open');
+}
+function closeBookingModal(){document.getElementById('booking-overlay').classList.remove('open')}
+function calcCost(){
+  const s=document.getElementById('bm-start').value,e=document.getElementById('bm-end').value;
+  const cEl=document.getElementById('bm-cost'),bEl=document.getElementById('bm-breakdown');
+  if(!s||!e){cEl.textContent='₹—';bEl.textContent='Select times to calculate';return}
+  const [sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);
+  const diff=(eh*60+em)-(sh*60+sm);
+  if(diff<=0){cEl.textContent='₹—';bEl.textContent='End time must be after start';return}
+  const slots=Math.ceil(diff/15),cost=slots*100;
+  const hrs=Math.floor(diff/60),mins=diff%60;
+  const dur=hrs>0?(hrs+'h '+(mins>0?mins+'m':'')):(mins+' min');
+  cEl.textContent='₹'+cost;
+  bEl.textContent=dur.trim()+' · '+slots+' slot'+(slots>1?'s':'')+' · ₹100/15 min';
+}
+function confirmBooking(){
+  const date=document.getElementById('bm-date').value,s=document.getElementById('bm-start').value,e=document.getElementById('bm-end').value,mobile=document.getElementById('bm-mobile').value.trim(),name=document.getElementById('bm-name').value.trim(),errEl=document.getElementById('bm-error');
+  errEl.classList.remove('show');
+  if(!name){errEl.textContent='⚠️ Please enter your name.';errEl.classList.add('show');return}
+  if(!mobile||mobile.length<10){errEl.textContent='⚠️ Enter a valid 10-digit number.';errEl.classList.add('show');return}
+  if(!date){errEl.textContent='⚠️ Select a date.';errEl.classList.add('show');return}
+  if(!s||!e){errEl.textContent='⚠️ Select start and end time.';errEl.classList.add('show');return}
+  const [sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);
+  const diff=(eh*60+em)-(sh*60+sm);
+  if(diff<=0){errEl.textContent='⚠️ End time must be after start.';errEl.classList.add('show');return}
+  const cost=Math.ceil(diff/15)*100;
+  const dateStr=new Date(date+'T00:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  const ref='HH'+Date.now().toString().slice(-6);
+  bowlingBookings.push({id:nB++,name,mobile,mins:diff,date,time:s,cost,status:'confirmed'});
+  renderAdmin();
+  document.getElementById('bm-form').style.display='none';
+  document.getElementById('bm-success-msg').textContent=name+', your slot on '+dateStr+' from '+fmt(s)+' to '+fmt(e)+' is confirmed! Total: ₹'+cost;
+  document.getElementById('bm-ref').textContent='Booking ID: '+ref+' — Save for reference!';
+  document.getElementById('bm-success').classList.add('show');
+}
+function deleteBooking(id){bowlingBookings=bowlingBookings.filter(b=>b.id!==id);renderAdmin();showToast('🗑️ Removed')}
+
+/* ══ LOGIN ══ */
+function openLogin(){document.getElementById('login-overlay').classList.add('open')}
+function closeLogin(){document.getElementById('login-overlay').classList.remove('open')}
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim(),p=document.getElementById('login-pass').value,err=document.getElementById('login-error');
+  err.classList.remove('show');
+  if(u==='admin'&&p==='admin123'){closeLogin();document.getElementById('admin-name-chip').textContent=u;goAdmin();showToast('👋 Welcome, '+u+'!')}
+  else{err.textContent='⚠️ Invalid credentials. Try admin / admin123';err.classList.add('show')}
+}
+function logout(){goHome();showToast('👋 Logged out')}
+
+/* ══ TABS ══ */
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  btn.classList.add('active');
+  const sec=document.getElementById('tab-'+name);if(sec)sec.classList.add('active');
+}
+
+/* ══ FAQ ══ */
+function toggleFaq(item){
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+/* ══ TOAST ══ */
+let tt;
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* ══ HELPERS ══ */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fmt(t){if(!t)return '';const[h,m]=t.split(':').map(Number);const p=h>=12?'PM':'AM';return (h%12||12)+':'+(m<10?'0':'')+m+' '+p}
+
+/* ══ INIT ══ */
+function init(){
+  games=SEED_GAMES;cafeItems=SEED_CAFE;
+  renderGames();renderCafe('All');
+  attachReveal();attachCounters();updateBadges();
+}
+document.addEventListener('DOMContentLoaded',init);
+document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')})});
+</script>
+</body>
+</html>

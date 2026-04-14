@@ -1,0 +1,1086 @@
+{% extends 'arena/base.html' %}
+{% load static %}
+
+{% block title %}Games & Activities - Happy Hoopers Play Arena{% endblock %}
+
+{% block content %}
+<!-- GAMES HERO -->
+<section class="games-hero">
+  <div class="container">
+    <div class="games-hero-content">
+      <div class="games-hero-eyebrow">Games & Activities</div>
+      <h1 class="games-hero-title">Epic Action<br>Awaits!</h1>
+      <p class="games-hero-desc">From trampoline jumping to cricket bowling — we've got every adventure your kids could dream of!</p>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES FILTER -->
+<section class="games-filter-section">
+  <div class="container">
+    <div class="games-filter">
+      <h3 style="background: linear-gradient(90deg, #ff8c00, #00bfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Filter by Category:</h3>
+      <div class="filter-buttons">
+        <button class="filter-btn {% if not selected_category %}active{% endif %}" data-url="{% url 'arena:games' %}">All Games</button>
+        {% for category in categories %}
+        <button class="filter-btn {% if selected_category == category.name %}active{% endif %}" data-url="?category={{ category.name }}">{{ category.emoji }} {{ category.name }}</button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES GRID -->
+<section class="games-section">
+  <div class="container">
+    <div class="games-grid">
+      {% for game in games %}
+      <div class="game-card reveal" data-delay="{{ forloop.counter0|floatformat:1 }}">
+        {% if game.is_popular %}<div class="game-popular">⭐ Popular</div>{% endif %}
+        <div class="game-card-img">
+          {% if game.image_url %}
+            <img src="{{ game.image_url }}" alt="{{ game.name }}" loading="lazy">
+          {% else %}
+            <img src="{% static 'images/game-placeholder.jpg' %}" alt="{{ game.name }}" loading="lazy">
+          {% endif %}
+          <div class="game-card-overlay">
+            <span class="game-tag-badge {{ game.category.tag_class|default:'adventure' }}">{{ game.category.name }}</span>
+            <span class="game-age-badge">Age {{ game.age_group }}</span>
+          </div>
+        </div>
+        <div class="game-card-body">
+          <div class="game-card-name">{{ game.name }}</div>
+          <p class="game-card-desc">{{ game.description }}</p>
+          <div class="game-card-footer">
+            <div><div class="game-price">{{ game.price_info }}</div></div>
+            <div class="game-dur">⏱ {{ game.duration }}</div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-games">
+        <h3>No games found</h3>
+        <p>Try selecting a different category or check back later for new games!</p>
+        <a href="{% url 'arena:games' %}" class="btn btn-blue">View All Games</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="games-cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready for Unlimited Fun?</h2>
+      <p>Choose the perfect package for your family and create memories that last a lifetime!</p>
+      <div class="cta-buttons">
+        <a href="{% url 'arena:packages' %}" class="btn btn-blue btn-lg">View Packages</a>
+        <a href="{% url 'arena:cricket_booking' %}" class="btn btn-amber btn-lg">Book Cricket Slot</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const url = this.dataset.url;
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+    
+    // Set transition delays from data attributes
+    document.querySelectorAll('.reveal[data-delay]').forEach(el => {
+        const delay = el.dataset.delay;
+        el.style.transitionDelay = delay + 's';
+    });
+    
+    // Reveal animations
+    if (typeof attachReveal === 'function') {
+        attachReveal();
+    }
+});
+</script>
+
+<style>
+:root {
+  --blue: #2563eb;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --gray-light: #e2e8f0;
+  --gray-dark: #334155;
+  --radius: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #0a0a0a;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 50%, #f8f9fa 100%);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 14px;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+}
+
+.btn:hover::before {
+  width: 120px;
+  height: 120px;
+}
+
+.btn-blue {
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+  box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+}
+
+.btn-blue:hover {
+  background: linear-gradient(45deg, #87CEEB, #1E3A8A);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(30, 58, 138, 0.4);
+}
+
+.btn-amber {
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+}
+
+.btn-amber:hover {
+  background: linear-gradient(45deg, #FF6347, #FFA500);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(255, 165, 0, 0.4);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+}
+
+.btn-ghost:hover {
+  background: var(--blue);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Enhanced Games Hero */
+.games-hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  color: white;
+  padding: 120px 0 100px;
+  position: relative;
+  overflow: hidden;
+  animation: heroPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroPulse {
+  0% { 
+    background: linear-gradient(135deg, #1E3A8A 0%, #87CEEB 50%, #FFA500 100%);
+  }
+  100% { 
+    background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 50%, #0a0a0a 100%);
+  }
+}
+
+.games-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  animation: heroPattern 20s linear infinite;
+}
+
+@keyframes heroPattern {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.games-hero-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.games-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  animation: eyebrowFloat 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.games-hero-title {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 900;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+  margin-bottom: 24px;
+}
+
+@keyframes titleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+  }
+  100% { 
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 165, 0, 0.8));
+  }
+}
+
+.games-hero-desc {
+  font-size: clamp(18px, 2vw, 24px);
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Filter Section */
+.games-filter-section {
+  padding: 60px 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(135, 206, 235, 0.1));
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.games-filter {
+  text-align: center;
+  position: relative;
+}
+
+.games-filter h3 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.games-filter h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #87CEEB, #FFA500);
+  border-radius: 2px;
+  animation: filterUnderline 3s ease-in-out infinite;
+}
+
+@keyframes filterUnderline {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.7); }
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-btn {
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.1));
+  border: 2px solid rgba(135, 206, 235, 0.3);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(135, 206, 235, 0.3), transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+}
+
+.filter-btn:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.filter-btn:hover {
+  background: linear-gradient(45deg, rgba(135, 206, 235, 0.2), rgba(0, 0, 0, 0.3));
+  border-color: #87CEEB;
+  color: white;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(135, 206, 235, 0.4);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.filter-btn.active {
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+  border-color: #1E3A8A;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+  text-shadow: 0 0 10px rgba(30, 58, 138, 0.3);
+}
+
+/* Enhanced Games Section */
+.games-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(135, 206, 235, 0.05));
+  position: relative;
+}
+
+.games-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+  animation: sectionPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sectionPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: tagPulse 2s ease-in-out infinite;
+}
+
+@keyframes tagPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.3);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 165, 0, 0.5);
+  }
+}
+
+.section-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  background: linear-gradient(45deg, #0a0a0a, #1E3A8A, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+  animation: sectionTitleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes sectionTitleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 15px rgba(0, 0, 0, 0.4));
+  }
+  100% { 
+    filter: brightness(1.2) drop-shadow(0 0 25px rgba(135, 206, 235, 0.6));
+  }
+}
+
+.section-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #0a0a0a;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.6;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.game-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  opacity: 1;
+  transform: none;
+}
+
+.game-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 25px 80px rgba(135, 206, 235, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+}
+
+.game-popular {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.4);
+  animation: popularPulse 2s ease-in-out infinite;
+}
+
+@keyframes popularPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.4);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 165, 0, 0.6);
+  }
+}
+
+.game-card-img {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.game-card-img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(135, 206, 235, 0.1), rgba(255, 165, 0, 0.1));
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.game-card:hover .game-card-img::before {
+  opacity: 1;
+}
+
+.game-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.game-card:hover .game-card-img img {
+  transform: scale(1.1);
+}
+
+.game-card-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.game-tag-badge {
+  background: linear-gradient(45deg, #1E3A8A, #87CEEB);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(30, 58, 138, 0.3);
+  animation: badgeFloat 3s ease-in-out infinite;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.game-tag-badge.adventure { background: linear-gradient(45deg, #1E3A8A, #2563eb); }
+.game-tag-badge.sports { background: linear-gradient(45deg, #10b981, #059669); }
+.game-tag-badge.arcade { background: linear-gradient(45deg, #8b5cf6, #6366f1); }
+.game-tag-badge.creative { background: linear-gradient(45deg, #ec4899, #f472b6); }
+
+.game-age-badge {
+  background: linear-gradient(45deg, #FFA500, #FF6347);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(255, 165, 0, 0.3);
+}
+
+.game-card-body {
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.game-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  position: relative;
+  display: inline-block;
+}
+
+.game-title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #87CEEB, #FFA500);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.game-card:hover .game-title::after {
+  transform: scaleX(1);
+  box-shadow: 0 0 5px rgba(135, 206, 235, 0.4);
+}
+
+.game-desc {
+  font-size: 16px;
+  color: #0a0a0a;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.game-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(10, 10, 10, 0.1);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.game-age {
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 14px;
+  flex: 1;
+}
+
+.game-price {
+  color: #1E3A8A;
+  font-weight: 700;
+  font-size: 18px;
+  background: linear-gradient(45deg, rgba(30, 58, 138, 0.1), rgba(135, 206, 235, 0.1));
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid rgba(30, 58, 138, 0.2);
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: fit-content;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4);
+}
+
+.game-dur {
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 13px;
+  background: linear-gradient(45deg, rgba(255, 165, 0, 0.1), rgba(135, 206, 235, 0.1));
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 165, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.game-card:hover .game-dur {
+  background: linear-gradient(45deg, rgba(255, 165, 0, 0.2), rgba(135, 206, 235, 0.2));
+  border-color: #FFA500;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+}
+
+.no-games {
+  text-align: center;
+  padding: 80px 40px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.no-games h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.no-games p {
+  font-size: 16px;
+  color: var(--gray);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.games-cta {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1E3A8A 50%, #0a0a0a 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.games-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10s-10 4.5-10 10 10 10-4.5 10-10zm0-30V0h-2v4h-4v2h4v2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  animation: ctaPattern 20s linear infinite;
+}
+
+@keyframes ctaPattern {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.games-cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.games-cta h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900;
+  background: linear-gradient(45deg, #ffffff, #87CEEB, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  margin-bottom: 16px;
+  animation: ctaTitleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes ctaTitleGlow {
+  0% { 
+    filter: brightness(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  }
+  100% { 
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(135, 206, 235, 0.8));
+  }
+}
+
+.games-cta p {
+  font-size: clamp(16px, 2vw, 20px);
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  animation: ctaTextPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes ctaTextPulse {
+  0%, 100% { 
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+  min-width: 200px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .games-hero {
+    padding: 80px 0 60px;
+  }
+  
+  .games-hero-title {
+    font-size: clamp(36px, 6vw, 48px);
+  }
+  
+  .games-hero-desc {
+    font-size: 16px;
+  }
+  
+  .games-filter-section {
+    padding: 40px 0;
+  }
+  
+  .games-filter h3 {
+    font-size: 20px;
+  }
+  
+  .filter-buttons {
+    gap: 12px;
+  }
+  
+  .filter-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+  
+  .games-section {
+    padding: 60px 0;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+  
+  .section-title {
+    font-size: clamp(28px, 5vw, 36px);
+  }
+  
+  .section-sub {
+    font-size: 14px;
+  }
+  
+  .games-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  .game-card {
+    padding: 24px;
+  }
+  
+  .game-card-img {
+    height: 220px;
+  }
+  
+  .game-card-body {
+    padding: 24px;
+  }
+  
+  .game-title {
+    font-size: 20px;
+  }
+  
+  .game-desc {
+    font-size: 14px;
+  }
+  
+  .game-meta {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .game-age, .game-price, .game-dur {
+    font-size: 12px;
+    padding: 4px 8px;
+    align-self: flex-start;
+  }
+  
+  .no-games {
+    padding: 60px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-hero {
+    padding: 60px 0 40px;
+  }
+  
+  .games-hero-title {
+    font-size: clamp(32px, 6vw, 40px);
+  }
+  
+  .games-hero-desc {
+    font-size: 14px;
+  }
+  
+  .games-filter-section {
+    padding: 30px 0;
+  }
+  
+  .games-filter h3 {
+    font-size: 18px;
+  }
+  
+  .filter-buttons {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  
+  .games-section {
+    padding: 40px 0;
+  }
+  
+  .game-card {
+    padding: 20px;
+  }
+  
+  .game-card-img {
+    height: 180px;
+  }
+  
+  .game-card-body {
+    padding: 20px;
+  }
+  
+  .game-title {
+    font-size: 18px;
+  }
+  
+  .game-desc {
+    font-size: 13px;
+  }
+  
+  .game-meta {
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
+  }
+  
+  .game-age, .game-price, .game-dur {
+    font-size: 11px;
+    padding: 3px 6px;
+    align-self: flex-start;
+  }
+  
+  .no-games {
+    padding: 40px 16px;
+  }
+  
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .section-sub {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 12px;
+  }
+  
+  .games-hero-eyebrow {
+    font-size: 12px;
+    padding: 6px 16px;
+  }
+  
+  .filter-btn {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  
+  .game-card-body {
+    padding: 16px;
+  }
+  
+  .game-title {
+    font-size: 16px;
+  }
+  
+  .game-desc {
+    font-size: 12px;
+  }
+  
+  .no-games {
+    padding: 40px 16px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .game-card:hover {
+    transform: none;
+  }
+  
+  .filter-btn:hover {
+    transform: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+}
+</style>
+{% endblock %}
