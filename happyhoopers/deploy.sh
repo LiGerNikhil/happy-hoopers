@@ -31,8 +31,15 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Collect static files
+# Collect static files (IMPORTANT: creates staticfiles folder)
+echo "Collecting static files..."
 python manage.py collectstatic --noinput
+
+# Verify static files were created
+if [ ! -d "staticfiles" ]; then
+    echo "ERROR: staticfiles folder not created!"
+    exit 1
+fi
 
 # Set up database (SQLite)
 python manage.py migrate
@@ -40,9 +47,15 @@ python manage.py migrate
 # Create superuser (optional)
 # python manage.py createsuperuser
 
-# Set permissions
+# Set proper permissions for Nginx
+echo "Setting up permissions..."
 sudo chown -R www-data:www-data /var/www/happyhoopers
 sudo chmod -R 755 /var/www/happyhoopers
+
+# Special permissions for static and media folders
+sudo chmod -R 755 staticfiles/
+sudo chmod -R 755 media/
+echo "Permissions set successfully!"
 
 # Copy systemd service file
 sudo cp happyhoopers.service /etc/systemd/system/

@@ -107,20 +107,63 @@ sudo tail -f /var/log/nginx/error.log
 - Browser caching configured
 
 ### Troubleshooting
+
+#### Static Files Not Loading (404 Errors)
+```bash
+# Check if staticfiles folder exists
+ls -la /var/www/happyhoopers/staticfiles/
+
+# Recollect static files
+cd /var/www/happyhoopers
+source venv/bin/activate
+python manage.py collectstatic --noinput
+
+# Check Nginx configuration
+sudo nginx -t
+cat /etc/nginx/sites-available/happyhoopers | grep -A 3 "location /static/"
+
+# Restart Nginx
+sudo systemctl restart nginx
+```
+
+#### Permission Issues (403 Forbidden)
+```bash
+# Fix permissions for static files
+sudo chown -R www-data:www-data /var/www/happyhoopers/staticfiles
+sudo chown -R www-data:www-data /var/www/happyhoopers/media
+sudo chmod -R 755 /var/www/happyhoopers/staticfiles
+sudo chmod -R 755 /var/www/happyhoopers/media
+
+# Check Nginx user
+ps aux | grep nginx
+```
+
+#### General Issues
 ```bash
 # Restart services
 sudo systemctl restart happyhoopers
 sudo systemctl restart nginx
 
-# Check permissions
-sudo chown -R www-data:www-data /var/www/happyhoopers
-sudo chmod -R 755 /var/www/happyhoopers
+# Check service status
+sudo systemctl status happyhoopers
+sudo systemctl status nginx
+
+# View logs
+sudo journalctl -u happyhoopers -f
+sudo tail -f /var/log/nginx/error.log
 
 # Test Django application
 cd /var/www/happyhoopers
 source venv/bin/activate
 python manage.py check --deploy
 ```
+
+#### Browser Debugging
+1. Open website in Chrome/Firefox
+2. Press F12 for Developer Tools
+3. Go to Console tab
+4. Look for 404 (Not Found) → Nginx path issue
+5. Look for 403 (Forbidden) → Permissions issue
 
 ## GitHub Upload Instructions
 
