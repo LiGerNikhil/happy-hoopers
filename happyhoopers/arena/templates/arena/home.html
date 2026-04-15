@@ -15,10 +15,56 @@
       🎯 Vijayawada's Ultimate Kids' Play Destination
     </div>
     <h1 class="hero-title">
-      Non-Stop Action.<br>
-      <span class="hl">Endless Smiles.</span><br>
-      Memories for Life.
+      <span style="
+        display: inline-block;
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
+                     0 0 40px rgba(255, 0, 255, 0.3),
+                     0 0 60px rgba(0, 255, 255, 0.3);
+        animation: neonGlow 2s ease-in-out infinite alternate,
+                  gradientShift 3s ease-in-out infinite;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      ">HappyHoopers</span><br>
+      <span style="
+        font-size: 1.8rem;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        animation: pulse 2s ease-in-out infinite;
+      ">Non-Stop Action & Endless Fun!</span><br>
+      <span style="
+        font-size: 1.4rem;
+        color: #ffd700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        animation: shimmer 3s ease-in-out infinite;
+      ">Where Memories Come Alive!</span>
     </h1>
+    <style>
+      @keyframes neonGlow {
+        from { filter: brightness(1) drop-shadow(0 0 20px rgba(255, 0, 255, 0.8)); }
+        to { filter: brightness(1.2) drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)); }
+      }
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+      }
+      @keyframes shimmer {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+    </style>
     <p class="hero-desc">
       Trampolines, cricket bowling machine, soft play, café & more! The perfect destination for birthday parties, weekend fun and family outings in Vijayawada.
     </p>

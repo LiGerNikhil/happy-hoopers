@@ -29,7 +29,7 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,happyhoopers.in,187.127.147.152').split(',')
 
 # CSRF settings for production
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://happyhoopers.in,http://happyhoopers.in').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://happyhoopers.in,http://happyhoopers.in','https://36e9-106-219-162-64.ngrok-free.app').split(',')
 
 # Security settings for production
 SECURE_BROWSER_XSS_FILTER = True
