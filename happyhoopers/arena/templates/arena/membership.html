@@ -47,6 +47,238 @@
 <!-- MEMBERSHIP PLANS -->
 <section class="membership-plans-section">
   <div class="container">
+    <div class="hero-title" style="
+      text-align: center;
+      padding: 0 1rem;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      margin-bottom: 2rem;
+    ">
+      <span style="
+        display: inline-block;
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        font-weight: 900;
+        background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 15px rgba(255, 0, 255, 0.5),
+                     0 0 25px rgba(255, 0, 255, 0.3),
+                     0 0 35px rgba(0, 255, 255, 0.3);
+        animation: neonGlow 2s ease-in-out infinite alternate,
+                  gradientShift 3s ease-in-out infinite;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+        line-height: 1.1;
+      ">HappyHoopers</span>
+    </div>
+    <style>
+      @keyframes neonGlow {
+        from { filter: brightness(1) drop-shadow(0 0 15px rgba(255, 0, 255, 0.8)); }
+        to { filter: brightness(1.2) drop-shadow(0 0 25px rgba(0, 255, 255, 0.8)); }
+      }
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      /* Mobile responsive adjustments */
+      @media (max-width: 768px) {
+        .hero-title {
+          padding: 0 0.5rem !important;
+        }
+        .hero-title span {
+          letter-spacing: 0.5px !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .hero-title {
+          padding: 0 0.3rem !important;
+        }
+        .hero-title span:first-child {
+          letter-spacing: 0 !important;
+          margin-bottom: 0.5rem !important;
+        }
+      }
+      
+      /* Membership Page Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        .membership-plans-section {
+          padding: 2rem 0;
+        }
+        
+        .membership-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          padding: 0 1rem;
+        }
+        
+        .membership-card {
+          max-width: 100%;
+          margin: 0 auto;
+        }
+        
+        .membership-header h3 {
+          font-size: 1.5rem;
+        }
+        
+        .membership-price .amount {
+          font-size: 2.5rem;
+        }
+        
+        .membership-desc {
+          font-size: 0.9rem;
+        }
+        
+        .membership-features li {
+          font-size: 0.85rem;
+          padding: 0.5rem 0;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+          padding: 0 1rem;
+        }
+        
+        .faq-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          padding: 0 1rem;
+        }
+        
+        .faq-item h4 {
+          font-size: 1.1rem;
+        }
+        
+        .faq-item p {
+          font-size: 0.9rem;
+        }
+        
+        .payment-modal-content {
+          margin: 1rem;
+          max-width: calc(100% - 2rem);
+        }
+        
+        .form-group {
+          margin-bottom: 1rem;
+        }
+        
+        .form-group input {
+          font-size: 16px; /* Prevents zoom on iOS */
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .membership-plans-section {
+          padding: 1rem 0;
+        }
+        
+        .membership-grid {
+          padding: 0 0.5rem;
+          gap: 1rem;
+        }
+        
+        .membership-card {
+          padding: 1.5rem;
+        }
+        
+        .membership-header h3 {
+          font-size: 1.3rem;
+        }
+        
+        .membership-price .amount {
+          font-size: 2rem;
+        }
+        
+        .membership-desc {
+          font-size: 0.8rem;
+        }
+        
+        .membership-features {
+          padding: 1rem 0;
+        }
+        
+        .membership-features li {
+          font-size: 0.8rem;
+          padding: 0.4rem 0;
+        }
+        
+        .btn {
+          padding: 0.8rem 1.5rem;
+          font-size: 0.9rem;
+        }
+        
+        .section-title {
+          font-size: 1.5rem;
+          padding: 0 0.5rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .faq-section {
+          padding: 2rem 0;
+        }
+        
+        .faq-grid {
+          padding: 0 0.5rem;
+        }
+        
+        .faq-item {
+          padding: 1rem;
+        }
+        
+        .faq-item h4 {
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .faq-item p {
+          font-size: 0.85rem;
+        }
+        
+        .payment-modal-content {
+          margin: 0.5rem;
+          max-width: calc(100% - 1rem);
+          padding: 1rem;
+        }
+        
+        .payment-modal-header h3 {
+          font-size: 1.2rem;
+        }
+        
+        .membership-summary h4 {
+          font-size: 1rem;
+        }
+        
+        .form-group label {
+          font-size: 0.9rem;
+        }
+        
+        .form-group input {
+          padding: 0.8rem;
+          font-size: 16px;
+        }
+        
+        .success-modal .payment-modal-content {
+          padding: 1rem;
+        }
+        
+        .success-message p {
+          font-size: 0.9rem;
+        }
+        
+        .card-details h4 {
+          font-size: 1rem;
+        }
+        
+        .card-details p {
+          font-size: 0.85rem;
+        }
+      }
+    </style>
     <h2 class="section-title" 
 style="background: linear-gradient(90deg, #ff8c00, #00bfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
   Choose Your Membership
